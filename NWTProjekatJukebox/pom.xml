@@ -10,6 +10,7 @@
     <modules>
         <module>UsersModule</module>
         <module>AdminModule</module>
+        <module>NotificationModule</module>
     </modules>
     <packaging>pom</packaging>
 

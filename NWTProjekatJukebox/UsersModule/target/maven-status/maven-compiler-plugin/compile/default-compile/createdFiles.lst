@@ -1,0 +1,5 @@
+UsersService\Application.class
+UsersService\Controllers\MainController.class
+UsersService\Repository\UserRepository.class
+UsersService\Models\UserEntity.class
+UsersService\Controllers\UserController.class
