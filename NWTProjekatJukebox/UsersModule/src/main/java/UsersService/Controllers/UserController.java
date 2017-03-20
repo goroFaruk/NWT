@@ -17,45 +17,42 @@ public class UserController {
     @Autowired
     private UserRepository repo;
 
-    @RequestMapping(value = "/testing", method = RequestMethod.GET)
-    public String insertTestAccounts() {
-        UserEntity u = new UserEntity();
-        u.setEmail("test");
-        u.setPasword("test");
-        u.setUsername("test");
-        try{
-            repo.save(u);
-        } catch (Exception e){
-            return e.getMessage();
-        }
-        return "OK";
-    }
-
     @RequestMapping(value = "/{id}", method= RequestMethod.GET)
     public UserEntity getById(@PathVariable("id") int id) {
         UserEntity userEntity = repo.findOne(id);
         return userEntity;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value= "/", method = RequestMethod.GET)
     public Page<UserEntity> getAll(Pageable pageable) {
         Page<UserEntity> users = repo.findAll(pageable);
         return users;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String insertUser(@RequestParam String email, String pass, String username){
+    public String insertUser(@RequestParam String email, String pass, String username, Integer idRole){
         UserEntity userEntity=new UserEntity();
         userEntity.setUsername(username);
         userEntity.setPasword(pass);
         userEntity.setEmail(email);
-        int id;
+        userEntity.setIdrole(idRole);
+        UserEntity user;
         try{
-            id=repo.save(userEntity).getId();
+            user=repo.save(userEntity);
         } catch (Exception e){
             return e.getMessage();
         }
-
-        return "ID: " + String.valueOf(id);
+        return "User is successfully added. ID: " + String.valueOf(user.getId());
     }
+
+    @RequestMapping(value = "/delete", method= RequestMethod.POST)
+    public String deleteById(@RequestParam int id) {
+        try {
+            repo.delete(id);
+        }catch (Exception e){
+            return e.getMessage();
+        }
+        return "User is successfully deleted. ID: " + String.valueOf(id);
+    }
+
 }

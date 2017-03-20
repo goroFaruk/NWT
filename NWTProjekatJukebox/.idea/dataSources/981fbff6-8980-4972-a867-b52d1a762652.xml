@@ -17,37 +17,57 @@
     <schema id="11" parent="1" name="tim2"/>
     <schema id="12" parent="1" name="world"/>
     <schema id="13" parent="1" name="wt"/>
-    <table id="14" parent="2" name="user"/>
-    <column id="15" parent="14" name="id">
+    <table id="14" parent="2" name="follow"/>
+    <table id="15" parent="2" name="user"/>
+    <column id="16" parent="14" name="idUser">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="17" parent="14" name="idLista">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="18" parent="14" name="PRIMARY">
+      <ColNames>idUser
+idLista</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="19" parent="15" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="16" parent="14" name="email">
+    <column id="20" parent="15" name="email">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="17" parent="14" name="pasword">
+    <column id="21" parent="15" name="pasword">
       <Position>3</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="18" parent="14" name="username">
+    <column id="22" parent="15" name="username">
       <Position>4</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="19" parent="14" name="id_UNIQUE">
+    <column id="23" parent="15" name="idrole">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="24" parent="15" name="id_UNIQUE">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="20" parent="14" name="PRIMARY">
+    <key id="25" parent="15" name="PRIMARY">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="21" parent="14" name="id_UNIQUE">
+    <key id="26" parent="15" name="id_UNIQUE">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>id_UNIQUE</UnderlyingIndexName>
     </key>

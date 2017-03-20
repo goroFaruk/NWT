@@ -3,7 +3,7 @@ package UsersService.Models;
 import javax.persistence.*;
 
 /**
- * Created by Šahin on 18.3.2017.
+ * Created by Šahin on 20.3.2017.
  */
 @Entity
 @Table(name = "user", schema = "nwtusers", catalog = "")
@@ -12,8 +12,10 @@ public class UserEntity {
     private String email;
     private String pasword;
     private String username;
+    private Integer idrole;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
@@ -53,6 +55,16 @@ public class UserEntity {
         this.username = username;
     }
 
+    @Basic
+    @Column(name = "idrole", nullable = true)
+    public Integer getIdrole() {
+        return idrole;
+    }
+
+    public void setIdrole(Integer idrole) {
+        this.idrole = idrole;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,6 +76,7 @@ public class UserEntity {
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (pasword != null ? !pasword.equals(that.pasword) : that.pasword != null) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
+        if (idrole != null ? !idrole.equals(that.idrole) : that.idrole != null) return false;
 
         return true;
     }
@@ -74,6 +87,7 @@ public class UserEntity {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (pasword != null ? pasword.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (idrole != null ? idrole.hashCode() : 0);
         return result;
     }
 }

@@ -12,6 +12,6 @@ public class MainController {
     @RequestMapping("/")
     @ResponseBody
     public String index() {
-        return "Test test";
+        return "Testing UsersService MainControler.... ";
     }
 }
