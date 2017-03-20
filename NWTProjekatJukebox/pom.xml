@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>UsersModule</module>
-        <module>AdminModule</module>
         <module>NotificationModule</module>
+        <module>AdminModule</module>
     </modules>
     <packaging>pom</packaging>
 
