@@ -1,4 +1,4 @@
-package UsersService.Controllers;
+package AdminServices.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +12,6 @@ public class MainController {
     @RequestMapping("/")
     @ResponseBody
     public String index() {
-        return "Testing UsersService MainControler.... ";
+        return "Test test";
     }
 }

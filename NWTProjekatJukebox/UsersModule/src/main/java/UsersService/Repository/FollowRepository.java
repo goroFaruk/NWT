@@ -1,25 +1,24 @@
 package UsersService.Repository;
 
+import UsersService.Models.FollowEntity;
 import UsersService.Models.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-import javax.jws.soap.SOAPBinding;
-
 /**
- * Created by Šahin on 18.3.2017.
+ * Created by Šahin on 20.3.2017.
  */
-public interface UserRepository  extends CrudRepository<UserEntity, Integer>{
+public interface FollowRepository extends CrudRepository<FollowEntity, Integer> {
 
     @Override
-    Iterable<UserEntity> findAll();
+    Iterable<FollowEntity> findAll();
 
     @Override
     void delete(Integer integer);
 
     @Override
-    UserEntity findOne(Integer integer);
+    FollowEntity findOne(Integer integer);
 
     Page<UserEntity> findAll(Pageable iterable);
 
@@ -27,23 +26,20 @@ public interface UserRepository  extends CrudRepository<UserEntity, Integer>{
     long count();
 
     @Override
-    void delete(UserEntity userEntity);
+    void delete(FollowEntity followEntity);
 
     @Override
-    void delete(Iterable<? extends UserEntity> iterable);
+    void delete(Iterable<? extends FollowEntity> iterable);
 
     @Override
     void deleteAll();
 
     @Override
-    <S extends UserEntity> Iterable<S> save(Iterable<S> iterable);
+    <S extends FollowEntity> Iterable<S> save(Iterable<S> iterable);
 
     @Override
-    <S extends UserEntity> S save(S s);
+    <S extends FollowEntity> S save(S s);
 
     @Override
     boolean exists(Integer integer);
-
-    void flush();
-
 }
