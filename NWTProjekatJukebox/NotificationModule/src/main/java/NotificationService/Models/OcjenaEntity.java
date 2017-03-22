@@ -14,7 +14,8 @@ public class OcjenaEntity {
     private Integer korisnikId;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }

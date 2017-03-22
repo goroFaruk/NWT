@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/NWTProjekatJukebox.iml" filepath="$PROJECT_DIR$/NWTProjekatJukebox.iml" />
       <module fileurl="file://$PROJECT_DIR$/NotificationModule/NotificationModule.iml" filepath="$PROJECT_DIR$/NotificationModule/NotificationModule.iml" group="Modules" />
       <module fileurl="file://$PROJECT_DIR$/UsersModule/UsersModule.iml" filepath="$PROJECT_DIR$/UsersModule/UsersModule.iml" group="Modules" />
+      <module fileurl="file://$PROJECT_DIR$/YoutubeModule/YoutubeModule.iml" filepath="$PROJECT_DIR$/YoutubeModule/YoutubeModule.iml" group="Modules" />
     </modules>
   </component>
 </project>

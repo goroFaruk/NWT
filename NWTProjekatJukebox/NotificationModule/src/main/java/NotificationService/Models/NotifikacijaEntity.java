@@ -1,9 +1,6 @@
 package NotificationService.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -18,8 +15,9 @@ public class NotifikacijaEntity {
     private Timestamp datumNotifikacije;
     private Integer ocjenaId;
 
-    @Basic
-    @Column(name = "id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }

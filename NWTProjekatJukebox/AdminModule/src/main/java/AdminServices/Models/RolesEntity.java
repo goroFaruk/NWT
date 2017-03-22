@@ -12,6 +12,7 @@ public class RolesEntity {
     private String nazivRole;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idroles")
     public int getIdroles() {
         return idroles;

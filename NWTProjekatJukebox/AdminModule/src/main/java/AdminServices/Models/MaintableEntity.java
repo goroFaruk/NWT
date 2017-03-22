@@ -13,6 +13,7 @@ public class MaintableEntity {
     private int idNotifikacije;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idMain")
     public int getIdMain() {
         return idMain;

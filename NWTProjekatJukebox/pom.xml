@@ -11,6 +11,7 @@
         <module>UsersModule</module>
         <module>AdminModule</module>
         <module>NotificationModule</module>
+        <module>YoutubeModule</module>
     </modules>
     <packaging>pom</packaging>
 

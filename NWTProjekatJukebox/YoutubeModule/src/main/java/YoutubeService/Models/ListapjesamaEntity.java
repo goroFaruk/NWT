@@ -12,7 +12,7 @@ public class ListapjesamaEntity {
     private int idPjesma;
 
     @Id
-    @Basic
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idLista")
     public int getIdLista() {
         return idLista;
