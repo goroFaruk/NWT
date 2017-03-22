@@ -1,17 +1,17 @@
 package AdminServices.Models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Predrag on 20.03.2017..
  */
 @Entity
 @Table(name = "userrole", schema = "adminmodule", catalog = "")
+@IdClass(UserroleEntityPK.class)
 public class UserroleEntity {
     private int idUser;
+    private int iduserRole;
+    private String idRole;
 
     @Id
     @Column(name = "idUser")
@@ -38,5 +38,25 @@ public class UserroleEntity {
     @Override
     public int hashCode() {
         return idUser;
+    }
+
+    @Id
+    @Column(name = "iduserRole")
+    public int getIduserRole() {
+        return iduserRole;
+    }
+
+    public void setIduserRole(int iduserRole) {
+        this.iduserRole = iduserRole;
+    }
+
+    @Id
+    @Column(name = "idRole")
+    public String getIdRole() {
+        return idRole;
+    }
+
+    public void setIdRole(String idRole) {
+        this.idRole = idRole;
     }
 }
