@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/AdminModule" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CentralConfiguration" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/NotificationModule" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UsersModule" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/YoutubeModule" charset="UTF-8" />

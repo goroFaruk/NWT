@@ -1,7 +1,6 @@
 package UsersService.Repository;
 
 import UsersService.Models.FollowEntity;
-import UsersService.Models.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
@@ -20,7 +19,7 @@ public interface FollowRepository extends CrudRepository<FollowEntity, Integer> 
     @Override
     FollowEntity findOne(Integer integer);
 
-    Page<UserEntity> findAll(Pageable iterable);
+    Page<FollowEntity> findAll(Pageable iterable);
 
     @Override
     long count();
