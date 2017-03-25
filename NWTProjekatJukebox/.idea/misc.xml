@@ -10,6 +10,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/AdminPanel/pom.xml" />
+        <option value="$PROJECT_DIR$/TEST/pom.xml" />
       </set>
     </option>
   </component>

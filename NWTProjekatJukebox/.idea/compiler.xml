@@ -20,6 +20,7 @@
       <module name="CentralConfiguration" target="1.8" />
       <module name="NotificationModule" target="1.8" />
       <module name="NWTProjekatJukebox" target="1.8" />
+      <module name="TEST" target="1.8" />
       <module name="UsersModule" target="1.8" />
       <module name="YoutubeModule" target="1.8" />
     </bytecodeTargetLevel>

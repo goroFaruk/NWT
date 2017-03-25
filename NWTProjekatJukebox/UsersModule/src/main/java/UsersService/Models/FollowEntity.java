@@ -3,34 +3,14 @@ package UsersService.Models;
 import javax.persistence.*;
 
 /**
- * Created by Šahin on 24.3.2017.
+ * Created by Šahin on 25.3.2017.
  */
 @Entity
 @Table(name = "follow", schema = "nwtusers", catalog = "")
 public class FollowEntity {
-    private int idUser;
-    private int idLista;
     private int id;
-
-    @Basic
-    @Column(name = "idUser", nullable = false)
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
-    }
-
-    @Basic
-    @Column(name = "idLista", nullable = false)
-    public int getIdLista() {
-        return idLista;
-    }
-
-    public void setIdLista(int idLista) {
-        this.idLista = idLista;
-    }
+    private int iduser;
+    private int idlista;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,6 +23,26 @@ public class FollowEntity {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "iduser", nullable = false)
+    public int getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
+    }
+
+    @Basic
+    @Column(name = "idlista", nullable = false)
+    public int getIdlista() {
+        return idlista;
+    }
+
+    public void setIdlista(int idlista) {
+        this.idlista = idlista;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,18 +50,18 @@ public class FollowEntity {
 
         FollowEntity that = (FollowEntity) o;
 
-        if (idUser != that.idUser) return false;
-        if (idLista != that.idLista) return false;
         if (id != that.id) return false;
+        if (iduser != that.iduser) return false;
+        if (idlista != that.idlista) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idUser;
-        result = 31 * result + idLista;
-        result = 31 * result + id;
+        int result = id;
+        result = 31 * result + iduser;
+        result = 31 * result + idlista;
         return result;
     }
 }
