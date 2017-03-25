@@ -3,47 +3,64 @@ package UsersService.Repository;
 import UsersService.Models.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.jws.soap.SOAPBinding;
+import java.beans.Transient;
 
 /**
  * Created by Šahin on 18.3.2017.
  */
 public interface UserRepository  extends CrudRepository<UserEntity, Integer>{
 
-    @Override
     Iterable<UserEntity> findAll();
 
-    @Override
     void delete(Integer integer);
 
-    @Override
     UserEntity findOne(Integer integer);
 
     Page<UserEntity> findAll(Pageable iterable);
 
-    @Override
     long count();
 
-    @Override
     void delete(UserEntity userEntity);
 
-    @Override
     void delete(Iterable<? extends UserEntity> iterable);
 
-    @Override
     void deleteAll();
 
-    @Override
     <S extends UserEntity> Iterable<S> save(Iterable<S> iterable);
 
-    @Override
     <S extends UserEntity> S save(S s);
 
-    @Override
     boolean exists(Integer integer);
 
-    void flush();
+    @Modifying
+    @Transactional
+    @Query("Update UserEntity u set u.username=?2 where u.id=?1")
+    void updateUsername(Integer id, String username);
+
+    @Modifying
+    @Transactional
+    @Query("Update UserEntity u set u.idrole=?2 where u.id=?1")
+    void updateRole(Integer id, Integer idRole);
+
+    @Modifying
+    @Transactional
+    @Query("Update UserEntity u set u.email=?2 where u.id=?1")
+    void updateEmail(Integer id, String email);
+
+    @Modifying
+    @Transactional
+    @Query("Update UserEntity u set u.pasword=?3 where u.id=?1 and u.pasword = ?2")
+    void changePassword(Integer id, String oldPass, String newPass);
+
+    @Modifying
+    @Transactional
+    @Query("Update UserEntity u set u.pasword=?3 where u.email=?1 and u.pasword = ?2")
+    void changePasswordUsingEmail(String email, String oldPass, String newPass);
 
 }
