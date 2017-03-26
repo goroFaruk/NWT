@@ -3,7 +3,12 @@ package NotificationService.Repository;
 import NotificationService.Models.NotifikacijaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Date;
 
 /**
  * Created by Enver on 19.3.2017.
@@ -39,4 +44,25 @@ public interface NotificationRepository  extends CrudRepository<NotifikacijaEnti
     public void delete(Iterable<? extends NotifikacijaEntity> entities);
     @Override
     public void deleteAll();
+
+    @Modifying
+    @Transactional
+    @Query("Update NotifikacijaEntity n set n.korisnikId=?1 where n.id=?2")
+    void updateKorisnik(Integer username, Integer id);
+
+    @Modifying
+    @Transactional
+    @Query("Update NotifikacijaEntity n set n.listaId=?1 where n.id=?2")
+    void updateLista(Integer listaID, Integer id);
+
+    @Modifying
+    @Transactional
+    @Query("Update NotifikacijaEntity n set n.ocjenaId=?1 where n.id=?2")
+    void updateOcjena(Integer ocjena, Integer id);
+
+    @Modifying
+    @Transactional
+    @Query("Update NotifikacijaEntity n set n.datumNotifikacije=?1 where n.id=?2")
+    void updateDatumNotifikacije(Date datum, Integer id);
+
 }
