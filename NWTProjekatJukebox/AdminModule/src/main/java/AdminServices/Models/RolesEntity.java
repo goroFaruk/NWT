@@ -3,7 +3,7 @@ package AdminServices.Models;
 import javax.persistence.*;
 
 /**
- * Created by Predrag on 28.03.2017..
+ * Created by Predrag on 20.03.2017..
  */
 @Entity
 @Table(name = "roles", schema = "adminmodule", catalog = "")
@@ -12,6 +12,7 @@ public class RolesEntity {
     private String nazivRole;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idroles")
     public int getIdroles() {
         return idroles;
@@ -22,7 +23,7 @@ public class RolesEntity {
     }
 
     @Basic
-    @Column(name = "naziv_role")
+    @Column(name = "nazivRole")
     public String getNazivRole() {
         return nazivRole;
     }

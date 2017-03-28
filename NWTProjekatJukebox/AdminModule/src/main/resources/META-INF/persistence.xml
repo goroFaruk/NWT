@@ -3,7 +3,7 @@
 
     <persistence-unit name="NewPersistenceUnit">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>AdminServices.Models.MaintableEntity</class>
+        <class>AdminServices.Models.MainEntity</class>
         <class>AdminServices.Models.RolesEntity</class>
         <class>AdminServices.Models.UserroleEntity</class>
         <properties>
