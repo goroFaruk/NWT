@@ -1,12 +1,15 @@
 package NotificationService.Repository;
 
 import NotificationService.Models.OcjenaEntity;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by Enver on 19.3.2017.
  */
-public interface OcjeneRepository extends CrudRepository<OcjenaEntity, Integer> {
+public interface OcjenaRepository extends CrudRepository<OcjenaEntity, Integer> {
     @Override
     public <S extends OcjenaEntity> S save(S entity);
 
@@ -38,4 +41,21 @@ public interface OcjeneRepository extends CrudRepository<OcjenaEntity, Integer> 
     public void delete(Iterable<? extends OcjenaEntity> entities);
     @Override
     public void deleteAll();
+
+    @Modifying
+    @Transactional
+    @Query("Update OcjenaEntity o set o.korisnikId=?1 where o.id=?2")
+    void updateKorisnik(Integer username, Integer id);
+
+    @Modifying
+    @Transactional
+    @Query("Update OcjenaEntity o set o.listaId=?1 where o.id=?2")
+    void updateLista(Integer listaID, Integer id);
+
+    @Modifying
+    @Transactional
+    @Query("Update OcjenaEntity o set o.ocjena=ocjena where o.id=id")
+    void updateOcjena(Integer ocjena, Integer id);
+
+
 }
