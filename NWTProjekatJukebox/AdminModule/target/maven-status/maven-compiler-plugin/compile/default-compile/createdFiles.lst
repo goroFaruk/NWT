@@ -1,0 +1,10 @@
+AdminServices\Models\UserroleEntity.class
+AdminServices\Repository\AdminRepository.class
+AdminServices\Controllers\MainController.class
+AdminServices\Controllers\UserController.class
+AdminServices\Models\MaintableEntity.class
+AdminServices\Repository\RoleRepository.class
+AdminServices\Models\RolesEntity.class
+AdminServices\AdminApplication.class
+AdminServices\Controllers\RoleController.class
+AdminServices\Models\Message.class

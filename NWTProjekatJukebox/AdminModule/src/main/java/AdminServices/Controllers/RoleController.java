@@ -1,5 +1,6 @@
 package AdminServices.Controllers;
 
+import AdminServices.Models.Message;
 import AdminServices.Models.RolesEntity;
 import AdminServices.Models.UserroleEntity;
 import AdminServices.Repository.AdminRepository;
@@ -7,6 +8,8 @@ import AdminServices.Repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,6 +32,16 @@ public class RoleController {
             return e.getMessage();
         }
         return "Role is successfully added. ID: " + String.valueOf(userEntity.getIdroles());
+    }
+    @RequestMapping(value = "/roleName", method = RequestMethod.POST)
+    public ResponseEntity<Message> changeRoleName(@RequestParam Integer roleId, String roleName){
+
+        try{
+            repo.updateRole(roleId,roleName);
+        } catch (Exception e){
+            return new ResponseEntity<Message>( new Message(e.getMessage(),"User"), HttpStatus.EXPECTATION_FAILED);
+        }
+        return new ResponseEntity<Message>( new Message("Role name is successfully changed","User"), HttpStatus.OK);
     }
     @RequestMapping(value = "/{id}", method= RequestMethod.GET)
     public RolesEntity getById(@PathVariable("id") int id) {
