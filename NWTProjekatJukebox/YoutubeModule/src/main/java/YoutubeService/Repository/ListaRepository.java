@@ -4,7 +4,10 @@ import YoutubeService.Models.ListaEntity;
 import YoutubeService.Models.ListapjesamaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 /**
  * Created by fare_ on 24.03.2017..
@@ -40,6 +43,12 @@ public interface ListaRepository extends CrudRepository<ListaEntity, Integer> {
     @Override
     <S extends ListaEntity> S save(S s);
 
+
     @Override
     boolean exists(Integer integer);
+    @Query("select f from ListaEntity f where f.idUser=?1")
+    List<ListaEntity> findAllByUserId(Integer userId);
+
+    @Query("select f from ListaEntity f where f.idPjesma=?1")
+    List<ListaEntity> findAllBySongId(Integer songId);
 }

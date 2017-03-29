@@ -3,7 +3,10 @@ package YoutubeService.Repository;
 import YoutubeService.Models.PjesmaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 /**
  * Created by fare_ on 21.03.2017..
@@ -40,4 +43,6 @@ public interface YoutubeRepository extends CrudRepository<PjesmaEntity, Integer>
 
     @Override
     boolean exists(Integer integer);
+    @Query("select f from PjesmaEntity f where f.id=?1")
+    List<PjesmaEntity> findAllById(Integer userId);
 }

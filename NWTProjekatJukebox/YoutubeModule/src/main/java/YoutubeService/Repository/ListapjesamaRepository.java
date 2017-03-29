@@ -3,7 +3,10 @@ package YoutubeService.Repository;
 import YoutubeService.Models.ListapjesamaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 /**
  * Created by fare_ on 24.03.2017..
@@ -40,4 +43,9 @@ public interface ListapjesamaRepository extends CrudRepository<ListapjesamaEntit
 
     @Override
     boolean exists(Integer integer);
+    @Query("select f from ListapjesamaEntity f where f.idLista=?1")
+    List<ListapjesamaEntity> findAllByListaId(Integer userId);
+
+    @Query("select f from ListapjesamaEntity f where f.idPjesma=?1")
+    List<ListapjesamaEntity> findAllBySongId(Integer songId);
 }
