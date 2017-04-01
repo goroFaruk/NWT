@@ -13,6 +13,7 @@
         <module>NotificationModule</module>
         <module>YoutubeModule</module>
         <module>CentralConfiguration</module>
+        <module>EurekaService</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -20,7 +21,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.5.RELEASE</version>
+        <version>1.5.2.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -71,6 +72,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka-server</artifactId>
+            <scope>test</scope>
         </dependency>
 
 

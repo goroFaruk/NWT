@@ -9,6 +9,7 @@
         <module name="AdminModule" />
         <module name="AdminPanel" />
         <module name="CentralConfiguration" />
+        <module name="EurekaService" />
         <module name="NotificationModule" />
         <module name="UsersModule" />
         <module name="YoutubeModule" />
@@ -18,6 +19,7 @@
       <module name="AdminModule" target="1.8" />
       <module name="AdminPanel" target="1.8" />
       <module name="CentralConfiguration" target="1.8" />
+      <module name="EurekaService" target="1.8" />
       <module name="NotificationModule" target="1.8" />
       <module name="NWTProjekatJukebox" target="1.8" />
       <module name="TEST" target="1.8" />

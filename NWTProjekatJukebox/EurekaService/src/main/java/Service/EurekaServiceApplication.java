@@ -1,14 +1,14 @@
-package NotificationService;
+package Service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,16 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Created by Šahin on 18.3.2017.
+ * Created by Šahin on 1.4.2017.
  */
-@PropertySource({"classpath:application.properties"})
-@Configuration
+@EnableEurekaServer
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @SpringBootApplication
-public class NotificationApplication {
+public class EurekaServiceApplication {
+
     public static void main(String[] args) {
-        Logger log= LoggerFactory.getLogger(NotificationApplication.class);
-        SpringApplication.run(NotificationApplication.class, args);
-        log.info("NotificationService.Application is started");
+        SpringApplication.run(EurekaServiceApplication.class, args);
     }
 }
 
