@@ -45,7 +45,11 @@ public class UserController {
         UserroleEntity user = repo.findOne(userId);
         return repo.exists(user.getIduserRole());
     }
-
+    @RequestMapping(value = "/chckUserRole/{id}", method = RequestMethod.GET)
+    public int checkUserRole(@PathVariable("id") int userId) {
+        UserroleEntity user = repo.findOne(userId);
+        return user.getIduserRole();
+    }
     @RequestMapping(value = "/insert", method=RequestMethod.POST)
     public String insertUser(@RequestParam Integer userId, Integer roleId){
         UserroleEntity userEntity = new UserroleEntity();
@@ -68,6 +72,17 @@ public class UserController {
             return new ResponseEntity<Message>( new Message(e.getMessage(),"User"), HttpStatus.EXPECTATION_FAILED);
         }
         return new ResponseEntity<Message>( new Message("Role name is successfully changed","User"), HttpStatus.OK);
+    }
+    @RequestMapping(value = "/userInRole/{id}", method = RequestMethod.POST)
+    public String getByRole(@PathVariable("id") int id)
+    {
+
+        try{
+            repo.updateRole(id,1);
+        } catch (Exception e){
+            return e.getMessage();
+        }
+        return "1";
     }
     @RequestMapping(value = "/delete", method= RequestMethod.POST)
     public String deleteById(@RequestParam int id) {
