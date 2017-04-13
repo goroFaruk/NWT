@@ -6,9 +6,11 @@ import AdminServices.Repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -50,6 +52,31 @@ public class UserController {
         UserroleEntity user = repo.findOne(userId);
         return user.getIduserRole();
     }
+    @RequestMapping(value = "/allListsById/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserroleEntity> getListsById(@PathVariable("id") int id){
+        RestTemplate restTemplate = new RestTemplate();
+        UserroleEntity quote = restTemplate.getForObject("http://localhost:1114/lists/"+id, UserroleEntity.class);
+        return new ResponseEntity<UserroleEntity>(quote, HttpStatus.OK) ;
+    }
+    @RequestMapping(value = "/allLists", method = RequestMethod.GET)
+    public ResponseEntity<UserroleEntity> getLists(){
+        RestTemplate restTemplate = new RestTemplate();
+        UserroleEntity quote = restTemplate.getForObject("http://localhost:1114/lists/", UserroleEntity.class);
+        return new ResponseEntity<UserroleEntity>(quote, HttpStatus.OK) ;
+    }
+    @RequestMapping(value = "/allSongs/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserroleEntity> getListsOfSongs(@PathVariable("id") int id){
+        RestTemplate restTemplate = new RestTemplate();
+        UserroleEntity quote = restTemplate.getForObject("http://localhost:1114/listapjesama/forList"+id, UserroleEntity.class);
+        return new ResponseEntity<UserroleEntity>(quote, HttpStatus.OK) ;
+    }
+    @RequestMapping(value = "/getSong/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserroleEntity> getSong(@PathVariable("id") int id){
+        RestTemplate restTemplate = new RestTemplate();
+        UserroleEntity quote = restTemplate.getForObject("http://localhost:1114/listapjesama/forSong"+id, UserroleEntity.class);
+        return new ResponseEntity<UserroleEntity>(quote, HttpStatus.OK) ;
+    }
+
     @RequestMapping(value = "/insert", method=RequestMethod.POST)
     public String insertUser(@RequestParam Integer userId, Integer roleId){
         UserroleEntity userEntity = new UserroleEntity();
