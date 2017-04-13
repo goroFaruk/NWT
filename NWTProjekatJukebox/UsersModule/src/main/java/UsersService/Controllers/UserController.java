@@ -4,6 +4,7 @@ import UsersService.Models.Message;
 import UsersService.Models.UserEntity;
 import UsersService.Repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.type.descriptor.sql.VarcharTypeDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -60,12 +62,9 @@ public class UserController {
                 HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
                 RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<Message> quote = restTemplate.postForEntity("http://localhost:1111/users/userInRole", request, Message.class);
 
-                //ne radi ovaj dio
-                Message quote = restTemplate.postForObject("http://localhost:1111/users/userInRole", request, Message.class);
-                repo.updateRole(user.getId(),Integer.parseInt(quote.getMessage()));
-                //kraj xD
-
+                repo.updateRole(user.getId(),Integer.parseInt(quote.getBody().getMessage()));
             }else{
                 return  new ResponseEntity<Message>( new Message("User is already exists","User"), HttpStatus.OK);
             }
@@ -80,12 +79,12 @@ public class UserController {
         List<UserEntity> user;
         try{
             user=repo.login(username,pass);
-            if (user==null) return  new ResponseEntity<Message>(new Message("Korisnicki podaci su netacni!","User"), HttpStatus.EXPECTATION_FAILED);
-            if(user.size()==1) return  new ResponseEntity<Message>(new Message("Uspjesno ste se logovali","User"), HttpStatus.OK);
+            if (user.size()==0) return  new ResponseEntity<Message>(new Message("Korisnicki podaci su netacni!","User"), HttpStatus.OK);
+            else if(user.size()==1) return  new ResponseEntity<Message>(new Message("Uspjesno ste se logovali","User"), HttpStatus.OK);
+            else return new  ResponseEntity<Message>( new Message("Error","User"), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e){
             return new ResponseEntity<Message>( new Message(e.getMessage(),"User"), HttpStatus.EXPECTATION_FAILED);
         }
-        return new ResponseEntity<Message>( new Message("User is successfully registered","User"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete", method= RequestMethod.POST)

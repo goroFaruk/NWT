@@ -60,13 +60,22 @@ public class Users {
     }
 
     @RequestMapping(value="/login",method = RequestMethod.POST)
-    public ResponseEntity<Message> insertUser(@RequestParam String username, String pass) {
+    public ResponseEntity<String> login(@RequestParam String username, String pass) {
         UserModel model=new UserModel();
         model.setPasword(pass);
         model.setUsername(username);
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("pass",pass);
+        map.add("username",username);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
         RestTemplate restTemplate = new RestTemplate();
-        Message quote = restTemplate.postForObject("http://localhost:1113/users/login", model,Message.class);
-        return new ResponseEntity<Message>(quote, HttpStatus.OK) ;
+        ResponseEntity<String> quote = restTemplate.postForEntity("http://localhost:1113/users/login", request,String.class);
+        return quote;
     }
 }

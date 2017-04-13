@@ -12,6 +12,10 @@ public class Message {
         this.objekat=objekat;
     }
 
+    public Message(){
+
+    }
+
     public String getObjekat() {
         return objekat;
     }

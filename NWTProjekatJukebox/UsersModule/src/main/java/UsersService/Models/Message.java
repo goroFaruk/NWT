@@ -14,6 +14,9 @@ public class Message {
         this.message=message;
         this.objekat=objekat;
     }
+    public Message(){
+
+    }
 
     public String getObjekat() {
         return objekat;
