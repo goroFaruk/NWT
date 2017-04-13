@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by Enver on 19.3.2017.
@@ -49,6 +50,9 @@ public interface NotificationRepository  extends CrudRepository<NotifikacijaEnti
     @Transactional
     @Query("Update NotifikacijaEntity n set n.korisnikId=?1 where n.id=?2")
     void updateKorisnik(Integer username, Integer id);
+
+    @Query("select f from NotifikacijaEntity f where f.korisnikId=?1")
+    List<NotifikacijaEntity> findAllByKorisnikId(Integer korisnikID);
 
     @Modifying
     @Transactional

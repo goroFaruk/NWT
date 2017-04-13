@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Enver on 19.3.2017.
  */
@@ -46,6 +48,9 @@ public interface OcjenaRepository extends CrudRepository<OcjenaEntity, Integer> 
     @Transactional
     @Query("Update OcjenaEntity o set o.korisnikId=?1 where o.id=?2")
     void updateKorisnik(Integer username, Integer id);
+
+    @Query("select f from OcjenaEntity f where f.listaId=?1")
+    List<OcjenaEntity> findAllByListaId(Integer listaId);
 
     @Modifying
     @Transactional
