@@ -1,14 +1,16 @@
 package MainServices.Controllers;
 
+
+import MainServices.Models.Message;
+import MainServices.Models.UserModel;
+import org.apache.catalina.User;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -18,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @RequestMapping(value = "/users")
 public class Users {
-    @RequestMapping(value = "/", method= RequestMethod.GET)
+    @RequestMapping(value = "/init", method= RequestMethod.GET)
     public ResponseEntity<String> init() {
         RestTemplate restTemplate = new RestTemplate();
         String quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", String.class);
@@ -30,5 +32,41 @@ public class Users {
         RestTemplate restTemplate = new RestTemplate();
         String quote = restTemplate.getForObject("http://localhost:1113/users/", String.class);
         return new ResponseEntity<String>(quote, HttpStatus.OK) ;
+    }
+
+    @RequestMapping(value = "/{id}", method= RequestMethod.GET)
+    public ResponseEntity<UserModel> getById(@PathVariable("id") int id) {
+        RestTemplate restTemplate = new RestTemplate();
+        UserModel quote = restTemplate.getForObject("http://localhost:1113/users/"+id, UserModel.class);
+        return new ResponseEntity<UserModel>(quote, HttpStatus.OK) ;
+    }
+
+    @RequestMapping(value="/register",method = RequestMethod.POST)
+    public ResponseEntity<String> insertUser(@RequestParam String email, String pass, String username) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("email", email);
+        map.add("pass",pass);
+        map.add("username",username);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> quote = restTemplate.postForEntity("http://localhost:1113/users/register", request, String.class);
+
+        return quote;
+    }
+
+    @RequestMapping(value="/login",method = RequestMethod.POST)
+    public ResponseEntity<Message> insertUser(@RequestParam String username, String pass) {
+        UserModel model=new UserModel();
+        model.setPasword(pass);
+        model.setUsername(username);
+
+        RestTemplate restTemplate = new RestTemplate();
+        Message quote = restTemplate.postForObject("http://localhost:1113/users/login", model,Message.class);
+        return new ResponseEntity<Message>(quote, HttpStatus.OK) ;
     }
 }

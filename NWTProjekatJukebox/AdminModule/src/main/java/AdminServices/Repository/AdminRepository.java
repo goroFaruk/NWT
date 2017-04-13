@@ -54,6 +54,7 @@ public interface AdminRepository extends CrudRepository<UserroleEntity, Integer>
 
     @Query("select u from UserroleEntity u where u.iduserRole=?1")
     List<UserroleEntity> findAllByRoleId(Integer roleId);
+
     @Query("select r from UserroleEntity r where r.idUser=?1")
     List<UserroleEntity> findAllByUserId(Integer userId);
 }
