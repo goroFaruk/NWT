@@ -13,6 +13,7 @@ public class ListaEntity {
     private int idUser;
     private int idFollow;
     private String naziv;
+    private int ocjena;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,6 +64,15 @@ public class ListaEntity {
 
     public void setNaziv(String naziv) {
         this.naziv = naziv;
+    }
+
+    @Basic
+    @Column(name="ocjena")
+    public int getOcjena() {return ocjena;}
+
+    public void setOcjena(int ocjena)
+    {
+        this.ocjena=ocjena;
     }
 
     @Override

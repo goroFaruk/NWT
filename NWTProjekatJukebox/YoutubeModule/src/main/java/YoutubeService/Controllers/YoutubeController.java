@@ -82,6 +82,25 @@ public class YoutubeController {
         List<PjesmaEntity> pjesmaEntities = repo.findAllById(id);
         return new ResponseEntity<List<PjesmaEntity>>(pjesmaEntities,HttpStatus.OK) ;
     }
+    @RequestMapping(value = "/forList", method = RequestMethod.GET)
+    public ResponseEntity<List<PjesmaEntity>> getAllSongsForList(@RequestParam Integer idListe)
+    {
+        List<PjesmaEntity>pjesmaEntities = repo.findAllById(idListe);
+        return  new ResponseEntity<List<PjesmaEntity>>(pjesmaEntities,HttpStatus.OK);
+    }
+    @RequestMapping(value= "/updateSong", method = RequestMethod.POST)
+    public  ResponseEntity<Message> updateURL(@RequestParam String url)
+    {
+        PjesmaEntity pjesmaEntity = new PjesmaEntity();
+        pjesmaEntity.setUrlPlesme(url);
+        try
+        {
+            repo.updateURL(url);
+        }catch (Exception e){
+            return new ResponseEntity<Message>( new Message(e.getMessage(),"Song"),HttpStatus.EXPECTATION_FAILED);
+        }
+        return new ResponseEntity<Message>(new Message("Song is successfully edited","Song"),HttpStatus.OK);
+    }
 
 
 }

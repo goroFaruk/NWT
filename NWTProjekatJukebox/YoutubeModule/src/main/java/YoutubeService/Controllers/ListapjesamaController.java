@@ -31,7 +31,7 @@ public class ListapjesamaController {
         return listapjesamaEntity;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value ="getAll",method = RequestMethod.GET)
     public Page<ListapjesamaEntity> getAll(java.awt.print.Pageable pageable) {
         Page<ListapjesamaEntity> listapjesama = (Page<ListapjesamaEntity>) repo.findAll();
         return listapjesama;

@@ -46,22 +46,70 @@ public class ListaController {
         return listaEntity;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value= "getAll",method = RequestMethod.GET)
     public Page<ListaEntity> getAll(Pageable pageable) {
         Page<ListaEntity> lista = (Page<ListaEntity>) repo.findAll();
         return lista;
     }
 
     @RequestMapping(value = "/forUser", method =RequestMethod.GET)
-    public ResponseEntity<List<ListaEntity>> getAllFollowsForUser(@RequestParam Integer idUser)
+    public ResponseEntity<List<ListaEntity>> getAllListsForUser(@RequestParam Integer idUser)
     {
-        List<ListaEntity> followEntities = repo.findAllByUserId(idUser);
-        return new ResponseEntity<List<ListaEntity>>(followEntities,HttpStatus.OK) ;
+        List<ListaEntity> listaEntities = repo.findAllByUserId(idUser);
+        return new ResponseEntity<List<ListaEntity>>(listaEntities,HttpStatus.OK) ;
     }
 
     @RequestMapping(value= "/forPjesma", method = RequestMethod.GET)
     public ResponseEntity<List<ListaEntity>> getAllFollowsForList(@RequestParam Integer idPjesma) {
-        List<ListaEntity> followEntities = repo.findAllBySongId(idPjesma);
-        return new ResponseEntity<List<ListaEntity>>(followEntities, HttpStatus.OK);
+        List<ListaEntity> listaEntities = repo.findAllBySongId(idPjesma);
+        return new ResponseEntity<List<ListaEntity>>(listaEntities, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity<Message> deleteById (@RequestParam int id)
+    {
+        try
+        {
+            repo.delete(id);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<Message>( new Message(e.getMessage(),"Lista"), HttpStatus.EXPECTATION_FAILED);
+        }
+        return new ResponseEntity<Message>( new Message("Lista is successfully deleted","Lista"), HttpStatus.OK);
+    }
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public ResponseEntity<Message> updateLista(@RequestParam String naziv ) {
+        try
+        {
+            repo.updateNaziv(naziv);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<Message>( new Message(e.getMessage(),"Lista"), HttpStatus.EXPECTATION_FAILED);
+        }
+        return new ResponseEntity<Message>( new Message("Lista is successfully updated","Lista"), HttpStatus.OK);
+    }
+    @RequestMapping(value = "addLista", method = RequestMethod.POST)
+    public ResponseEntity<Message> addLista(@RequestParam String naziv, Integer idUsera )
+    {
+        ListaEntity listaEntity = new ListaEntity();
+        listaEntity.setNaziv(naziv);
+        listaEntity.setIdUser(idUsera);
+        try
+        {
+            repo.save(listaEntity);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<Message>( new Message(e.getMessage(),"Lista"), HttpStatus.EXPECTATION_FAILED);
+        }
+        return new ResponseEntity<Message>( new Message("Lista is successfully added","Lista"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "gradesForList", method = RequestMethod.GET)
+    public ResponseEntity<List<ListaEntity>> getAllGradesForList (@RequestParam Integer idListe)
+    {
+        List<ListaEntity> listaEntities = repo.findAllByListId(idListe);
+        return new ResponseEntity<List<ListaEntity>>(listaEntities, HttpStatus.OK);
     }
 }

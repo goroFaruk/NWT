@@ -4,8 +4,10 @@ import YoutubeService.Models.ListaEntity;
 import YoutubeService.Models.ListapjesamaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -51,4 +53,13 @@ public interface ListaRepository extends CrudRepository<ListaEntity, Integer> {
 
     @Query("select f from ListaEntity f where f.idPjesma=?1")
     List<ListaEntity> findAllBySongId(Integer songId);
+
+    @Query("select f from ListaEntity f where f.ocjena=?1")
+    List<ListaEntity> findAllByListId(Integer listId);
+
+    @Modifying
+    @Transactional
+    @Query("Update ListaEntity l set l.naziv=?2 where l.id=?1")
+    void updateNaziv(String naziv);
+
 }
