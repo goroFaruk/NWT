@@ -46,8 +46,8 @@ public class NotificationController {
     }
 
     //vraca notifikacije za korisnika po ID-u
-    @RequestMapping(value= "/byKorisnikID/{korisnikID}", method = RequestMethod.GET)
-    public ResponseEntity<List<NotifikacijaEntity>> getByKorisnikId(@PathVariable("korisnikID") int korisnikID)
+    @RequestMapping(value= "/byKorisnikID", method = RequestMethod.GET)
+    public ResponseEntity<List<NotifikacijaEntity>> getByKorisnikId(@RequestParam int korisnikID)
     {
         List<NotifikacijaEntity> ocjene = repo.findAllByKorisnikId(korisnikID);
         return new  ResponseEntity<List<NotifikacijaEntity>>(ocjene, HttpStatus.OK);

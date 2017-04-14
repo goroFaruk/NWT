@@ -2,13 +2,13 @@ package YoutubeService.Controllers;
 
 
 import YoutubeService.Models.ListaEntity;
-import YoutubeService.Models.ListapjesamaEntity;
 import YoutubeService.Models.Message;
 import YoutubeService.Repository.ListaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.awt.print.Pageable;
 import java.util.List;
@@ -111,5 +111,14 @@ public class ListaController {
     {
         List<ListaEntity> listaEntities = repo.findAllByListId(idListe);
         return new ResponseEntity<List<ListaEntity>>(listaEntities, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getAllFollowsForList", method = RequestMethod.GET)
+    public ResponseEntity<String> getAllFollowsForList(@RequestParam int idListe){
+        RestTemplate restTemplate = new RestTemplate();
+        String quote = restTemplate.getForObject("http://localhost:1113/follows/forList?idList="+idListe, String.class);
+
+        return new ResponseEntity<String>(quote, HttpStatus.OK);
+
     }
 }

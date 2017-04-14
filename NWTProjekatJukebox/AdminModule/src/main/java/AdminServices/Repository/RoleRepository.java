@@ -1,12 +1,15 @@
 package AdminServices.Repository;
 
 import AdminServices.Models.RolesEntity;
+import AdminServices.Models.UserroleEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by Predrag on 22.03.2017..

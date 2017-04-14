@@ -2,7 +2,10 @@ package UsersService.Controllers;
 
 import UsersService.Models.FollowEntity;
 import UsersService.Models.Message;
+import UsersService.Models.UserEntity;
+import UsersService.Models.UserModel;
 import UsersService.Repository.FollowRepository;
+import UsersService.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +24,9 @@ import java.util.List;
 public class FollowController {
     @Autowired
     private FollowRepository repo;
+
+    @Autowired
+    private UserRepository userRepo;
 
     @RequestMapping(value = "/{id}", method= RequestMethod.GET)
     public ResponseEntity<FollowEntity> getById(@PathVariable("id") int id) {
@@ -64,8 +71,18 @@ public class FollowController {
     }
 
     @RequestMapping(value= "/forList", method = RequestMethod.GET)
-    public ResponseEntity<List<FollowEntity>> getAllFollowsForList(@RequestParam Integer idList) {
+    public ResponseEntity<List<UserModel>> getAllFollowsForList(@RequestParam Integer idList) {
         List<FollowEntity> followEntities = repo.findAllByListId(idList);
-        return new ResponseEntity<List<FollowEntity>>(followEntities,HttpStatus.OK) ;
+        List<UserModel> users= new ArrayList<>();
+        for (int i=0; i<followEntities.size(); i++){
+            UserEntity u=userRepo.findOne(followEntities.get(i).getIduser());
+            UserModel um= new UserModel();
+            um.setEmail(u.getEmail());
+            um.setUsername(u.getUsername());
+            um.setId(u.getId());
+            um.setIdrole(u.getId());
+            users.add(i,um);
+        }
+        return new ResponseEntity<List<UserModel>>(users,HttpStatus.OK) ;
     }
 }

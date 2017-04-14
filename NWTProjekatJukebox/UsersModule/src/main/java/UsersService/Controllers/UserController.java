@@ -138,4 +138,20 @@ public class UserController {
         }
         return new ResponseEntity<Message>( new Message("Role is successfully updated","User"), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/getRoleForUser", method = RequestMethod.GET)
+    public ResponseEntity<Message> getRoleForUser(@RequestParam int userId) {
+        RestTemplate restTemplate = new RestTemplate();
+        String quote = restTemplate.getForObject("http://localhost:1113/users/chckUserRole?userId="+userId, String.class);
+
+        return new ResponseEntity<Message>(new Message(quote,"UserService"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getNotifications", method = RequestMethod.GET)
+    public ResponseEntity<Message> getNotifications(@RequestParam int userId) {
+        RestTemplate restTemplate = new RestTemplate();
+        String quote = restTemplate.getForObject("http://localhost:1112/notification/byKorisnikID?korisnikID="+userId, String.class);
+
+        return new ResponseEntity<Message>(new Message(quote,"UserService"), HttpStatus.OK);
+    }
 }

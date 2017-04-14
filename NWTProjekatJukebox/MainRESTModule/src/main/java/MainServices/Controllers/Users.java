@@ -78,4 +78,13 @@ public class Users {
         ResponseEntity<String> quote = restTemplate.postForEntity("http://localhost:1113/users/login", request,String.class);
         return quote;
     }
+
+    @RequestMapping(value = "/getRoleForUser/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<Message> getRoleForUser(@PathVariable("userId") int userId) {
+        RestTemplate restTemplate = new RestTemplate();
+        String quote = restTemplate.getForObject("http://localhost:1113/users/getRoleForUser?userId="+userId, String.class);
+
+        return new ResponseEntity<Message>(new Message(quote,"UserService"), HttpStatus.OK);
+    }
+
 }

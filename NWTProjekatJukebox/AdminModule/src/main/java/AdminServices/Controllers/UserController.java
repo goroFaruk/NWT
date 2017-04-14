@@ -1,15 +1,19 @@
 package AdminServices.Controllers;
 
 import AdminServices.Models.Message;
+import AdminServices.Models.RolesEntity;
 import AdminServices.Models.UserroleEntity;
 import AdminServices.Repository.AdminRepository;
+import AdminServices.Repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import javax.management.relation.Role;
 import java.util.List;
 
 /**
@@ -21,6 +25,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     private AdminRepository repo;
+
+    @Autowired
+    private RoleRepository roleRepo;
 
     @RequestMapping(value = "/testing", method = RequestMethod.GET)
     public int getTestAccount() {
@@ -45,24 +52,39 @@ public class UserController {
         UserroleEntity user = repo.findOne(userId);
         return repo.exists(user.getIduserRole());
     }
-    @RequestMapping(value = "/chckUserRole/{id}", method = RequestMethod.GET)
-    public int checkUserRole(@PathVariable("id") int userId) {
-        UserroleEntity user = repo.findOne(userId);
-        return user.getIduserRole();
+    @RequestMapping(value = "/chckUserRole", method = RequestMethod.GET)
+    public String checkUserRole(@RequestParam int userId) {
+        List<UserroleEntity> user = repo.findAllByUserId(userId);
+        if(user.size()==0) return "Error, korisnik ne postoji!";
+        RolesEntity role=roleRepo.findOne(Integer.parseInt(user.get(0).getIdRole()));
+        return role.getNazivRole();
     }
-    @RequestMapping(value = "/insert", method=RequestMethod.POST)
-    public String insertUser(@RequestParam Integer userId, Integer roleId){
-        UserroleEntity userEntity = new UserroleEntity();
-        userEntity.setIduserRole(roleId);
-        userEntity.setIdUser(userId);
-        userEntity.setIdRole(roleId.toString());
-        try{
-            userEntity=repo.save(userEntity);
-        } catch (Exception e){
-            return e.getMessage();
-        }
-        return "User is successfully added. ID: " + String.valueOf(userEntity.getIdUser());
+
+    @RequestMapping(value = "/allListsById/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserroleEntity> getListsById(@PathVariable("id") int id){
+        RestTemplate restTemplate = new RestTemplate();
+        UserroleEntity quote = restTemplate.getForObject("http://localhost:1114/lists/"+id, UserroleEntity.class);
+        return new ResponseEntity<UserroleEntity>(quote, HttpStatus.OK) ;
     }
+    @RequestMapping(value = "/allLists", method = RequestMethod.GET)
+    public ResponseEntity<UserroleEntity> getLists(){
+        RestTemplate restTemplate = new RestTemplate();
+        UserroleEntity quote = restTemplate.getForObject("http://localhost:1114/lists/", UserroleEntity.class);
+        return new ResponseEntity<UserroleEntity>(quote, HttpStatus.OK) ;
+    }
+    @RequestMapping(value = "/allSongs/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserroleEntity> getListsOfSongs(@PathVariable("id") int id){
+        RestTemplate restTemplate = new RestTemplate();
+        UserroleEntity quote = restTemplate.getForObject("http://localhost:1114/listapjesama/forList"+id, UserroleEntity.class);
+        return new ResponseEntity<UserroleEntity>(quote, HttpStatus.OK) ;
+    }
+    @RequestMapping(value = "/getSong/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserroleEntity> getSong(@PathVariable("id") int id){
+        RestTemplate restTemplate = new RestTemplate();
+        UserroleEntity quote = restTemplate.getForObject("http://localhost:1114/listapjesama/forSong"+id, UserroleEntity.class);
+        return new ResponseEntity<UserroleEntity>(quote, HttpStatus.OK) ;
+    }
+
     @RequestMapping(value = "/changeRole", method = RequestMethod.POST)
     public ResponseEntity<Message> changeRole(@RequestParam Integer userId, Integer roleId){
 
