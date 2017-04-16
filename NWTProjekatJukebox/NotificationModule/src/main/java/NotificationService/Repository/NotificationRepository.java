@@ -43,6 +43,7 @@ public interface NotificationRepository  extends CrudRepository<NotifikacijaEnti
 
     @Override
     public void delete(Iterable<? extends NotifikacijaEntity> entities);
+
     @Override
     public void deleteAll();
 
@@ -53,6 +54,8 @@ public interface NotificationRepository  extends CrudRepository<NotifikacijaEnti
 
     @Query("select f from NotifikacijaEntity f where f.korisnikId=?1")
     List<NotifikacijaEntity> findAllByKorisnikId(Integer korisnikID);
+
+
 
     @Modifying
     @Transactional

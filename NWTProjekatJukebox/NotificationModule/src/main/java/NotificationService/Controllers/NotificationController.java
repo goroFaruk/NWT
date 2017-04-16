@@ -33,28 +33,29 @@ public class NotificationController {
         return "OK";
     }
 
-    @RequestMapping(value = "/{id}", method= RequestMethod.GET)
+    @RequestMapping(value = "/getById/{id}", method= RequestMethod.GET)
     public ResponseEntity<NotifikacijaEntity> getById(@PathVariable("id") int id) {
         NotifikacijaEntity notifikacija = repo.findOne(id);
         return new ResponseEntity<NotifikacijaEntity>(notifikacija, HttpStatus.OK);
     }
 
-    @RequestMapping(value= "/", method = RequestMethod.GET)
+    @RequestMapping(value= "/getAll", method = RequestMethod.GET)
     public ResponseEntity<Page<NotifikacijaEntity>> getAll(Pageable pageable) {
         Page<NotifikacijaEntity> notifikacije = repo.findAll(pageable);
         return new ResponseEntity<Page<NotifikacijaEntity>>(notifikacije,HttpStatus.OK) ;
     }
 
     //vraca notifikacije za korisnika po ID-u
-    @RequestMapping(value= "/byKorisnikID", method = RequestMethod.GET)
-    public ResponseEntity<List<NotifikacijaEntity>> getByKorisnikId(@RequestParam int korisnikID)
+    @RequestMapping(value= "/byKorisnikID/{korisnikID}", method = RequestMethod.GET)
+    public ResponseEntity<List<NotifikacijaEntity>> getByKorisnikId(@PathVariable("korisnikID")
+                                                                            int korisnikID)
     {
         List<NotifikacijaEntity> ocjene = repo.findAllByKorisnikId(korisnikID);
         return new  ResponseEntity<List<NotifikacijaEntity>>(ocjene, HttpStatus.OK);
     }
 
 
-    @RequestMapping(value="/notification",method = RequestMethod.POST)
+    @RequestMapping(value="/insertNotification",method = RequestMethod.POST)
     public ResponseEntity<Message> insertNotification(@RequestParam int korisnikID, int listaID,
                                                       int ocjenaID){
         NotifikacijaEntity notifikacija=new NotifikacijaEntity();

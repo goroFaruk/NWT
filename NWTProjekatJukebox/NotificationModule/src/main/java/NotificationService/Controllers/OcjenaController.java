@@ -33,26 +33,27 @@ public class OcjenaController {
         }
         return "OK";
     }
-
-    @RequestMapping(value = "/{id}", method= RequestMethod.GET)
+    // putanja mjenjana
+    @RequestMapping(value = "/getById/{id}", method= RequestMethod.GET)
     public ResponseEntity<OcjenaEntity> getById(@PathVariable("id") int id) {
         OcjenaEntity ocjena = repo.findOne(id);
         return new  ResponseEntity<OcjenaEntity>(ocjena, HttpStatus.OK);
     }
     // vraca ocjene po id-u liste
-    @RequestMapping(value = "/byListaID/{lista_id}", method= RequestMethod.GET)
-    public ResponseEntity<List<OcjenaEntity>> getByListaId(@PathVariable("lista_id") int lista_id) {
+    @RequestMapping(value = "/getbyListaID/{lista_id}", method= RequestMethod.GET)
+    public ResponseEntity<List<OcjenaEntity>> getByListaId(@PathVariable("lista_id") int
+                                                                   lista_id) {
         List<OcjenaEntity> ocjene = repo.findAllByListaId(lista_id);
         return new  ResponseEntity<List<OcjenaEntity>>(ocjene, HttpStatus.OK);
     }
-
-    @RequestMapping(value="/",method = RequestMethod.GET)
+    // putanja mjenjana
+    @RequestMapping(value="/getAll",method = RequestMethod.GET)
     public ResponseEntity<Page<OcjenaEntity>> getAll(Pageable pageable) {
         Page<OcjenaEntity> ocjena = (Page<OcjenaEntity>) repo.findAll();
         return new ResponseEntity<Page<OcjenaEntity>>(ocjena,HttpStatus.OK) ;
     }
-
-    @RequestMapping(value="/ocjena",method = RequestMethod.POST)
+    // putanja mjenjana
+    @RequestMapping(value="/unesiOcjenu",method = RequestMethod.POST)
     public ResponseEntity<Message> insertOcjena(@RequestParam int korisnikID, int listaID, int
             _ocjena){
         OcjenaEntity ocjena=new OcjenaEntity(){};
@@ -61,7 +62,8 @@ public class OcjenaController {
         ocjena.setOcjena(_ocjena);
         int id;
         try{
-            id=repo.save(ocjena).getId();
+            repo.save(ocjena);
+
         } catch (Exception e){
             return new ResponseEntity<Message>( new Message(e.getMessage
                     (),"Ocjena"),HttpStatus.EXPECTATION_FAILED);

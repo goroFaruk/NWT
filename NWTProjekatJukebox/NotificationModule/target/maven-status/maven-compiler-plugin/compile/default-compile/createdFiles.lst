@@ -1,0 +1,11 @@
+NotificationService\ServiceInstanceRestController.class
+NotificationService\Controllers\OcjenaController.class
+NotificationService\Models\OcjenaEntity.class
+NotificationService\Models\Message.class
+NotificationService\Controllers\MainController.class
+NotificationService\NotificationApplication.class
+NotificationService\Models\NotifikacijaEntity.class
+NotificationService\Controllers\NotificationController.class
+NotificationService\Repository\OcjenaRepository.class
+NotificationService\Controllers\OcjenaController$1.class
+NotificationService\Repository\NotificationRepository.class
