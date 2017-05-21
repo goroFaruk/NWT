@@ -31,8 +31,8 @@ public class UserController {
 
     @RequestMapping(value = "/testing", method = RequestMethod.GET)
     public int getTestAccount() {
-        UserroleEntity u = new UserroleEntity();
-        u.getIdUser();
+        /*UserroleEntity u = new UserroleEntity();
+        u.getIdUser();*/
 
         return 0;
     }
