@@ -28,21 +28,10 @@ import java.util.List;
 @SpringBootApplication
 @RestController
 public class NotificationApplication {
-    @Value("${user.role}")
-    private String role;
-
     public static void main(String[] args) {
         Logger log= LoggerFactory.getLogger(NotificationApplication.class);
         SpringApplication.run(NotificationApplication.class, args);
         log.info("NotificationService.Application is started");
-    }
-
-    @RequestMapping(
-            value = "/whoami/{username}",
-            method = RequestMethod.GET,
-            produces = MediaType.TEXT_PLAIN_VALUE)
-    public String whoami(@PathVariable("username") String username) {
-        return String.format("Hello! You're %s and you'll become a(n) %s...\n", username, role);
     }
 }
 

@@ -1,6 +1,6 @@
-package AdminServices.multiplelogin;
+package NotificationService.multiplelogin;
 
-import AdminServices.Models.User;
+import NotificationService.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;

@@ -13,6 +13,8 @@ public class UserEntity {
     private String pasword;
     private String username;
     private Integer idrole;
+    private boolean enabled;
+    private String token;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,6 +65,24 @@ public class UserEntity {
 
     public void setIdrole(Integer idrole) {
         this.idrole = idrole;
+    }
+
+    @Basic
+    @Column(name = "enabled")
+    public boolean getEnabled(){ return enabled;}
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Basic
+    @Column(name = "token")
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package AdminServices.multiplelogin;
+package NotificationService.multiplelogin;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +73,7 @@ public class MultipleLoginSecurityConfig {
         }
 
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/user*").antMatcher("/roles/**").authorizeRequests().anyRequest().hasRole("USER")
+            http.antMatcher("/user*").antMatcher("/notification/**").antMatcher("/ocjena/**").authorizeRequests().anyRequest().hasRole("USER")
                     // log in
                     .and().formLogin().loginPage("/loginUser").loginProcessingUrl("/user_login").failureUrl("/loginUser?error=loginError").defaultSuccessUrl("/userPage")
                     // logout

@@ -1,4 +1,4 @@
-package AdminServices.multiplelogin;
+package UsersService.multiplelogin;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,11 +73,13 @@ public class MultipleLoginSecurityConfig {
         }
 
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/user*").antMatcher("/roles/**").authorizeRequests().anyRequest().hasRole("USER")
+            http.antMatcher("/user*").authorizeRequests().anyRequest().hasRole("USER")
                     // log in
                     .and().formLogin().loginPage("/loginUser").loginProcessingUrl("/user_login").failureUrl("/loginUser?error=loginError").defaultSuccessUrl("/userPage")
                     // logout
                     .and().logout().logoutUrl("/user_logout").logoutSuccessUrl("/protectedLinks").deleteCookies("JSESSIONID").and().exceptionHandling().accessDeniedPage("/403").and().csrf().disable();
+            http.authorizeRequests().antMatchers("/follows/**").hasRole("USER").and().formLogin();
+            http.authorizeRequests().antMatchers("/users/**").hasRole("USER").and().formLogin();
         }
 
         private String getUserQuery() {

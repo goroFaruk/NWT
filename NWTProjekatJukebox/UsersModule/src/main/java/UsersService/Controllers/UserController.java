@@ -1,11 +1,14 @@
 package UsersService.Controllers;
 
+import UsersService.Heplers.MailHelper;
 import UsersService.Models.Message;
 import UsersService.Models.UserEntity;
 import UsersService.Repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.type.descriptor.sql.VarcharTypeDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
@@ -16,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Šahin on 18.3.2017.
@@ -45,6 +49,9 @@ public class UserController {
         userEntity.setUsername(username);
         userEntity.setPasword(pass);
         userEntity.setEmail(email);
+        userEntity.setEnabled(false);
+        String token = UUID.randomUUID().toString();
+        userEntity.setToken(token);
         UserEntity user;
         try{
             List<UserEntity> userList;
@@ -65,6 +72,7 @@ public class UserController {
                 ResponseEntity<Message> quote = restTemplate.postForEntity("http://localhost:1111/users/userInRole", request, Message.class);
 
                 repo.updateRole(user.getId(),Integer.parseInt(quote.getBody().getMessage()));
+                SendEmailConfirmation(user);
             }else{
                 return  new ResponseEntity<Message>( new Message("User is already exists","User"), HttpStatus.OK);
             }
@@ -72,6 +80,20 @@ public class UserController {
             return new ResponseEntity<Message>( new Message(e.getMessage(),"User"), HttpStatus.EXPECTATION_FAILED);
         }
         return new ResponseEntity<Message>( new Message("User is successfully registered","User"), HttpStatus.OK);
+    }
+
+    private void SendEmailConfirmation(UserEntity user) {
+        try {
+            ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+
+            MailHelper mm = (MailHelper) context.getBean("mailMail");
+            mm.sendMail("from@no-spam.com",
+                    "to@no-spam.com",
+                    "Testing123",
+                    "Testing only \n\n Hello Spring Email Sender");
+        } catch (Exception ex) {
+
+        }
     }
 
     @RequestMapping(value="/login",method = RequestMethod.POST)
@@ -142,7 +164,7 @@ public class UserController {
     @RequestMapping(value = "/getRoleForUser", method = RequestMethod.GET)
     public ResponseEntity<Message> getRoleForUser(@RequestParam int userId) {
         RestTemplate restTemplate = new RestTemplate();
-        String quote = restTemplate.getForObject("http://localhost:1113/users/chckUserRole?userId="+userId, String.class);
+        String quote = restTemplate.getForObject("http://localhost:1111/users/chckUserRole?userId="+userId, String.class);
 
         return new ResponseEntity<Message>(new Message(quote,"UserService"), HttpStatus.OK);
     }
