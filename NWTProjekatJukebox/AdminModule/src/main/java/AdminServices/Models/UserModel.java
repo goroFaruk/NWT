@@ -1,8 +1,7 @@
-package MainServices.Models;
-
+package AdminServices.Models;
 
 /**
- * Created by Šahin on 20.3.2017.
+ * Created by Šahin on 27.5.2017.
  */
 public class UserModel {
     private int id;

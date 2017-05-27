@@ -72,7 +72,7 @@ public class UserController {
                 ResponseEntity<Message> quote = restTemplate.postForEntity("http://localhost:1111/users/userInRole", request, Message.class);
 
                 repo.updateRole(user.getId(),Integer.parseInt(quote.getBody().getMessage()));
-                SendEmailConfirmation(user);
+                //SendEmailConfirmation(user);
             }else{
                 return  new ResponseEntity<Message>( new Message("User is already exists","User"), HttpStatus.OK);
             }
@@ -82,17 +82,65 @@ public class UserController {
         return new ResponseEntity<Message>( new Message("User is successfully registered","User"), HttpStatus.OK);
     }
 
-    private void SendEmailConfirmation(UserEntity user) {
+    @RequestMapping(value="/seviceRegister",method = RequestMethod.GET)
+    public ResponseEntity<Message> insertUserFromService(@RequestParam String email, String pass, String username, String url){
+        UserEntity userEntity=new UserEntity();
+        userEntity.setUsername(username);
+        userEntity.setPasword(pass);
+        userEntity.setEmail(email);
+        userEntity.setEnabled(false);
+        String token = UUID.randomUUID().toString();
+        userEntity.setToken(token);
+        UserEntity user;
+        try{
+            List<UserEntity> userList;
+            userList=repo.findOne(username,email);
+            if(userList.size()==0) {
+                user = repo.save(userEntity);
+
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+                MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+                map.add("id",  Integer.toString(user.getId()));
+
+                HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+                RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<Message> quote = restTemplate.postForEntity("http://localhost:1111/users/userInRole", request, Message.class);
+
+                repo.updateRole(user.getId(),Integer.parseInt(quote.getBody().getMessage()));
+                SendEmailConfirmation(user,url);
+            }else{
+                return  new ResponseEntity<Message>( new Message("User is already exists","User"), HttpStatus.OK);
+            }
+        } catch (Exception e){
+            return new ResponseEntity<Message>( new Message(e.getMessage(),"User"), HttpStatus.EXPECTATION_FAILED);
+        }
+        return new ResponseEntity<Message>( new Message("User is successfully registered","User"), HttpStatus.OK);
+    }
+
+    private void SendEmailConfirmation(UserEntity user,String url) {
         try {
-            ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
-
-            MailHelper mm = (MailHelper) context.getBean("mailMail");
-            mm.sendMail("from@no-spam.com",
-                    "to@no-spam.com",
-                    "Testing123",
-                    "Testing only \n\n Hello Spring Email Sender");
+            switch (url){
+                case "1":
+                    url="http://localhost:1111/";
+                    break;
+                case "2":
+                    url="http://localhost:1112/";
+                    break;
+                case "3":
+                    url="http://localhost:1113/";
+                    break;
+                case "4":
+                    url="http://localhost:1114/";
+                    break;
+            }
+            String confirmationUrl= url + "/regitrationConfirm.html?token=" + user.getToken();
+            MailHelper.sendMail(user.getEmail(),confirmationUrl);
         } catch (Exception ex) {
-
+            return;
         }
     }
 
@@ -128,7 +176,16 @@ public class UserController {
             return new ResponseEntity<Message>( new Message(e.getMessage(),"User"), HttpStatus.EXPECTATION_FAILED);
         }
         return new ResponseEntity<Message>( new Message("Username is successfully updated","User"), HttpStatus.OK);
+    }
 
+    @RequestMapping(value="/enableUser",method = RequestMethod.POST)
+    public ResponseEntity<Message> updateUserToEnabled(@RequestParam String username){
+        try{
+            repo.updateUserToEnabled(username);
+        } catch (Exception e){
+            return new ResponseEntity<Message>( new Message(e.getMessage(),"User"), HttpStatus.EXPECTATION_FAILED);
+        }
+        return new ResponseEntity<Message>( new Message("Username is successfully updated","User"), HttpStatus.OK);
     }
 
     @RequestMapping(value="/changepass",method = RequestMethod.POST)
@@ -175,5 +232,14 @@ public class UserController {
         String quote = restTemplate.getForObject("http://localhost:1112/notification/byKorisnikID?korisnikID="+userId, String.class);
 
         return new ResponseEntity<Message>(new Message(quote,"UserService"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value="getToken",method = RequestMethod.GET)
+    public UserEntity getToken(@RequestParam String token){
+        try {
+            return repo.findToke(token).get(0);
+        }catch (Exception ex){
+            return  null;
+        }
     }
 }

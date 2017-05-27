@@ -23,7 +23,6 @@ public class MultipleLoginSecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() throws Exception {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        //mislim da ne radi ovo nista
         manager.createUser(User.withUsername("user").password("userPass").roles("USER").build());
         manager.createUser(User.withUsername("admin").password("adminPass").roles("ADMIN").build());
         return manager;
@@ -73,7 +72,7 @@ public class MultipleLoginSecurityConfig {
         }
 
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/user*").antMatcher("/roles/**").authorizeRequests().anyRequest().hasRole("USER")
+            http.requestMatchers().antMatchers("/user*","/roles*").and().authorizeRequests().anyRequest().hasRole("USER")
                     // log in
                     .and().formLogin().loginPage("/loginUser").loginProcessingUrl("/user_login").failureUrl("/loginUser?error=loginError").defaultSuccessUrl("/userPage")
                     // logout
@@ -81,7 +80,7 @@ public class MultipleLoginSecurityConfig {
         }
 
         private String getUserQuery() {
-            return "SELECT username, pasword, true  "
+            return "SELECT username, pasword, enabled  "
                     + "FROM user "
                     + "WHERE username = ?";
         }

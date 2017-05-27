@@ -73,18 +73,15 @@ public class MultipleLoginSecurityConfig {
         }
 
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/user*").authorizeRequests().anyRequest().hasRole("USER")
+            http.requestMatchers().antMatchers("/user*","/youtube*","/listapjesama*","/lista*").and().authorizeRequests().anyRequest().hasRole("USER")
                     // log in
                     .and().formLogin().loginPage("/loginUser").loginProcessingUrl("/user_login").failureUrl("/loginUser?error=loginError").defaultSuccessUrl("/userPage")
                     // logout
                     .and().logout().logoutUrl("/user_logout").logoutSuccessUrl("/protectedLinks").deleteCookies("JSESSIONID").and().exceptionHandling().accessDeniedPage("/403").and().csrf().disable();
-            http.authorizeRequests().antMatchers("/youtube/**").hasRole("USER").and().formLogin();
-            http.authorizeRequests().antMatchers("/listapjesama/**").hasRole("USER").and().formLogin();
-            http.authorizeRequests().antMatchers("/lista/**").hasRole("USER").and().formLogin();
         }
 
         private String getUserQuery() {
-            return "SELECT username, pasword, true  "
+            return "SELECT username, pasword, enabled  "
                     + "FROM user "
                     + "WHERE username = ?";
         }

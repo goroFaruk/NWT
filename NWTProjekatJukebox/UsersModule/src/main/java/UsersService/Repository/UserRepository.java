@@ -57,6 +57,11 @@ public interface UserRepository  extends CrudRepository<UserEntity, Integer>{
 
     @Modifying
     @Transactional
+    @Query("Update UserEntity u set u.enabled=1 where u.username=?1")
+    void updateUserToEnabled(String username);
+
+    @Modifying
+    @Transactional
     @Query("Update UserEntity u set u.pasword=?3 where u.id=?1 and u.pasword = ?2")
     void changePassword(Integer id, String oldPass, String newPass);
 
@@ -71,4 +76,6 @@ public interface UserRepository  extends CrudRepository<UserEntity, Integer>{
     @Query("select u from UserEntity u where u.username=?1 and u.email=?2")
     List<UserEntity> findOne(String username, String email);
 
+    @Query("select u from UserEntity u where u.token=?1")
+    List<UserEntity> findToke(String token);
 }

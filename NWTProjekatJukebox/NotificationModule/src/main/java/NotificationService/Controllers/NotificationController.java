@@ -1,4 +1,5 @@
 package NotificationService.Controllers;
+
 import NotificationService.Models.Message;
 import NotificationService.Models.NotifikacijaEntity;
 import NotificationService.Repository.NotificationRepository;

@@ -1,18 +1,16 @@
 package UsersService.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.*;
-
 /**
- * Created by Šahin on 14.4.2017.
+ * Created by Šahin on 27.5.2017.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserModel {
     private int id;
     private String email;
+    private String pasword;
     private String username;
     private Integer idrole;
+    private boolean enabled;
+    private String token;
 
     public int getId() {
         return id;
@@ -30,6 +28,13 @@ public class UserModel {
         this.email = email;
     }
 
+    public String getPasword() {
+        return pasword;
+    }
+
+    public void setPasword(String pasword) {
+        this.pasword = pasword;
+    }
 
     public String getUsername() {
         return username;
@@ -47,5 +52,19 @@ public class UserModel {
         this.idrole = idrole;
     }
 
-    public UserModel(){}
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

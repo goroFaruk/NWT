@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <body>
 <h1>Registracija</h1>
+<h5 th:text="${message}"></h5>
 <form action="/registerUser" th:object="${user}" method="POST" enctype="utf8">
     <div>
         <label>Username </label>

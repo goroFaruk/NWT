@@ -73,7 +73,7 @@ public class MultipleLoginSecurityConfig {
         }
 
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/user*").antMatcher("/notification/**").antMatcher("/ocjena/**").authorizeRequests().anyRequest().hasRole("USER")
+            http.requestMatchers().antMatchers("/user*","/notification*","/ocjena*").and().authorizeRequests().anyRequest().hasRole("USER")
                     // log in
                     .and().formLogin().loginPage("/loginUser").loginProcessingUrl("/user_login").failureUrl("/loginUser?error=loginError").defaultSuccessUrl("/userPage")
                     // logout
@@ -81,7 +81,7 @@ public class MultipleLoginSecurityConfig {
         }
 
         private String getUserQuery() {
-            return "SELECT username, pasword, true  "
+            return "SELECT username, pasword, enabled  "
                     + "FROM user "
                     + "WHERE username = ?";
         }
