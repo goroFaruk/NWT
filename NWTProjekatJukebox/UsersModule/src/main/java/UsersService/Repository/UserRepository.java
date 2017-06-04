@@ -76,6 +76,9 @@ public interface UserRepository  extends CrudRepository<UserEntity, Integer>{
     @Query("select u from UserEntity u where u.username=?1 and u.email=?2")
     List<UserEntity> findOne(String username, String email);
 
+    @Query("select u from UserEntity u where u.username=?1")
+    List<UserEntity> findOneMyUsername(String username);
+
     @Query("select u from UserEntity u where u.token=?1")
     List<UserEntity> findToke(String token);
 }

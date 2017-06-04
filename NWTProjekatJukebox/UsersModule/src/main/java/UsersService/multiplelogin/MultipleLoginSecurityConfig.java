@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -55,10 +56,8 @@ public class MultipleLoginSecurityConfig {
     @Configuration
     @Order(2)
     public static class App2ConfigurationAdapter extends WebSecurityConfigurerAdapter {
-
         @Autowired
-        private DataSource dataSource;
-
+        private CustomAuthUserService customAuthUserService;
 
         public App2ConfigurationAdapter() {
             super();
@@ -66,10 +65,7 @@ public class MultipleLoginSecurityConfig {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            //MyUserDetailsService s=new MyUserDetailsService();
-            //UserDetails user1= s.loadUserByUsername("john");
-            auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(getUserQuery()).authoritiesByUsernameQuery(getAuthoritiesQuery());//authoritiesByUsernameQuery(getAuthoritiesQuery());
-            //auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
+            auth.userDetailsService(customAuthUserService);
         }
 
         protected void configure(HttpSecurity http) throws Exception {
@@ -78,16 +74,6 @@ public class MultipleLoginSecurityConfig {
                     .and().formLogin().loginPage("/loginUser").loginProcessingUrl("/user_login").failureUrl("/loginUser?error=loginError").defaultSuccessUrl("/userPage")
                     // logout
                     .and().logout().logoutUrl("/user_logout").logoutSuccessUrl("/protectedLinks").deleteCookies("JSESSIONID").and().exceptionHandling().accessDeniedPage("/403").and().csrf().disable();
-        }
-
-        private String getUserQuery() {
-            return "SELECT username, pasword, enabled  "
-                    + "FROM user "
-                    + "WHERE username = ?";
-        }
-
-        private String getAuthoritiesQuery() {
-            return "select username, 'ROLE_USER' from user where username = ? ";
         }
     }
 

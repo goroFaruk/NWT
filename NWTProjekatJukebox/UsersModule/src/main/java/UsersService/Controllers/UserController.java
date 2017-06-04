@@ -37,6 +37,25 @@ public class UserController {
         return new ResponseEntity<UserEntity>(userEntity,HttpStatus.OK) ;
     }
 
+    @RequestMapping(value = "/getUserByUsername", method= RequestMethod.GET)
+    public ResponseEntity<UserEntity> getByUsername(@RequestParam String username) {
+        List<UserEntity> userEntity = repo.findOneMyUsername(username);
+        if(userEntity.size()>0)
+            return new ResponseEntity<UserEntity>(userEntity.get(0),HttpStatus.OK) ;
+        else{
+            return new ResponseEntity<UserEntity>(new UserEntity(),HttpStatus.OK);
+        }
+    }
+
+    public UserEntity getByUsernameLocal(String username) {
+        List<UserEntity> userEntity = repo.findOneMyUsername(username);
+        if(userEntity.size()>0)
+            return userEntity.get(0);
+        else{
+            return new UserEntity();
+        }
+    }
+
     @RequestMapping(value= "/", method = RequestMethod.GET)
     public ResponseEntity<Page<UserEntity>> getAll(Pageable pageable) {
         Page<UserEntity> users = repo.findAll(pageable);

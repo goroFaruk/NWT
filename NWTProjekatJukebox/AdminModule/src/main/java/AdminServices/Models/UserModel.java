@@ -1,5 +1,8 @@
 package AdminServices.Models;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
 /**
  * Created by Šahin on 27.5.2017.
  */
@@ -67,4 +70,5 @@ public class UserModel {
     public boolean isEnabled() {
         return enabled;
     }
+
 }
