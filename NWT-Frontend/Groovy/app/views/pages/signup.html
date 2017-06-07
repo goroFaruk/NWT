@@ -1,4 +1,4 @@
-<div class="page-signup">
+<div class="page-signup" ng-controller="SignUpCtrl">
 
     <div class="signin-header">
         <div class="container text-center">
@@ -61,7 +61,7 @@
                         <div class="form-group">
                             <p class="text-muted text-small">By clicking on Sign up, you agree to <a href="javascript:;">terms & conditions</a> and <a href="javascript:;">privacy policy</a></p>
                             <div class="divider"></div>
-                            <a href="signup.html#/" class="btn btn-primary btn-block btn-lg">Sign up</a>
+                            <a class="btn btn-primary btn-block btn-lg" ng-click="signUp();">Sign up</a>
                         </div>
  
                     </form>

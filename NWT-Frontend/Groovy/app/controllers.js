@@ -41,17 +41,40 @@ angular.module("app.controllers", []).controller("AdminAppCtrl", ["$scope", "$lo
   }
   ]).controller("SignInCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
 console.log("u kontroleru sign.in.ctrl", PlayListSrv); 
-
-//ne valja ti service gdje je taj toj ser vice
-//http://localhost:1113/users/login?username=test&pass=test
-//ne udje ti uopce ovdje
-//al nema uopce ovog iznad loga sta moze bit to hmmm
  $scope.login = function () {
 	 console.log("u funkciji sign.in.ctrl");
            PlayListSrv.login().
 		then(function (response) {
             $scope.loginService = response.data;
 	    console.log($scope.loginService);
+        });
+        };
+	
+  }
+])
+.controller("DeleteCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.ctrl", PlayListSrv); 
+
+ $scope.deleteProfile = function () {
+	 console.log("u funkciji deleteProfile");
+           PlayListSrv.deleteProfile().
+		then(function (response) {
+            $scope.deleteProfileService = response.data;
+	    console.log($scope.deleteProfileService);
+        });
+        };
+	
+  }
+])
+.controller("SignUpCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru sign.up.ctrl", PlayListSrv); 
+
+ $scope.signUp = function () {
+	 console.log("u funkciji sign.in.ctrl");
+           PlayListSrv.signUp().
+		then(function (response) {
+            $scope.signUpService = response.data;
+	    console.log($scope.signUpService);
         });
         };
 	

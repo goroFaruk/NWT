@@ -7,31 +7,31 @@
  **************************/
 
 angular.module("app.ui.services", []).factory("loggit", [
-    function() {
-        var logIt;
-        return toastr.options = {
-            closeButton: !0,
-            positionClass: "toast-top-right",
-            timeOut: "3000"
-        }, logIt = function(message, type) {
-            return toastr[type](message);
-        }, {
-            log: function(message) {
-                logIt(message, "info");
-            },
-            logWarning: function(message) {
-                logIt(message, "warning");
-            },
-            logSuccess: function(message) {
-                logIt(message, "success");
-            },
-            logError: function(message) {
-                logIt(message, "error");
-            }
-        };
-    }
+  function () {
+    var logIt;
+    return toastr.options = {
+      closeButton: !0,
+      positionClass: "toast-top-right",
+      timeOut: "3000"
+    }, logIt = function (message, type) {
+      return toastr[type](message);
+    }, {
+        log: function (message) {
+          logIt(message, "info");
+        },
+        logWarning: function (message) {
+          logIt(message, "warning");
+        },
+        logSuccess: function (message) {
+          logIt(message, "success");
+        },
+        logError: function (message) {
+          logIt(message, "error");
+        }
+      };
+  }
 ]).factory("ArtistListingSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Gets artists list with image url and name from the Server
@@ -44,9 +44,9 @@ angular.module("app.ui.services", []).factory("loggit", [
      Get data from the .json files (Replace by your own webserver)
      **************************/
 
-    ArtistListingObj.getArtists = function(callback){
+    ArtistListingObj.getArtists = function (callback) {
 
-      $http.get('dist/data/artists.json').success(function(data) {
+      $http.get('dist/data/artists.json').success(function (data) {
 
         artists = data;
 
@@ -60,7 +60,7 @@ angular.module("app.ui.services", []).factory("loggit", [
     return ArtistListingObj;
 
   }).factory("AlbumsListingSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Gets artists list with image url and name from the Server
@@ -73,9 +73,9 @@ angular.module("app.ui.services", []).factory("loggit", [
      Get data from the .json files (Replace by your own webserver)
      **************************/
 
-    AlbumListingObj.getAlbums = function(callback){
+    AlbumListingObj.getAlbums = function (callback) {
 
-      $http.get('dist/data/albums.json').success(function(data) {
+      $http.get('dist/data/albums.json').success(function (data) {
 
         albums = data;
 
@@ -90,7 +90,7 @@ angular.module("app.ui.services", []).factory("loggit", [
 
   })
   .factory("GenresListingSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Gets genres list with image url and name from the Server
@@ -103,9 +103,9 @@ angular.module("app.ui.services", []).factory("loggit", [
      Get data from the .json files (Replace by your own webserver)
      **************************/
 
-    GenresListingObj.getGenres = function(callback){
+    GenresListingObj.getGenres = function (callback) {
 
-      $http.get('dist/data/genres.json').success(function(data) {
+      $http.get('dist/data/genres.json').success(function (data) {
 
         genres = data;
 
@@ -120,7 +120,7 @@ angular.module("app.ui.services", []).factory("loggit", [
 
 
   }).factory("ArtistSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Gets artists with all songs from the "Server"
@@ -133,9 +133,9 @@ angular.module("app.ui.services", []).factory("loggit", [
      Get data from the .json files (Replace by your own webserver)
      **************************/
 
-    PlayListObj.getSongs = function(callback){
+    PlayListObj.getSongs = function (callback) {
 
-      $http.get('dist/data/artistsMusic.json').success(function(data) {
+      $http.get('dist/data/artistsMusic.json').success(function (data) {
 
         artists = data;
 
@@ -146,13 +146,13 @@ angular.module("app.ui.services", []).factory("loggit", [
 
     };
 
-    PlayListObj.getArtist = function(title,callback) {
+    PlayListObj.getArtist = function (title, callback) {
 
-      PlayListObj.getSongs(function(data){
+      PlayListObj.getSongs(function (data) {
 
-        _.map(PlayListObj.artists, function(artistSongs){
+        _.map(PlayListObj.artists, function (artistSongs) {
 
-          if(artistSongs.url_name == title){
+          if (artistSongs.url_name == title) {
             return callback(artistSongs);
           }
         });
@@ -165,7 +165,7 @@ angular.module("app.ui.services", []).factory("loggit", [
 
   })
   .factory("PlayListSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Saves and loads Playlists from the localStorage
@@ -189,15 +189,15 @@ angular.module("app.ui.services", []).factory("loggit", [
       image: 'dist/images/songs/song10.jpg',
       genre: [],
       songs: [
-        {image: 'dist/images/songs/song1.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - Come Together', type: "audio/mpeg" },
-        {image: 'dist/images/songs/song2.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song3.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song4.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song5.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Taxman', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song6.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - Come Together', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song7.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song8.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song9.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg"  }
+        { image: 'dist/images/songs/song1.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - Come Together', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song2.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song3.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song4.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song5.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Taxman', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song6.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - Come Together', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song7.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song8.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song9.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg" }
       ]
     };
 
@@ -206,33 +206,33 @@ angular.module("app.ui.services", []).factory("loggit", [
       name: 'Sons of Dream',
       banner: 'dist/images/playlists/playlistbanner.jpg',
       image: 'dist/images/songs/song11.jpg',
-      genre: ['New age','Celtic','World'],
+      genre: ['New age', 'Celtic', 'World'],
       songs: [
-        {image: 'dist/images/songs/song12.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Enya - Laetha', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song13.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Enya - Only if', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song14.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Enya - Trains and winter rains', type: "audio/mpeg" },
-        {image: 'dist/images/songs/song15.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song16.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song17.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg"  }
+        { image: 'dist/images/songs/song12.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Enya - Laetha', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song13.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Enya - Only if', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song14.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Enya - Trains and winter rains', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song15.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song16.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song17.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg" }
       ]
     };
 
-    PlayListObj.get = function (){
+    PlayListObj.get = function () {
       return JSON.parse(localStorage.getItem(storage_id) || JSON.stringify(playlists));
     };
 
-    PlayListObj.put = function (playlist,callback){
+    PlayListObj.put = function (playlist, callback) {
 
       PlayListObj.playlists.push(playlist);
 
       localStorage.setItem(storage_id, JSON.stringify(PlayListObj.playlistsObj));
 
-      setTimeout(function(){
+      setTimeout(function () {
         callback(localStorage.getItem(storage_id));
-      },500);
+      }, 500);
     };
 
-    PlayListObj.update = function (playlists){
+    PlayListObj.update = function (playlists) {
 
       PlayListObj.playlists = playlists;
 
@@ -245,22 +245,22 @@ angular.module("app.ui.services", []).factory("loggit", [
 
     PlayListObj.playlists = PlayListObj.playlistsObj.list;
 
-    PlayListObj.getPlaylist = function(title,callback) {
+    PlayListObj.getPlaylist = function (title, callback) {
 
-      _.map(PlayListObj.playlists, function(playlist){
+      _.map(PlayListObj.playlists, function (playlist) {
 
-        if(playlist.url_name == title){
+        if (playlist.url_name == title) {
           return callback(playlist);
         }
       });
 
     };
 
-    PlayListObj.addSongToPlaylist = function(song,playListName) {
+    PlayListObj.addSongToPlaylist = function (song, playListName) {
 
-      _.map(PlayListObj.playlists, function(playlist){
+      _.map(PlayListObj.playlists, function (playlist) {
 
-        if(playlist.name == playListName){
+        if (playlist.name == playListName) {
 
           playlist.songs.push(song);
 
@@ -270,25 +270,36 @@ angular.module("app.ui.services", []).factory("loggit", [
       });
 
     };
-    
+
     PlayListObj.login = function () {
-            return $http.post('http://localhost:1113/users/login?username=test&pass=test')
-             .then(function (results) {
-                 return results;
-             });
-        };
+      return $http.post('http://localhost:1113/users/login?username=test&pass=test')
+        .then(function (results) {
+          return results;
+        });
+    };
+    PlayListObj.signUp = function () {
+      return $http.post('http://localhost:1113/users/register?email=noviJuzer@njegovEmail.com&pass=njegovaSifra&username=njegovJuzernejm')
+        .then(function (results) {
+          return results;
+        });
+    };
+     PlayListObj.deleteProfile = function () {
+      return $http.post('http://localhost:1113/users/delete?id=8')
+        .then(function (results) {
+          return results;
+        });
+    };
+    PlayListObj.removeSongFromPlaylist = function (song, playListName) {
 
-    PlayListObj.removeSongFromPlaylist = function(song,playListName) {
+      _.map(PlayListObj.playlists, function (playlist) {
 
-      _.map(PlayListObj.playlists, function(playlist){
+        if (playlist.name == playListName) {
 
-        if(playlist.name == playListName){
+          _.map(playlist.songs, function (songOnList) {
 
-          _.map(playlist.songs, function(songOnList){
+            if (songOnList.url == song.url) {
 
-            if(songOnList.url == song.url){ 
-
-              playlist.songs = _.without(playlist.songs,songOnList);
+              playlist.songs = _.without(playlist.songs, songOnList);
 
               console.log(PlayListObj.playlists);
 
@@ -307,21 +318,21 @@ angular.module("app.ui.services", []).factory("loggit", [
     return PlayListObj;
 
   }).factory("navigationMenuService",
-  function() {
+  function () {
 
     /**************************
      Provides a way to toggle the menu scope
      **************************/
 
     var MENU_STATES = {
-      menu:true,
-      playing:false
+      menu: true,
+      playing: false
     };
 
     return MENU_STATES;
 
 
-  }).factory("CreatePlaylistSrv",['$modal','$log','PlayListSrv','$location',function($modal,$log,PlayListSrv,$location) {
+  }).factory("CreatePlaylistSrv", ['$modal', '$log', 'PlayListSrv', '$location', function ($modal, $log, PlayListSrv, $location) {
 
     /**************************
      Provides a way to create a new playlist
@@ -329,53 +340,53 @@ angular.module("app.ui.services", []).factory("loggit", [
 
     var CreatePlayListSrvObj = {};
 
-    CreatePlayListSrvObj.openCreateModal = function(song){
+    CreatePlayListSrvObj.openCreateModal = function (song) {
 
-     var modalInstance = $modal.open({
-       templateUrl: 'app/views/forms/create_playlist.html',
-       controller: 'CreatePlaylistInstanceCtrl',
-       resolve: {
-         playlistName: function () {
-           return '';
-         },
-         song: function () {
-           return song;
-         }
-       }
-     });
+      var modalInstance = $modal.open({
+        templateUrl: 'app/views/forms/create_playlist.html',
+        controller: 'CreatePlaylistInstanceCtrl',
+        resolve: {
+          playlistName: function () {
+            return '';
+          },
+          song: function () {
+            return song;
+          }
+        }
+      });
 
-     modalInstance.result.then(function (response) {
+      modalInstance.result.then(function (response) {
 
-       var songs = [],
-         playlistName;
+        var songs = [],
+          playlistName;
 
-       if(typeof response.song != "undefined"){
-         songs.push(response.song);
-       }
+        if (typeof response.song != "undefined") {
+          songs.push(response.song);
+        }
 
-       playlistName = response.playlistName;
+        playlistName = response.playlistName;
 
-       //Callback for a Okay on Save new playlist
-       var url_name = playlistName.toLowerCase().replace(" ","-"),
-       new_playlist = {
-         url_name: url_name,
-         name: playlistName,
-         banner: 'dist/images/playlists/playlistbanner.jpg',
-         image: 'dist/images/songs/song17.jpg',
-         genre: [],
-         songs: songs
-       };
+        //Callback for a Okay on Save new playlist
+        var url_name = playlistName.toLowerCase().replace(" ", "-"),
+          new_playlist = {
+            url_name: url_name,
+            name: playlistName,
+            banner: 'dist/images/playlists/playlistbanner.jpg',
+            image: 'dist/images/songs/song17.jpg',
+            genre: [],
+            songs: songs
+          };
 
-       PlayListSrv.put(new_playlist,function(response){
+        PlayListSrv.put(new_playlist, function (response) {
 
-         window.location = "#/playlist/" + url_name;
-       });
+          window.location = "#/playlist/" + url_name;
+        });
 
-     }, function () {
+      }, function () {
         $log.info('Modal dismissed at: ' + new Date());
-     });
+      });
 
-     };
+    };
 
     return CreatePlayListSrvObj;
 
