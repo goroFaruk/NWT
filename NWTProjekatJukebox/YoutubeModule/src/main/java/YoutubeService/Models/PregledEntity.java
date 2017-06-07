@@ -1,6 +1,7 @@
 package YoutubeService.Models;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by fare_ on 20.03.2017..
@@ -10,7 +11,7 @@ import javax.persistence.*;
 public class PregledEntity {
     private int id;
     private int idPjesma;
-    private int datum;
+    private Date datum;
     private int brojPregleda;
 
     @Id
@@ -36,11 +37,11 @@ public class PregledEntity {
 
     @Basic
     @Column(name = "datum")
-    public int getDatum() {
+    public Date getDatum() {
         return datum;
     }
 
-    public void setDatum(int datum) {
+    public void setDatum(Date datum) {
         this.datum = datum;
     }
 
@@ -73,7 +74,6 @@ public class PregledEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + idPjesma;
-        result = 31 * result + datum;
         result = 31 * result + brojPregleda;
         return result;
     }

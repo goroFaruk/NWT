@@ -47,8 +47,9 @@ public interface YoutubeRepository extends CrudRepository<PjesmaEntity, Integer>
     boolean exists(Integer integer);
     @Query("select f from PjesmaEntity f where f.id=?1")
     List<PjesmaEntity> findAllById(Integer userId);
+
     @Modifying
     @Transactional
-    @Query("Update PjesmaEntity p set p.urlPlesme=?2 where p.id=?1")
-    void updateURL( String url);
+    @Query("Update PjesmaEntity p set p.urlPlesme=?1 where p.id=?2")
+    void updateURL(String url, Integer id);
 }

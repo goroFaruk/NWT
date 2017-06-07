@@ -76,6 +76,7 @@ public class FollowController {
         List<UserModel> users= new ArrayList<>();
         for (int i=0; i<followEntities.size(); i++){
             UserEntity u=userRepo.findOne(followEntities.get(i).getIduser());
+            if(u==null) continue;
             UserModel um= new UserModel();
             um.setEmail(u.getEmail());
             um.setUsername(u.getUsername());

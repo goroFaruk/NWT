@@ -4,6 +4,7 @@ package YoutubeService.Controllers;
 import YoutubeService.Models.ListaEntity;
 import YoutubeService.Models.Message;
 import YoutubeService.Repository.ListaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,9 @@ import java.util.List;
 @RequestMapping(value = "/lista")
 public class ListaController {
 
+    @Autowired
     private ListaRepository repo;
+
     @RequestMapping(value = "/testing", method = RequestMethod.GET)
     public String InsertTestLista()
     {
@@ -39,6 +42,24 @@ public class ListaController {
         return "OK";
     }
 
+    @RequestMapping(value = "/insert", method = RequestMethod.GET)
+    public String InsertLista(@RequestParam String naziv)
+    {
+        ListaEntity p = new ListaEntity();
+        p.setNaziv(naziv);
+        try
+        {
+            repo.save(p);
+        }
+        catch (Exception e)
+        {
+            return e.getMessage();
+        }
+
+        return "OK";
+    }
+
+
     @RequestMapping(value = "/{id}", method= RequestMethod.GET)
     public ListaEntity getById(@PathVariable("id") int id)
     {
@@ -47,8 +68,8 @@ public class ListaController {
     }
 
     @RequestMapping(value= "getAll",method = RequestMethod.GET)
-    public Page<ListaEntity> getAll(Pageable pageable) {
-        Page<ListaEntity> lista = (Page<ListaEntity>) repo.findAll();
+    public List<ListaEntity> getAll() {
+        List<ListaEntity> lista = (List<ListaEntity>) repo.findAll();
         return lista;
     }
 
@@ -78,10 +99,10 @@ public class ListaController {
         return new ResponseEntity<Message>( new Message("Lista is successfully deleted","Lista"), HttpStatus.OK);
     }
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ResponseEntity<Message> updateLista(@RequestParam String naziv ) {
+    public ResponseEntity<Message> updateLista(@RequestParam String naziv, Integer id) {
         try
         {
-            repo.updateNaziv(naziv);
+            repo.updateNaziv(naziv,id);
         }
         catch (Exception e)
         {
@@ -89,7 +110,7 @@ public class ListaController {
         }
         return new ResponseEntity<Message>( new Message("Lista is successfully updated","Lista"), HttpStatus.OK);
     }
-    @RequestMapping(value = "addLista", method = RequestMethod.POST)
+    @RequestMapping(value = "dodijeliListu", method = RequestMethod.POST)
     public ResponseEntity<Message> addLista(@RequestParam String naziv, Integer idUsera )
     {
         ListaEntity listaEntity = new ListaEntity();
@@ -106,6 +127,8 @@ public class ListaController {
         return new ResponseEntity<Message>( new Message("Lista is successfully added","Lista"), HttpStatus.OK);
     }
 
+    //NEDEFINISANO JOS NE RADI NISTA
+    // TODO:skontati sta i kako
     @RequestMapping(value = "gradesForList", method = RequestMethod.GET)
     public ResponseEntity<List<ListaEntity>> getAllGradesForList (@RequestParam Integer idListe)
     {

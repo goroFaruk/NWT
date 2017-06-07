@@ -23,23 +23,6 @@ public class YoutubeController {
     @Autowired
     private YoutubeRepository repo;
 
-    @RequestMapping(value = "/testing", method = RequestMethod.GET)
-    public String InsertTestYoutube()
-    {
-        PjesmaEntity p = new PjesmaEntity();
-        p.setUrlPlesme("test");
-        try
-        {
-            repo.save(p);
-        }
-        catch (Exception e)
-        {
-            return e.getMessage();
-        }
-
-        return "OK";
-    }
-
     @RequestMapping(value = "/{id}", method= RequestMethod.GET)
     public PjesmaEntity getById(@PathVariable("id") int id)
     {
@@ -48,15 +31,14 @@ public class YoutubeController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<PjesmaEntity> getAll(Pageable pageable) {
-        Page<PjesmaEntity> pjesma = (Page<PjesmaEntity>) repo.findAll();
+    public List<PjesmaEntity> getAll() {
+        List<PjesmaEntity> pjesma = (List<PjesmaEntity>) repo.findAll();
         return pjesma;
     }
 
     @RequestMapping(value="/youtube",method = RequestMethod.POST)
-    public ResponseEntity<Message> insertSong(@RequestParam Integer id, String urlPjesme){
+    public ResponseEntity<Message> insertSong(@RequestParam String urlPjesme){
         PjesmaEntity pjesma=new PjesmaEntity();
-        pjesma.setId(id);
         pjesma.setUrlPlesme(urlPjesme);
         try{
             repo.save(pjesma);
@@ -76,26 +58,28 @@ public class YoutubeController {
         return new ResponseEntity<Message>(new Message("Song is successfully deleted","Song"),HttpStatus.OK);
     }
 
-
-    @RequestMapping(value= "/forSong", method = RequestMethod.GET)
+    //NE KONTAM SVRHU
+    /*@RequestMapping(value= "/forSong", method = RequestMethod.GET)
     public ResponseEntity<List<PjesmaEntity>> getAllSongsForUser(@RequestParam Integer id) {
         List<PjesmaEntity> pjesmaEntities = repo.findAllById(id);
         return new ResponseEntity<List<PjesmaEntity>>(pjesmaEntities,HttpStatus.OK) ;
-    }
+    }*/
+
+    //TODO: napraviti da radi ispravno a ne beze da nesto vraca
     @RequestMapping(value = "/forList", method = RequestMethod.GET)
     public ResponseEntity<List<PjesmaEntity>> getAllSongsForList(@RequestParam Integer idListe)
     {
         List<PjesmaEntity>pjesmaEntities = repo.findAllById(idListe);
         return  new ResponseEntity<List<PjesmaEntity>>(pjesmaEntities,HttpStatus.OK);
     }
+
+
     @RequestMapping(value= "/updateSong", method = RequestMethod.POST)
-    public  ResponseEntity<Message> updateURL(@RequestParam String url)
+    public  ResponseEntity<Message> updateURL(@RequestParam String url, Integer idPjesme)
     {
-        PjesmaEntity pjesmaEntity = new PjesmaEntity();
-        pjesmaEntity.setUrlPlesme(url);
         try
         {
-            repo.updateURL(url);
+            repo.updateURL(url,idPjesme);
         }catch (Exception e){
             return new ResponseEntity<Message>( new Message(e.getMessage(),"Song"),HttpStatus.EXPECTATION_FAILED);
         }

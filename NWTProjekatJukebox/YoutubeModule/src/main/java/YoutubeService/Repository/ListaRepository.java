@@ -15,37 +15,6 @@ import java.util.List;
  * Created by fare_ on 24.03.2017..
  */
 public interface ListaRepository extends CrudRepository<ListaEntity, Integer> {
-
-    @Override
-    Iterable<ListaEntity> findAll();
-
-    @Override
-    void delete(Integer integer);
-
-    @Override
-    ListaEntity findOne(Integer integer);
-
-    Page<ListaEntity> findAll(Pageable iterable);
-
-    @Override
-    long count();
-
-    @Override
-    void delete(ListaEntity userEntity);
-
-    @Override
-    void delete(Iterable<? extends ListaEntity> iterable);
-
-    @Override
-    void deleteAll();
-
-    @Override
-    <S extends ListaEntity> Iterable<S> save(Iterable<S> iterable);
-
-    @Override
-    <S extends ListaEntity> S save(S s);
-
-
     @Override
     boolean exists(Integer integer);
     @Query("select f from ListaEntity f where f.idUser=?1")
@@ -59,7 +28,6 @@ public interface ListaRepository extends CrudRepository<ListaEntity, Integer> {
 
     @Modifying
     @Transactional
-    @Query("Update ListaEntity l set l.naziv=?2 where l.id=?1")
-    void updateNaziv(String naziv);
-
+    @Query("Update ListaEntity l set l.naziv=?1 where l.id=?2")
+    void updateNaziv(String naziv, Integer id);
 }

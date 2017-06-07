@@ -4,31 +4,47 @@ import YoutubeService.Models.ListapjesamaEntity;
 import YoutubeService.Models.Message;
 import YoutubeService.Models.PregledEntity;
 import YoutubeService.Repository.PregledRepository;
+import org.apache.derby.client.am.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by fare_ on 24.03.2017..
  */
+@RestController
+@RequestMapping(value = "/pregledi")
 public class PregledController {
 
+    @Autowired
     private PregledRepository repo;
 
-    @RequestMapping(value = "/testing", method = RequestMethod.GET)
-    public String InsertTestPregled()
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public String InsertPregled(@RequestParam Integer idPjesme)
     {
-        PregledEntity p = new PregledEntity();
-        p.setBrojPregleda(4);
         try
         {
-            repo.save(p);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date datum= new Date();
+            List<PregledEntity> lista=repo.findBySongId(idPjesme);
+            if(lista.size()==0){
+                PregledEntity pregledEntity=new PregledEntity();
+                pregledEntity.setBrojPregleda(1);
+                pregledEntity.setDatum(datum);
+                pregledEntity.setIdPjesma(idPjesme);
+                repo.save(pregledEntity);
+            }else {
+                for (int i = 0; i < lista.size(); i++) {
+                    if(lista.get(i).getDatum().compareTo(datum)==-1)
+                       repo.insertPregled(idPjesme,lista.get(i).getId());
+                }
+            }
         }
         catch (Exception e)
         {
@@ -46,8 +62,8 @@ public class PregledController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<PregledEntity> getAll(java.awt.print.Pageable pageable) {
-        Page<PregledEntity> pregled = (Page<PregledEntity>) repo.findAll();
+    public List<PregledEntity> getAll() {
+        List<PregledEntity> pregled = (List<PregledEntity>) repo.findAll();
         return pregled;
     }
 
@@ -61,7 +77,8 @@ public class PregledController {
         return new ResponseEntity<Message>(new Message("Pregled is successfully deleted","Pregled"),HttpStatus.OK);
     }
 
-
+    //NEDEFINISANO ???
+    //TODO: srediti ovaj klinac i skontati sta treba
     @RequestMapping(value= "/forUser", method = RequestMethod.GET)
     public ResponseEntity<List<PregledEntity>> getAllViewsForUser(@RequestParam Integer idUser) {
         List<PregledEntity> pregledEntities = repo.findAllById(idUser);

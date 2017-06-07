@@ -87,6 +87,7 @@ public class ListaEntity {
         if (idUser != that.idUser) return false;
         if (idFollow != that.idFollow) return false;
         if (naziv != null ? !naziv.equals(that.naziv) : that.naziv != null) return false;
+        if(ocjena!= that.ocjena) return  false;
 
         return true;
     }
