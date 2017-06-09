@@ -46,6 +46,6 @@ public interface ListapjesamaRepository extends CrudRepository<ListapjesamaEntit
     @Query("select f from ListapjesamaEntity f where f.idLista=?1")
     List<ListapjesamaEntity> findAllByListaId(Integer userId);
 
-    @Query("select f from ListapjesamaEntity f where f.idPjesma=?1")
-    List<ListapjesamaEntity> findAllBySongId(Integer songId);
+    @Query("select f from ListapjesamaEntity f where f.idLista=?1")
+    List<ListapjesamaEntity> findAllBySongForList(Integer idListe);
 }

@@ -10,9 +10,9 @@ import javax.persistence.*;
 public class ListapjesamaEntity {
     private int idLista;
     private int idPjesma;
+    private int id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Basic
     @Column(name = "idLista")
     public int getIdLista() {
         return idLista;
@@ -32,6 +32,17 @@ public class ListapjesamaEntity {
         this.idPjesma = idPjesma;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,7 +52,7 @@ public class ListapjesamaEntity {
 
         if (idLista != that.idLista) return false;
         if (idPjesma != that.idPjesma) return false;
-
+        if(id!=that.id) return false;
         return true;
     }
 

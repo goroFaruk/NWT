@@ -25,23 +25,6 @@ public class ListaController {
     @Autowired
     private ListaRepository repo;
 
-    @RequestMapping(value = "/testing", method = RequestMethod.GET)
-    public String InsertTestLista()
-    {
-        ListaEntity p = new ListaEntity();
-        p.setNaziv("test");
-        try
-        {
-            repo.save(p);
-        }
-        catch (Exception e)
-        {
-            return e.getMessage();
-        }
-
-        return "OK";
-    }
-
     @RequestMapping(value = "/insert", method = RequestMethod.GET)
     public String InsertLista(@RequestParam String naziv)
     {
@@ -73,14 +56,14 @@ public class ListaController {
         return lista;
     }
 
-    @RequestMapping(value = "/forUser", method =RequestMethod.GET)
+    @RequestMapping(value = "/getAllListForUser", method =RequestMethod.GET)
     public ResponseEntity<List<ListaEntity>> getAllListsForUser(@RequestParam Integer idUser)
     {
         List<ListaEntity> listaEntities = repo.findAllByUserId(idUser);
         return new ResponseEntity<List<ListaEntity>>(listaEntities,HttpStatus.OK) ;
     }
 
-    @RequestMapping(value= "/forPjesma", method = RequestMethod.GET)
+    @RequestMapping(value= "/getAllListsForSongId", method = RequestMethod.GET)
     public ResponseEntity<List<ListaEntity>> getAllFollowsForList(@RequestParam Integer idPjesma) {
         List<ListaEntity> listaEntities = repo.findAllBySongId(idPjesma);
         return new ResponseEntity<List<ListaEntity>>(listaEntities, HttpStatus.OK);
