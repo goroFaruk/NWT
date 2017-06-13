@@ -289,6 +289,87 @@ angular.module("app.ui.services", []).factory("loggit", [
           return results;
         });
     };
+	
+	PlayListObj.insertList = function () {
+      return $http.get('http://localhost:1114/lista/insert?naziv=test5')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	
+	
+	PlayListObj.deleteList = function () {
+      return $http.post('http://localhost:1114/lista/delete?id=3')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.updateList = function () {
+      return $http.post('http://localhost:1114/lista/update?naziv=test256&id=111')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.dodijeliList = function () {
+      return $http.post('http://localhost:1114/lista/dodijeliListu?naziv=test&idUsera=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.dodijeliPjesmuListi = function () {
+      return $http.post('http://localhost:1114/listapjesama/dodijeliPjesmuListi?idPjesma=1&idLista=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.deleteListaPjesma = function () {
+      return $http.post('http://localhost:1114/listapjesama/delete?id=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.dajSvePjesmeZaListu = function () {
+      return $http.get('http://localhost:1114/listapjesama/dajSvePjesmeZaListu?idListe=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.insertPregled = function () {  //could not execute statement; nested exception is org.hibernate.exception.GenericJDBCException: could not execute statement
+      return $http.post('http://localhost:1114/pregledi/insert?idPjesme=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.deletePregled = function () {
+      return $http.post('http://localhost:1114/pregledi/delete?id=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.insertSong = function () { 
+      return $http.post('http://localhost:1114/youtube/youtube?urlPjesme=ovoJeNekaProba')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.deleteSong = function () { 
+      return $http.post('http://localhost:1114/youtube/delete?id=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	
+	
+	
+	
+	
+	
     PlayListObj.removeSongFromPlaylist = function (song, playListName) {
 
       _.map(PlayListObj.playlists, function (playlist) {

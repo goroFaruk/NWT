@@ -1,4 +1,10 @@
-<div data-ng-controller="UserPlayListCtrl as playlist">
+<div data-ng-controller="UserPlayListCtrl as playlist " >
+<div ng-controller="deleteListCtrl"</div>
+<div ng-controller="updateListCtrl"</div>
+<div ng-controller="dodijeliListCtrl"</div>
+<div ng-controller="dodijeliPjesmuListiCtrl"</div>
+<div ng-controller="insertSongCtrl"</div>
+<div ng-controller="deleteSongCtrl"</div>
 
   <div class="artist-banner" data-ng-show="playlist.playlistBanner" style="background-image:url({{playlist.playlistBanner}});">
 
@@ -21,6 +27,8 @@
       <div class="artist-actions">
 
         <button class="btn btn-primary" ng-click="playlist.addSongsAndPlay(generalPlaylist.audioPlaylist,mediaPlayer)"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Play all songs</button>
+		
+		
 
       </div>
 
@@ -54,6 +62,8 @@
 
                 <div class="music-listing__actions-top">
                   <button ng-click="playlist.addSongsAndPlay(generalPlaylist.audioPlaylist,mediaPlayer)" class="btn btn-primary"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Play all</button>
+				  <button ng-click="deleteList()" class="btn btn-primary"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Delete list</button>
+				  <button ng-click="updateList()" class="btn btn-primary"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Update list</button>
                   <!--<button ng-click="artist.addSongs(generalPlaylist.audioPlaylist)" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>-->
 
                   <div class="btn-group">
@@ -141,6 +151,10 @@
 
                   <div class="empty-message">
                     <a ng-href="#/artist-list" class="btn btn-primary">Search for new artists</a>
+					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="dodijeliList()">Grant List to User</a>
+					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="dodijeliPjesmuListi()">Grant Song to User</a>
+					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="insertSong()">Insert Song</a>
+					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="deleteSong()">Delete Song</a>
                   </div>
 
                 </div>

@@ -1,4 +1,4 @@
-/*! angular-groovy - v0.0.1 - 2017-05-30 *//*!
+/*! angular-groovy - v0.0.1 - 2017-06-13 *//*!
  * Bootstrap v3.2.0 (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -3437,17 +3437,177 @@ angular.module("app.controllers", []).controller("AdminAppCtrl", ["$scope", "$lo
   }
   ]).controller("SignInCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
 console.log("u kontroleru sign.in.ctrl", PlayListSrv); 
-
-//ne valja ti service gdje je taj toj ser vice
-//http://localhost:1113/users/login?username=test&pass=test
-//ne udje ti uopce ovdje
-//al nema uopce ovog iznad loga sta moze bit to hmmm
  $scope.login = function () {
 	 console.log("u funkciji sign.in.ctrl");
            PlayListSrv.login().
 		then(function (response) {
             $scope.loginService = response.data;
 	    console.log($scope.loginService);
+        });
+        };
+	
+  }
+])
+.controller("DeleteCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.ctrl", PlayListSrv); 
+
+ $scope.deleteProfile = function () {
+	 console.log("u funkciji deleteProfile");
+           PlayListSrv.deleteProfile().
+		then(function (response) {
+            $scope.deleteProfileService = response.data;
+	    console.log($scope.deleteProfileService);
+        });
+        };
+	
+  }
+])
+.controller("SignUpCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru sign.up.ctrl", PlayListSrv); 
+
+ $scope.signUp = function () {
+	 console.log("u funkciji sign.in.ctrl");
+           PlayListSrv.signUp().
+		then(function (response) {
+            $scope.signUpService = response.data;
+	    console.log($scope.signUpService);
+        });
+        };
+	
+  }
+]).controller("insertListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru insert.List.ctrl", PlayListSrv); 
+
+ $scope.insertList = function () {
+	 console.log("u funkciji insert.List.ctrl");
+           PlayListSrv.insertList().
+		then(function (response) {
+            $scope.insertListService = response.data;
+	    console.log($scope.insertListService);
+        });
+        };
+	
+  }
+]).controller("deleteListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.List.ctrl", PlayListSrv); 
+
+ $scope.deleteList = function () {
+	 console.log("u funkciji delete.List.ctrl");
+           PlayListSrv.deleteList().
+		then(function (response) {
+            $scope.deleteListService = response.data;
+	    console.log($scope.deleteListService);
+        });
+        };
+	
+  }
+]).controller("updateListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.List.ctrl", PlayListSrv); 
+
+ $scope.updateList = function () {
+	 console.log("u funkciji update.List.ctrl");
+           PlayListSrv.updateList().
+		then(function (response) {
+            $scope.updateListService = response.data;
+	    console.log($scope.updateListService);
+        });
+        };
+	
+  }
+]).controller("dodijeliListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru dodijeli.List.ctrl", PlayListSrv); 
+
+ $scope.dodijeliList = function () {
+	 console.log("u funkciji dodijeli.List.ctrl");
+           PlayListSrv.dodijeliList().
+		then(function (response) {
+            $scope.dodijeliListService = response.data;
+	    console.log($scope.dodijeliListService);
+        });
+        };
+	
+  }
+]).controller("dodijeliPjesmuListiCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru dodijeliPjesmu.List.ctrl", PlayListSrv); 
+//417
+ $scope.dodijeliPjesmuListi = function () {
+	 console.log("u funkciji dodijeliPjesmu.Listi.ctrl");
+           PlayListSrv.dodijeliPjesmuListi().
+		then(function (response) {
+            $scope.dodijeliPjesmuListiService = response.data;
+	    console.log($scope.dodijeliPjesmuListiService);
+        });
+        };
+	
+  }
+]).controller("deleteListapjesamaCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru deleteLista.pjesama.ctrl", PlayListSrv); 
+ $scope.deleteListaPjesma = function () {
+	 console.log("u funkciji deleteLista.pjesama.ctrl");
+           PlayListSrv.deleteListaPjesma().
+		then(function (response) {
+            $scope.deleteListaPjesmaService = response.data;
+	    console.log($scope.deleteListaPjesmaService);
+        });
+        };
+	
+  }
+]).controller("dajSvePjesmeZaListuCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru dajSvePjesmeZaListu.pjesama.ctrl", PlayListSrv); 
+ $scope.dajSvePjesmeZaListu = function () {
+	 console.log("u funkciji dajSvePjesmeZaListu.pjesama.ctrl");
+           PlayListSrv.dajSvePjesmeZaListu().
+		then(function (response) {
+            $scope.dajSvePjesmeZaListuService = response.data;
+	    console.log($scope.dajSvePjesmeZaListuService);
+        });
+        };
+	
+  }
+]).controller("insertPregledCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru insert.pregled.ctrl", PlayListSrv); 
+ $scope.insertPregled = function () {
+	 console.log("u funkciji insert.pregled.ctrl");
+           PlayListSrv.insertPregled().
+		then(function (response) {
+            $scope.insertPregledService = response.data;
+	    console.log($scope.insertPregledService);
+        });
+        };
+	
+  }
+]).controller("deletePregledCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.pregled.ctrl", PlayListSrv); 
+ $scope.deletePregled = function () {
+	 console.log("u funkciji delete.pregled.ctrl");
+           PlayListSrv.deletePregled().
+		then(function (response) {
+            $scope.deletePregledService = response.data;
+	    console.log($scope.deletePregledService);
+        });
+        };
+	
+  }
+]).controller("insertSongCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru insert.song.ctrl", PlayListSrv); 
+ $scope.insertSong = function () {
+	 console.log("u funkciji insert.Song.ctrl");
+           PlayListSrv.insertSong().
+		then(function (response) {
+            $scope.insertSongService = response.data;
+	    console.log($scope.insertSongService);
+        });
+        };
+	
+  }
+]).controller("deleteSongCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.song.ctrl", PlayListSrv); 
+ $scope.deleteSong = function () {
+	 console.log("u funkciji delete.Song.ctrl");
+           PlayListSrv.deleteSong().
+		then(function (response) {
+            $scope.deleteSongService = response.data;
+	    console.log($scope.deleteSongService);
         });
         };
 	
@@ -4561,31 +4721,31 @@ angular.module("app.ui.form.directives", []).directive("uiRangeSlider", [
 
 
 angular.module("app.ui.services", []).factory("loggit", [
-    function() {
-        var logIt;
-        return toastr.options = {
-            closeButton: !0,
-            positionClass: "toast-top-right",
-            timeOut: "3000"
-        }, logIt = function(message, type) {
-            return toastr[type](message);
-        }, {
-            log: function(message) {
-                logIt(message, "info");
-            },
-            logWarning: function(message) {
-                logIt(message, "warning");
-            },
-            logSuccess: function(message) {
-                logIt(message, "success");
-            },
-            logError: function(message) {
-                logIt(message, "error");
-            }
-        };
-    }
+  function () {
+    var logIt;
+    return toastr.options = {
+      closeButton: !0,
+      positionClass: "toast-top-right",
+      timeOut: "3000"
+    }, logIt = function (message, type) {
+      return toastr[type](message);
+    }, {
+        log: function (message) {
+          logIt(message, "info");
+        },
+        logWarning: function (message) {
+          logIt(message, "warning");
+        },
+        logSuccess: function (message) {
+          logIt(message, "success");
+        },
+        logError: function (message) {
+          logIt(message, "error");
+        }
+      };
+  }
 ]).factory("ArtistListingSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Gets artists list with image url and name from the Server
@@ -4598,9 +4758,9 @@ angular.module("app.ui.services", []).factory("loggit", [
      Get data from the .json files (Replace by your own webserver)
      **************************/
 
-    ArtistListingObj.getArtists = function(callback){
+    ArtistListingObj.getArtists = function (callback) {
 
-      $http.get('dist/data/artists.json').success(function(data) {
+      $http.get('dist/data/artists.json').success(function (data) {
 
         artists = data;
 
@@ -4614,7 +4774,7 @@ angular.module("app.ui.services", []).factory("loggit", [
     return ArtistListingObj;
 
   }).factory("AlbumsListingSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Gets artists list with image url and name from the Server
@@ -4627,9 +4787,9 @@ angular.module("app.ui.services", []).factory("loggit", [
      Get data from the .json files (Replace by your own webserver)
      **************************/
 
-    AlbumListingObj.getAlbums = function(callback){
+    AlbumListingObj.getAlbums = function (callback) {
 
-      $http.get('dist/data/albums.json').success(function(data) {
+      $http.get('dist/data/albums.json').success(function (data) {
 
         albums = data;
 
@@ -4644,7 +4804,7 @@ angular.module("app.ui.services", []).factory("loggit", [
 
   })
   .factory("GenresListingSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Gets genres list with image url and name from the Server
@@ -4657,9 +4817,9 @@ angular.module("app.ui.services", []).factory("loggit", [
      Get data from the .json files (Replace by your own webserver)
      **************************/
 
-    GenresListingObj.getGenres = function(callback){
+    GenresListingObj.getGenres = function (callback) {
 
-      $http.get('dist/data/genres.json').success(function(data) {
+      $http.get('dist/data/genres.json').success(function (data) {
 
         genres = data;
 
@@ -4674,7 +4834,7 @@ angular.module("app.ui.services", []).factory("loggit", [
 
 
   }).factory("ArtistSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Gets artists with all songs from the "Server"
@@ -4687,9 +4847,9 @@ angular.module("app.ui.services", []).factory("loggit", [
      Get data from the .json files (Replace by your own webserver)
      **************************/
 
-    PlayListObj.getSongs = function(callback){
+    PlayListObj.getSongs = function (callback) {
 
-      $http.get('dist/data/artistsMusic.json').success(function(data) {
+      $http.get('dist/data/artistsMusic.json').success(function (data) {
 
         artists = data;
 
@@ -4700,13 +4860,13 @@ angular.module("app.ui.services", []).factory("loggit", [
 
     };
 
-    PlayListObj.getArtist = function(title,callback) {
+    PlayListObj.getArtist = function (title, callback) {
 
-      PlayListObj.getSongs(function(data){
+      PlayListObj.getSongs(function (data) {
 
-        _.map(PlayListObj.artists, function(artistSongs){
+        _.map(PlayListObj.artists, function (artistSongs) {
 
-          if(artistSongs.url_name == title){
+          if (artistSongs.url_name == title) {
             return callback(artistSongs);
           }
         });
@@ -4719,7 +4879,7 @@ angular.module("app.ui.services", []).factory("loggit", [
 
   })
   .factory("PlayListSrv",
-  function($http) {
+  function ($http) {
 
     /**************************
      Saves and loads Playlists from the localStorage
@@ -4743,15 +4903,15 @@ angular.module("app.ui.services", []).factory("loggit", [
       image: 'dist/images/songs/song10.jpg',
       genre: [],
       songs: [
-        {image: 'dist/images/songs/song1.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - Come Together', type: "audio/mpeg" },
-        {image: 'dist/images/songs/song2.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song3.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song4.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song5.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Taxman', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song6.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - Come Together', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song7.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song8.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song9.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg"  }
+        { image: 'dist/images/songs/song1.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - Come Together', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song2.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song3.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song4.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song5.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Taxman', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song6.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - Come Together', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song7.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song8.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song9.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg" }
       ]
     };
 
@@ -4760,33 +4920,33 @@ angular.module("app.ui.services", []).factory("loggit", [
       name: 'Sons of Dream',
       banner: 'dist/images/playlists/playlistbanner.jpg',
       image: 'dist/images/songs/song11.jpg',
-      genre: ['New age','Celtic','World'],
+      genre: ['New age', 'Celtic', 'World'],
       songs: [
-        {image: 'dist/images/songs/song12.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Enya - Laetha', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song13.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Enya - Only if', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song14.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Enya - Trains and winter rains', type: "audio/mpeg" },
-        {image: 'dist/images/songs/song15.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song16.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg"  },
-        {image: 'dist/images/songs/song17.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg"  }
+        { image: 'dist/images/songs/song12.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Enya - Laetha', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song13.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Enya - Only if', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song14.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Enya - Trains and winter rains', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song15.jpg', url: 'http://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Remixin_Blues_2.mp3', displayName: 'Beatles - Drive my car', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song16.jpg', url: 'http://ccmixter.org/content/unreal_dm/unreal_dm_-_Recycle_This.mp3', displayName: 'Beatles - Loser', type: "audio/mpeg" },
+        { image: 'dist/images/songs/song17.jpg', url: 'http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3', displayName: 'Beatles - All my loving', type: "audio/mpeg" }
       ]
     };
 
-    PlayListObj.get = function (){
+    PlayListObj.get = function () {
       return JSON.parse(localStorage.getItem(storage_id) || JSON.stringify(playlists));
     };
 
-    PlayListObj.put = function (playlist,callback){
+    PlayListObj.put = function (playlist, callback) {
 
       PlayListObj.playlists.push(playlist);
 
       localStorage.setItem(storage_id, JSON.stringify(PlayListObj.playlistsObj));
 
-      setTimeout(function(){
+      setTimeout(function () {
         callback(localStorage.getItem(storage_id));
-      },500);
+      }, 500);
     };
 
-    PlayListObj.update = function (playlists){
+    PlayListObj.update = function (playlists) {
 
       PlayListObj.playlists = playlists;
 
@@ -4799,22 +4959,22 @@ angular.module("app.ui.services", []).factory("loggit", [
 
     PlayListObj.playlists = PlayListObj.playlistsObj.list;
 
-    PlayListObj.getPlaylist = function(title,callback) {
+    PlayListObj.getPlaylist = function (title, callback) {
 
-      _.map(PlayListObj.playlists, function(playlist){
+      _.map(PlayListObj.playlists, function (playlist) {
 
-        if(playlist.url_name == title){
+        if (playlist.url_name == title) {
           return callback(playlist);
         }
       });
 
     };
 
-    PlayListObj.addSongToPlaylist = function(song,playListName) {
+    PlayListObj.addSongToPlaylist = function (song, playListName) {
 
-      _.map(PlayListObj.playlists, function(playlist){
+      _.map(PlayListObj.playlists, function (playlist) {
 
-        if(playlist.name == playListName){
+        if (playlist.name == playListName) {
 
           playlist.songs.push(song);
 
@@ -4824,25 +4984,117 @@ angular.module("app.ui.services", []).factory("loggit", [
       });
 
     };
-    
+
     PlayListObj.login = function () {
-            return $http.post('http://localhost:1113/users/login?username=test&pass=test')
-             .then(function (results) {
-                 return results;
-             });
-        };
+      return $http.post('http://localhost:1113/users/login?username=test&pass=test')
+        .then(function (results) {
+          return results;
+        });
+    };
+    PlayListObj.signUp = function () {
+      return $http.post('http://localhost:1113/users/register?email=noviJuzer@njegovEmail.com&pass=njegovaSifra&username=njegovJuzernejm')
+        .then(function (results) {
+          return results;
+        });
+    };
+     PlayListObj.deleteProfile = function () {
+      return $http.post('http://localhost:1113/users/delete?id=8')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.insertList = function () {
+      return $http.get('http://localhost:1114/lista/insert?naziv=test5')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	
+	
+	PlayListObj.deleteList = function () {
+      return $http.post('http://localhost:1114/lista/delete?id=3')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.updateList = function () {
+      return $http.post('http://localhost:1114/lista/update?naziv=test256&id=111')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.dodijeliList = function () {
+      return $http.post('http://localhost:1114/lista/dodijeliListu?naziv=test&idUsera=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.dodijeliPjesmuListi = function () {
+      return $http.post('http://localhost:1114/listapjesama/dodijeliPjesmuListi?idPjesma=1&idLista=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.deleteListaPjesma = function () {
+      return $http.post('http://localhost:1114/listapjesama/delete?id=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.dajSvePjesmeZaListu = function () {
+      return $http.get('http://localhost:1114/listapjesama/dajSvePjesmeZaListu?idListe=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.insertPregled = function () {  //could not execute statement; nested exception is org.hibernate.exception.GenericJDBCException: could not execute statement
+      return $http.post('http://localhost:1114/pregledi/insert?idPjesme=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.deletePregled = function () {
+      return $http.post('http://localhost:1114/pregledi/delete?id=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.insertSong = function () { 
+      return $http.post('http://localhost:1114/youtube/youtube?urlPjesme=ovoJeNekaProba')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.deleteSong = function () { 
+      return $http.post('http://localhost:1114/youtube/delete?id=1')
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	
+	
+	
+	
+	
+	
+    PlayListObj.removeSongFromPlaylist = function (song, playListName) {
 
-    PlayListObj.removeSongFromPlaylist = function(song,playListName) {
+      _.map(PlayListObj.playlists, function (playlist) {
 
-      _.map(PlayListObj.playlists, function(playlist){
+        if (playlist.name == playListName) {
 
-        if(playlist.name == playListName){
+          _.map(playlist.songs, function (songOnList) {
 
-          _.map(playlist.songs, function(songOnList){
+            if (songOnList.url == song.url) {
 
-            if(songOnList.url == song.url){ 
-
-              playlist.songs = _.without(playlist.songs,songOnList);
+              playlist.songs = _.without(playlist.songs, songOnList);
 
               console.log(PlayListObj.playlists);
 
@@ -4861,21 +5113,21 @@ angular.module("app.ui.services", []).factory("loggit", [
     return PlayListObj;
 
   }).factory("navigationMenuService",
-  function() {
+  function () {
 
     /**************************
      Provides a way to toggle the menu scope
      **************************/
 
     var MENU_STATES = {
-      menu:true,
-      playing:false
+      menu: true,
+      playing: false
     };
 
     return MENU_STATES;
 
 
-  }).factory("CreatePlaylistSrv",['$modal','$log','PlayListSrv','$location',function($modal,$log,PlayListSrv,$location) {
+  }).factory("CreatePlaylistSrv", ['$modal', '$log', 'PlayListSrv', '$location', function ($modal, $log, PlayListSrv, $location) {
 
     /**************************
      Provides a way to create a new playlist
@@ -4883,53 +5135,53 @@ angular.module("app.ui.services", []).factory("loggit", [
 
     var CreatePlayListSrvObj = {};
 
-    CreatePlayListSrvObj.openCreateModal = function(song){
+    CreatePlayListSrvObj.openCreateModal = function (song) {
 
-     var modalInstance = $modal.open({
-       templateUrl: 'app/views/forms/create_playlist.html',
-       controller: 'CreatePlaylistInstanceCtrl',
-       resolve: {
-         playlistName: function () {
-           return '';
-         },
-         song: function () {
-           return song;
-         }
-       }
-     });
+      var modalInstance = $modal.open({
+        templateUrl: 'app/views/forms/create_playlist.html',
+        controller: 'CreatePlaylistInstanceCtrl',
+        resolve: {
+          playlistName: function () {
+            return '';
+          },
+          song: function () {
+            return song;
+          }
+        }
+      });
 
-     modalInstance.result.then(function (response) {
+      modalInstance.result.then(function (response) {
 
-       var songs = [],
-         playlistName;
+        var songs = [],
+          playlistName;
 
-       if(typeof response.song != "undefined"){
-         songs.push(response.song);
-       }
+        if (typeof response.song != "undefined") {
+          songs.push(response.song);
+        }
 
-       playlistName = response.playlistName;
+        playlistName = response.playlistName;
 
-       //Callback for a Okay on Save new playlist
-       var url_name = playlistName.toLowerCase().replace(" ","-"),
-       new_playlist = {
-         url_name: url_name,
-         name: playlistName,
-         banner: 'dist/images/playlists/playlistbanner.jpg',
-         image: 'dist/images/songs/song17.jpg',
-         genre: [],
-         songs: songs
-       };
+        //Callback for a Okay on Save new playlist
+        var url_name = playlistName.toLowerCase().replace(" ", "-"),
+          new_playlist = {
+            url_name: url_name,
+            name: playlistName,
+            banner: 'dist/images/playlists/playlistbanner.jpg',
+            image: 'dist/images/songs/song17.jpg',
+            genre: [],
+            songs: songs
+          };
 
-       PlayListSrv.put(new_playlist,function(response){
+        PlayListSrv.put(new_playlist, function (response) {
 
-         window.location = "#/playlist/" + url_name;
-       });
+          window.location = "#/playlist/" + url_name;
+        });
 
-     }, function () {
+      }, function () {
         $log.info('Modal dismissed at: ' + new Date());
-     });
+      });
 
-     };
+    };
 
     return CreatePlayListSrvObj;
 

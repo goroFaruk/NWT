@@ -1,4 +1,4 @@
-<div class="page page-full page-dashboard two-column">
+<div class="page page-full page-dashboard two-column" ng-controller="insertListCtrl">
 
   <section class="inner-wrapper scrollable">
 
@@ -16,9 +16,10 @@
             playlist to share with your friends
           </h5>
 
-          <a class="btn btn-primary" href="#/artist-list">
+          <a class="btn btn-primary"  ng-click="insertList();">
             Start searching
           </a>
+		  
 
         </div>
 

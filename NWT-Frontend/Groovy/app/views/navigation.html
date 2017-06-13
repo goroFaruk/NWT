@@ -12,7 +12,7 @@
     </div>
   </div>
 </div>
-
+<div ng-controller="deleteListapjesamaCtrl"</div>
 <div id="nav-wrapper" data-ng-controller="NavCtrl as navigation">
 
   <div class="sidebar-nav-switch">
@@ -226,9 +226,10 @@
           <li id="user-menu" class="nav-item">
             <a class="nav-link profile" href="javascript:;" data-ng-click="generalPlaylist.createNewPlaylist()">
               <i class="icon fa fa-plus-circle"></i>
-              <span class="label helper-tooltip-measured">Create a playlist</span>
+              <span class="label helper-tooltip-measured">Create a playlist</span> 
+			  
             </a>
-
+			<button class="btn btn-primary" ng-click="deleteListaPjesma()">Delete list of songs</button>
           </li>
           <!--<li id="user-menu" class="nav-item">
             <a class="nav-link profile" href="#/artist/enya">

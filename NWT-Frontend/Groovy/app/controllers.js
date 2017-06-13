@@ -79,6 +79,143 @@ console.log("u kontroleru sign.up.ctrl", PlayListSrv);
         };
 	
   }
+]).controller("insertListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru insert.List.ctrl", PlayListSrv); 
+
+ $scope.insertList = function () {
+	 console.log("u funkciji insert.List.ctrl");
+           PlayListSrv.insertList().
+		then(function (response) {
+            $scope.insertListService = response.data;
+	    console.log($scope.insertListService);
+        });
+        };
+	
+  }
+]).controller("deleteListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.List.ctrl", PlayListSrv); 
+
+ $scope.deleteList = function () {
+	 console.log("u funkciji delete.List.ctrl");
+           PlayListSrv.deleteList().
+		then(function (response) {
+            $scope.deleteListService = response.data;
+	    console.log($scope.deleteListService);
+        });
+        };
+	
+  }
+]).controller("updateListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.List.ctrl", PlayListSrv); 
+
+ $scope.updateList = function () {
+	 console.log("u funkciji update.List.ctrl");
+           PlayListSrv.updateList().
+		then(function (response) {
+            $scope.updateListService = response.data;
+	    console.log($scope.updateListService);
+        });
+        };
+	
+  }
+]).controller("dodijeliListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru dodijeli.List.ctrl", PlayListSrv); 
+
+ $scope.dodijeliList = function () {
+	 console.log("u funkciji dodijeli.List.ctrl");
+           PlayListSrv.dodijeliList().
+		then(function (response) {
+            $scope.dodijeliListService = response.data;
+	    console.log($scope.dodijeliListService);
+        });
+        };
+	
+  }
+]).controller("dodijeliPjesmuListiCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru dodijeliPjesmu.List.ctrl", PlayListSrv); 
+//417
+ $scope.dodijeliPjesmuListi = function () {
+	 console.log("u funkciji dodijeliPjesmu.Listi.ctrl");
+           PlayListSrv.dodijeliPjesmuListi().
+		then(function (response) {
+            $scope.dodijeliPjesmuListiService = response.data;
+	    console.log($scope.dodijeliPjesmuListiService);
+        });
+        };
+	
+  }
+]).controller("deleteListapjesamaCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru deleteLista.pjesama.ctrl", PlayListSrv); 
+ $scope.deleteListaPjesma = function () {
+	 console.log("u funkciji deleteLista.pjesama.ctrl");
+           PlayListSrv.deleteListaPjesma().
+		then(function (response) {
+            $scope.deleteListaPjesmaService = response.data;
+	    console.log($scope.deleteListaPjesmaService);
+        });
+        };
+	
+  }
+]).controller("dajSvePjesmeZaListuCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru dajSvePjesmeZaListu.pjesama.ctrl", PlayListSrv); 
+ $scope.dajSvePjesmeZaListu = function () {
+	 console.log("u funkciji dajSvePjesmeZaListu.pjesama.ctrl");
+           PlayListSrv.dajSvePjesmeZaListu().
+		then(function (response) {
+            $scope.dajSvePjesmeZaListuService = response.data;
+	    console.log($scope.dajSvePjesmeZaListuService);
+        });
+        };
+	
+  }
+]).controller("insertPregledCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru insert.pregled.ctrl", PlayListSrv); 
+ $scope.insertPregled = function () {
+	 console.log("u funkciji insert.pregled.ctrl");
+           PlayListSrv.insertPregled().
+		then(function (response) {
+            $scope.insertPregledService = response.data;
+	    console.log($scope.insertPregledService);
+        });
+        };
+	
+  }
+]).controller("deletePregledCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.pregled.ctrl", PlayListSrv); 
+ $scope.deletePregled = function () {
+	 console.log("u funkciji delete.pregled.ctrl");
+           PlayListSrv.deletePregled().
+		then(function (response) {
+            $scope.deletePregledService = response.data;
+	    console.log($scope.deletePregledService);
+        });
+        };
+	
+  }
+]).controller("insertSongCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru insert.song.ctrl", PlayListSrv); 
+ $scope.insertSong = function () {
+	 console.log("u funkciji insert.Song.ctrl");
+           PlayListSrv.insertSong().
+		then(function (response) {
+            $scope.insertSongService = response.data;
+	    console.log($scope.insertSongService);
+        });
+        };
+	
+  }
+]).controller("deleteSongCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
+console.log("u kontroleru delete.song.ctrl", PlayListSrv); 
+ $scope.deleteSong = function () {
+	 console.log("u funkciji delete.Song.ctrl");
+           PlayListSrv.deleteSong().
+		then(function (response) {
+            $scope.deleteSongService = response.data;
+	    console.log($scope.deleteSongService);
+        });
+        };
+	
+  }
 ]).controller("ActionsCtrl", ['$scope',function ($scope) {
 
     this.toggleChat = function () {
