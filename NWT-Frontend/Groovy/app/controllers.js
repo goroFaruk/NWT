@@ -105,51 +105,30 @@ angular.module("app.controllers", ['ngCookies']).controller("AdminAppCtrl", ["$s
     };
 
   }
-  ]).controller("insertListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+  ]).controller("insertListCtrl", ['$scope','PlayListSrv', function ($scope, PlayListSrv) {
     console.log("u kontroleru insert.List.ctrl", PlayListSrv);
-
+	
     $scope.insertList = function () {
-      console.log("u funkciji insert.List.ctrl");
-      PlayListSrv.insertList().
+      console.log($scope.naziv);
+      PlayListSrv.insertList($scope.naziv).
         then(function (response) {
-          $scope.insertListService = response.data;
+			window.open("#", '_self', false);
+          
+		  $scope.insertListService = response.data;
           console.log($scope.insertListService);
         });
+		
     };
 
-  }
-  ]).controller("deleteListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
-    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
-
-    $scope.deleteList = function () {
-      console.log("u funkciji delete.List.ctrl");
-      PlayListSrv.deleteList().
-        then(function (response) {
-          $scope.deleteListService = response.data;
-          console.log($scope.deleteListService);
-        });
-    };
 
   }
-  ]).controller("updateListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
-    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
-
-    $scope.updateList = function () {
-      console.log("u funkciji update.List.ctrl");
-      PlayListSrv.updateList().
-        then(function (response) {
-          $scope.updateListService = response.data;
-          console.log($scope.updateListService);
-        });
-    };
-
-  }
-  ]).controller("dodijeliListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+  ]).controller("dodijeliListCtrl", ['$scope', '$cookieStore','PlayListSrv', function ($scope, $cookieStore, PlayListSrv) {
     console.log("u kontroleru dodijeli.List.ctrl", PlayListSrv);
-
+	
+	
     $scope.dodijeliList = function () {
-      console.log("u funkciji dodijeli.List.ctrl");
-      PlayListSrv.dodijeliList().
+      console.log(userId);
+      PlayListSrv.dodijeliList($scope.naziv,userId).
         then(function (response) {
           $scope.dodijeliListService = response.data;
           console.log($scope.dodijeliListService);
@@ -157,9 +136,74 @@ angular.module("app.controllers", ['ngCookies']).controller("AdminAppCtrl", ["$s
     };
 
   }
+  ]).controller("insertSongCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru insert.song.ctrl", PlayListSrv);
+    
+	$scope.insertSong = function () {
+      console.log($scope.urlPjesme);
+      PlayListSrv.insertSong($scope.urlPjesme).
+        then(function (response) {
+          $scope.insertSongService = response.data;
+          console.log($scope.insertSongService);
+        });
+    };
+
+  }
+  ])
+  .controller("GetAllListsCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru getalllists.ctrl", PlayListSrv);
+    $scope.getLists = function () {
+      console.log("u funkciji getLists.ctrl");
+      PlayListSrv.getLists().
+        then(function (response) {
+          $scope.lists = response.data[0].naziv;
+		  console.log($scope.lists);
+        });
+    };
+
+  }
+  ]).controller("insertPregledCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru insert.pregled.ctrl", PlayListSrv);
+    $scope.insertPregled = function () {
+      console.log(scope.idPjesme);
+      PlayListSrv.insertPregled($scope.idPjesme).
+        then(function (response) {
+          $scope.insertPregledService = response.data;
+          console.log($scope.insertPregledService);
+        });
+    };
+
+  }
+  ]).controller("deleteListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
+	
+    $scope.deleteList = function () {
+      console.log("u funkciji delete.List.ctrl");
+      PlayListSrv.deleteList($scope.id).
+        then(function (response) {
+          $scope.deleteListService = response.data;
+          console.log($scope.deleteListService);
+		 
+        });
+		window.open("#/dashboards/dashboard", '_self', false);
+    };
+
+  }
+  ]).controller("updateListCtrl", ['$scope','$cookieStore', 'PlayListSrv', function ($scope,$cookieStore, PlayListSrv) {
+    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
+
+    $scope.updateList = function () {
+      console.log("u funkciji update.List.ctrl");
+      PlayListSrv.updateList(naziv, id).
+        then(function (response) {
+          $scope.updateListService = response.data;
+          console.log($scope.updateListService);
+        });
+    };
+
+  }
   ]).controller("dodijeliPjesmuListiCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
     console.log("u kontroleru dodijeliPjesmu.List.ctrl", PlayListSrv);
-    //417
     $scope.dodijeliPjesmuListi = function () {
       console.log("u funkciji dodijeliPjesmu.Listi.ctrl");
       PlayListSrv.dodijeliPjesmuListi().
@@ -194,18 +238,6 @@ angular.module("app.controllers", ['ngCookies']).controller("AdminAppCtrl", ["$s
     };
 
   }
-  ]).controller("insertPregledCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
-    console.log("u kontroleru insert.pregled.ctrl", PlayListSrv);
-    $scope.insertPregled = function () {
-      console.log("u funkciji insert.pregled.ctrl");
-      PlayListSrv.insertPregled().
-        then(function (response) {
-          $scope.insertPregledService = response.data;
-          console.log($scope.insertPregledService);
-        });
-    };
-
-  }
   ]).controller("deletePregledCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
     console.log("u kontroleru delete.pregled.ctrl", PlayListSrv);
     $scope.deletePregled = function () {
@@ -214,18 +246,6 @@ angular.module("app.controllers", ['ngCookies']).controller("AdminAppCtrl", ["$s
         then(function (response) {
           $scope.deletePregledService = response.data;
           console.log($scope.deletePregledService);
-        });
-    };
-
-  }
-  ]).controller("insertSongCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
-    console.log("u kontroleru insert.song.ctrl", PlayListSrv);
-    $scope.insertSong = function () {
-      console.log("u funkciji insert.Song.ctrl");
-      PlayListSrv.insertSong().
-        then(function (response) {
-          $scope.insertSongService = response.data;
-          console.log($scope.insertSongService);
         });
     };
 

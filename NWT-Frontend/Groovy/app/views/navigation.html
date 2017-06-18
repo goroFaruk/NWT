@@ -73,14 +73,14 @@
 
       </div>
 
-      <div class="nav-user-menu sidebar-nav-content">
+      <div class="nav-user-menu sidebar-nav-content" ng-controller="GetAllListsCtrl">
 
         <ul class="sidebar-nav-menu" data-highlight-active data-collapse-nav>
 
           <li id="user-menu" class="nav-item">
-            <a class="nav-link profile" href="#/artist-list">
+            <a class="nav-link profile" ng-click="getLists();" href="#/artist-list">
               <i class="icon fa fa-headphones"></i>
-              <span class="label helper-tooltip-measured">Artists</span>
+              <span class="label helper-tooltip-measured">Lists</span>
             </a>
 
           </li>

@@ -1,10 +1,10 @@
 <div data-ng-controller="UserPlayListCtrl as playlist " >
-<div ng-controller="deleteListCtrl"</div>
-<div ng-controller="updateListCtrl"</div>
-<div ng-controller="dodijeliListCtrl"</div>
-<div ng-controller="dodijeliPjesmuListiCtrl"</div>
-<div ng-controller="insertSongCtrl"</div>
-<div ng-controller="deleteSongCtrl"</div>
+<div ng-controller="deleteListCtrl"></div>
+<div ng-controller="updateListCtrl"></div>
+
+<div ng-controller="dodijeliPjesmuListiCtrl"></div>
+
+<div ng-controller="deleteSongCtrl"></div>
 
   <div class="artist-banner" data-ng-show="playlist.playlistBanner" style="background-image:url({{playlist.playlistBanner}});">
 
@@ -59,11 +59,33 @@
             <div class="music-listing">
 
               <div class="music-listing__header">
-
+				<div ng-controller="insertSongCtrl">
+				<div ng-controller="dodijeliListCtrl">
                 <div class="music-listing__actions-top">
                   <button ng-click="playlist.addSongsAndPlay(generalPlaylist.audioPlaylist,mediaPlayer)" class="btn btn-primary"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Play all</button>
 				  <button ng-click="deleteList()" class="btn btn-primary"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Delete list</button>
 				  <button ng-click="updateList()" class="btn btn-primary"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Update list</button>
+				  
+					<input type="text"
+					class="form-control"
+					placeholder="naziv"
+					ng-model="naziv"
+					placeholder="naziv" >
+				    
+					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="dodijeliList();">Grant List to User</a>
+				  </div>
+				  
+					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="dodijeliPjesmuListi()">Grant Song to User</a>
+					<input type="text"
+					class="form-control"
+					placeholder="Song name"
+					ng-model="urlPjesme"
+					placeholder="urlPjesme"
+                      >
+					
+					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="insertSong()">Insert Song</a>
+					
+					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="deleteSong()">Delete Song</a>
                   <!--<button ng-click="artist.addSongs(generalPlaylist.audioPlaylist)" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>-->
 
                   <div class="btn-group">
@@ -79,6 +101,7 @@
                       <li><a href="#">Separated link</a></li>
                     </ul>
                   </div>
+				  </div>
 
                 </div>
 
@@ -150,11 +173,9 @@
                   </div>
 
                   <div class="empty-message">
+				 
                     <a ng-href="#/artist-list" class="btn btn-primary">Search for new artists</a>
-					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="dodijeliList()">Grant List to User</a>
-					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="dodijeliPjesmuListi()">Grant Song to User</a>
-					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="insertSong()">Insert Song</a>
-					<a ng-href="#/artist-list" class="btn btn-primary" ng-click="deleteSong()">Delete Song</a>
+					
                   </div>
 
                 </div>

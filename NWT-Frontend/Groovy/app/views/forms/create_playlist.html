@@ -1,6 +1,7 @@
 <div class="modal-header" >
   <h3 class="modal-title">New playlist</h3>
 </div>
+<div ng-controller="insertListCtrl">
 <div class="modal-body">
   <form class="form-horizontal">
     <div class="row">
@@ -9,16 +10,19 @@
           <span class="input-group-addon">
               <span class="fa fa-headphones"></span>
           </span>
-          <input required data-ng-model="playlistName" type="text"
+          <input type="text"
                  class="form-control"
-                 placeholder="Playlist name" value="{{playlistName}}"
+                 placeholder="Playlist name"
+				 ng-model="naziv"
+				 placeholder="naziv"
                   >
         </div>
       </div>
     </div>
   </form>
 </div>
-<div class="modal-footer" ng-controller="insertListCtrl">
-  <button class="btn btn-primary" ng-click="insertList()">OK</button>
+<div class="modal-footer" >
+  <button class="btn btn-primary" ng-click="insertList();">OK</button>
   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
 </div>

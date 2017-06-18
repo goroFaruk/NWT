@@ -3502,51 +3502,30 @@ angular.module("app.controllers", ['ngCookies']).controller("AdminAppCtrl", ["$s
     };
 
   }
-  ]).controller("insertListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+  ]).controller("insertListCtrl", ['$scope','PlayListSrv', function ($scope, PlayListSrv) {
     console.log("u kontroleru insert.List.ctrl", PlayListSrv);
-
+	
     $scope.insertList = function () {
-      console.log("u funkciji insert.List.ctrl");
-      PlayListSrv.insertList().
+      console.log($scope.naziv);
+      PlayListSrv.insertList($scope.naziv).
         then(function (response) {
-          $scope.insertListService = response.data;
+			window.open("#", '_self', false);
+          
+		  $scope.insertListService = response.data;
           console.log($scope.insertListService);
         });
+		
     };
 
-  }
-  ]).controller("deleteListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
-    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
-
-    $scope.deleteList = function () {
-      console.log("u funkciji delete.List.ctrl");
-      PlayListSrv.deleteList().
-        then(function (response) {
-          $scope.deleteListService = response.data;
-          console.log($scope.deleteListService);
-        });
-    };
 
   }
-  ]).controller("updateListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
-    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
-
-    $scope.updateList = function () {
-      console.log("u funkciji update.List.ctrl");
-      PlayListSrv.updateList().
-        then(function (response) {
-          $scope.updateListService = response.data;
-          console.log($scope.updateListService);
-        });
-    };
-
-  }
-  ]).controller("dodijeliListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+  ]).controller("dodijeliListCtrl", ['$scope', '$cookieStore','PlayListSrv', function ($scope, $cookieStore, PlayListSrv) {
     console.log("u kontroleru dodijeli.List.ctrl", PlayListSrv);
-
+	
+	
     $scope.dodijeliList = function () {
-      console.log("u funkciji dodijeli.List.ctrl");
-      PlayListSrv.dodijeliList().
+      console.log(userId);
+      PlayListSrv.dodijeliList($scope.naziv,userId).
         then(function (response) {
           $scope.dodijeliListService = response.data;
           console.log($scope.dodijeliListService);
@@ -3554,9 +3533,74 @@ angular.module("app.controllers", ['ngCookies']).controller("AdminAppCtrl", ["$s
     };
 
   }
+  ]).controller("insertSongCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru insert.song.ctrl", PlayListSrv);
+    
+	$scope.insertSong = function () {
+      console.log($scope.urlPjesme);
+      PlayListSrv.insertSong($scope.urlPjesme).
+        then(function (response) {
+          $scope.insertSongService = response.data;
+          console.log($scope.insertSongService);
+        });
+    };
+
+  }
+  ])
+  .controller("GetAllListsCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru getalllists.ctrl", PlayListSrv);
+    $scope.getLists = function () {
+      console.log("u funkciji getLists.ctrl");
+      PlayListSrv.getLists().
+        then(function (response) {
+          $scope.lists = response.data[0].naziv;
+		  console.log($scope.lists);
+        });
+    };
+
+  }
+  ]).controller("insertPregledCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru insert.pregled.ctrl", PlayListSrv);
+    $scope.insertPregled = function () {
+      console.log(scope.idPjesme);
+      PlayListSrv.insertPregled($scope.idPjesme).
+        then(function (response) {
+          $scope.insertPregledService = response.data;
+          console.log($scope.insertPregledService);
+        });
+    };
+
+  }
+  ]).controller("deleteListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
+	
+    $scope.deleteList = function () {
+      console.log("u funkciji delete.List.ctrl");
+      PlayListSrv.deleteList($scope.id).
+        then(function (response) {
+          $scope.deleteListService = response.data;
+          console.log($scope.deleteListService);
+		 
+        });
+		window.open("#/dashboards/dashboard", '_self', false);
+    };
+
+  }
+  ]).controller("updateListCtrl", ['$scope','$cookieStore', 'PlayListSrv', function ($scope,$cookieStore, PlayListSrv) {
+    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
+
+    $scope.updateList = function () {
+      console.log("u funkciji update.List.ctrl");
+      PlayListSrv.updateList(naziv, id).
+        then(function (response) {
+          $scope.updateListService = response.data;
+          console.log($scope.updateListService);
+        });
+    };
+
+  }
   ]).controller("dodijeliPjesmuListiCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
     console.log("u kontroleru dodijeliPjesmu.List.ctrl", PlayListSrv);
-    //417
     $scope.dodijeliPjesmuListi = function () {
       console.log("u funkciji dodijeliPjesmu.Listi.ctrl");
       PlayListSrv.dodijeliPjesmuListi().
@@ -3591,18 +3635,6 @@ angular.module("app.controllers", ['ngCookies']).controller("AdminAppCtrl", ["$s
     };
 
   }
-  ]).controller("insertPregledCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
-    console.log("u kontroleru insert.pregled.ctrl", PlayListSrv);
-    $scope.insertPregled = function () {
-      console.log("u funkciji insert.pregled.ctrl");
-      PlayListSrv.insertPregled().
-        then(function (response) {
-          $scope.insertPregledService = response.data;
-          console.log($scope.insertPregledService);
-        });
-    };
-
-  }
   ]).controller("deletePregledCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
     console.log("u kontroleru delete.pregled.ctrl", PlayListSrv);
     $scope.deletePregled = function () {
@@ -3611,18 +3643,6 @@ angular.module("app.controllers", ['ngCookies']).controller("AdminAppCtrl", ["$s
         then(function (response) {
           $scope.deletePregledService = response.data;
           console.log($scope.deletePregledService);
-        });
-    };
-
-  }
-  ]).controller("insertSongCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
-    console.log("u kontroleru insert.song.ctrl", PlayListSrv);
-    $scope.insertSong = function () {
-      console.log("u funkciji insert.Song.ctrl");
-      PlayListSrv.insertSong().
-        then(function (response) {
-          $scope.insertSongService = response.data;
-          console.log($scope.insertSongService);
         });
     };
 
@@ -5037,8 +5057,8 @@ angular.module("app.ui.services", []).factory("loggit", [
         });
     };
 	
-	PlayListObj.insertList = function () {
-      return $http.get('http://localhost:1114/lista/insert?naziv=test5')
+	PlayListObj.insertList = function (naziv) {
+      return $http.get('http://localhost:1114/lista/insert?naziv='+naziv)
         .then(function (results) {
           return results;
         });
@@ -5046,66 +5066,73 @@ angular.module("app.ui.services", []).factory("loggit", [
 	
 	
 	
-	PlayListObj.deleteList = function () {
-      return $http.post('http://localhost:1114/lista/delete?id=3')
+	PlayListObj.deleteList = function (id) {
+      return $http.post('http://localhost:1114/lista/delete?id='+id)
         .then(function (results) {
           return results;
         });
     };
-	PlayListObj.updateList = function () {
-      return $http.post('http://localhost:1114/lista/update?naziv=test256&id=111')
+	PlayListObj.updateList = function (naziv, id) {
+      return $http.post('http://localhost:1114/lista/update?naziv='+naziv+'&id='+id)
         .then(function (results) {
           return results;
         });
     };
-	PlayListObj.dodijeliList = function () {
-      return $http.post('http://localhost:1114/lista/dodijeliListu?naziv=test&idUsera=1')
+	PlayListObj.dodijeliList = function (naziv, idUsera) {
+      return $http.post('http://localhost:1114/lista/dodijeliListu?naziv='+naziv+'&idUsera='+idUsera)
         .then(function (results) {
           return results;
         });
     };
-	PlayListObj.dodijeliPjesmuListi = function () {
-      return $http.post('http://localhost:1114/listapjesama/dodijeliPjesmuListi?idPjesma=1&idLista=1')
+	PlayListObj.dodijeliPjesmuListi = function (idPjesma, idLista) {
+      return $http.post('http://localhost:1114/listapjesama/dodijeliPjesmuListi?idPjesma='+idPjesma+'&idLista='+idLista)
         .then(function (results) {
           return results;
         });
     };
-	PlayListObj.deleteListaPjesma = function () {
-      return $http.post('http://localhost:1114/listapjesama/delete?id=1')
-        .then(function (results) {
-          return results;
-        });
-    };
-	
-	PlayListObj.dajSvePjesmeZaListu = function () {
-      return $http.get('http://localhost:1114/listapjesama/dajSvePjesmeZaListu?idListe=1')
+	PlayListObj.deleteListaPjesma = function (id) {
+      return $http.post('http://localhost:1114/listapjesama/delete?id='+id)
         .then(function (results) {
           return results;
         });
     };
 	
-	PlayListObj.insertPregled = function () {  //could not execute statement; nested exception is org.hibernate.exception.GenericJDBCException: could not execute statement
-      return $http.post('http://localhost:1114/pregledi/insert?idPjesme=1')
-        .then(function (results) {
-          return results;
-        });
-    };
-	PlayListObj.deletePregled = function () {
-      return $http.post('http://localhost:1114/pregledi/delete?id=1')
+	PlayListObj.dajSvePjesmeZaListu = function (idListe) {
+      return $http.get('http://localhost:1114/listapjesama/dajSvePjesmeZaListu?idListe='+idListe)
         .then(function (results) {
           return results;
         });
     };
 	
-	PlayListObj.insertSong = function () { 
-      return $http.post('http://localhost:1114/youtube/youtube?urlPjesme=ovoJeNekaProba')
+	PlayListObj.insertPregled = function (idPjesme) { 
+      return $http.post('http://localhost:1114/pregledi/insert?idPjesme='+idPjesme)
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.deletePregled = function (id) {
+      return $http.post('http://localhost:1114/pregledi/delete?id='+id)
         .then(function (results) {
           return results;
         });
     };
 	
-	PlayListObj.deleteSong = function () { 
-      return $http.post('http://localhost:1114/youtube/delete?id=1')
+	PlayListObj.insertSong = function (urlPjesme) { 
+      return $http.post('http://localhost:1114/youtube/youtube?urlPjesme='+urlPjesme)
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.deleteSong = function (id) { 
+      return $http.post('http://localhost:1114/youtube/delete?id='+id)
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.getLists = function () { 
+      return $http.get('http://localhost:1114/lista/getAll')
         .then(function (results) {
           return results;
         });

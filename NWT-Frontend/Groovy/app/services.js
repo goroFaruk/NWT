@@ -296,8 +296,8 @@ angular.module("app.ui.services", []).factory("loggit", [
         });
     };
 	
-	PlayListObj.insertList = function () {
-      return $http.get('http://localhost:1114/lista/insert?naziv=test5')
+	PlayListObj.insertList = function (naziv) {
+      return $http.get('http://localhost:1114/lista/insert?naziv='+naziv)
         .then(function (results) {
           return results;
         });
@@ -305,66 +305,73 @@ angular.module("app.ui.services", []).factory("loggit", [
 	
 	
 	
-	PlayListObj.deleteList = function () {
-      return $http.post('http://localhost:1114/lista/delete?id=3')
+	PlayListObj.deleteList = function (id) {
+      return $http.post('http://localhost:1114/lista/delete?id='+id)
         .then(function (results) {
           return results;
         });
     };
-	PlayListObj.updateList = function () {
-      return $http.post('http://localhost:1114/lista/update?naziv=test256&id=111')
+	PlayListObj.updateList = function (naziv, id) {
+      return $http.post('http://localhost:1114/lista/update?naziv='+naziv+'&id='+id)
         .then(function (results) {
           return results;
         });
     };
-	PlayListObj.dodijeliList = function () {
-      return $http.post('http://localhost:1114/lista/dodijeliListu?naziv=test&idUsera=1')
+	PlayListObj.dodijeliList = function (naziv, idUsera) {
+      return $http.post('http://localhost:1114/lista/dodijeliListu?naziv='+naziv+'&idUsera='+idUsera)
         .then(function (results) {
           return results;
         });
     };
-	PlayListObj.dodijeliPjesmuListi = function () {
-      return $http.post('http://localhost:1114/listapjesama/dodijeliPjesmuListi?idPjesma=1&idLista=1')
+	PlayListObj.dodijeliPjesmuListi = function (idPjesma, idLista) {
+      return $http.post('http://localhost:1114/listapjesama/dodijeliPjesmuListi?idPjesma='+idPjesma+'&idLista='+idLista)
         .then(function (results) {
           return results;
         });
     };
-	PlayListObj.deleteListaPjesma = function () {
-      return $http.post('http://localhost:1114/listapjesama/delete?id=1')
-        .then(function (results) {
-          return results;
-        });
-    };
-	
-	PlayListObj.dajSvePjesmeZaListu = function () {
-      return $http.get('http://localhost:1114/listapjesama/dajSvePjesmeZaListu?idListe=1')
+	PlayListObj.deleteListaPjesma = function (id) {
+      return $http.post('http://localhost:1114/listapjesama/delete?id='+id)
         .then(function (results) {
           return results;
         });
     };
 	
-	PlayListObj.insertPregled = function () {  //could not execute statement; nested exception is org.hibernate.exception.GenericJDBCException: could not execute statement
-      return $http.post('http://localhost:1114/pregledi/insert?idPjesme=1')
-        .then(function (results) {
-          return results;
-        });
-    };
-	PlayListObj.deletePregled = function () {
-      return $http.post('http://localhost:1114/pregledi/delete?id=1')
+	PlayListObj.dajSvePjesmeZaListu = function (idListe) {
+      return $http.get('http://localhost:1114/listapjesama/dajSvePjesmeZaListu?idListe='+idListe)
         .then(function (results) {
           return results;
         });
     };
 	
-	PlayListObj.insertSong = function () { 
-      return $http.post('http://localhost:1114/youtube/youtube?urlPjesme=ovoJeNekaProba')
+	PlayListObj.insertPregled = function (idPjesme) { 
+      return $http.post('http://localhost:1114/pregledi/insert?idPjesme='+idPjesme)
+        .then(function (results) {
+          return results;
+        });
+    };
+	PlayListObj.deletePregled = function (id) {
+      return $http.post('http://localhost:1114/pregledi/delete?id='+id)
         .then(function (results) {
           return results;
         });
     };
 	
-	PlayListObj.deleteSong = function () { 
-      return $http.post('http://localhost:1114/youtube/delete?id=1')
+	PlayListObj.insertSong = function (urlPjesme) { 
+      return $http.post('http://localhost:1114/youtube/youtube?urlPjesme='+urlPjesme)
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.deleteSong = function (id) { 
+      return $http.post('http://localhost:1114/youtube/delete?id='+id)
+        .then(function (results) {
+          return results;
+        });
+    };
+	
+	PlayListObj.getLists = function () { 
+      return $http.get('http://localhost:1114/lista/getAll')
         .then(function (results) {
           return results;
         });
