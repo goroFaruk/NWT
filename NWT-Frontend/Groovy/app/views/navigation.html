@@ -1,3 +1,4 @@
+<script src="path/to/angular-cookies.js"></script>
 <!-- Logo -->
 <div class="logo" data-ng-controller="AdminAppCtrl">
   <a class="logo-link" href="#/">
@@ -35,9 +36,9 @@
 
   <div class="sidebar-nav-main navigation-menu-container" data-slim-scroll data-ng-class="{minified:mediaPlayer.currentTrack}" ng-controller="DeleteCtrl">
 
-    <div class="menu-navigation-menus" ng-show="navigation.navigationState.menu">
+    <div class="menu-navigation-menus" ng-show="navigation.navigationState.menu" >
 
-      <div class="nav-user-menu sidebar-nav-content">
+      <div class="nav-user-menu sidebar-nav-content" ng-controller="SignInCtrl">
 
         <ul class="sidebar-nav-menu" data-highlight-active>
           
@@ -48,9 +49,9 @@
               </a>
               <i id="user-settings-btn" class="action-icon fa fa-gear"></i>
             </div>
-            <a class="nav-link profile" href="#/pages/profile">
-              <img src="dist/images/user.png" alt="" class="img20_20 img-circle">
-              <span class="label helper-tooltip-measured">Joao Garin</span>
+            <a class="nav-link profile" href="#/pages/profile" >
+              <img src="dist/images/user.png" alt="" class="img20_20 img-circle" >
+              <span class="label helper-tooltip-measured" ng-init="logedUsername">{{logedUsername}}</span>
             </a>
 
           </li>

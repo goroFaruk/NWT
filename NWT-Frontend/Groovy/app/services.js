@@ -271,20 +271,26 @@ angular.module("app.ui.services", []).factory("loggit", [
 
     };
 
-    PlayListObj.login = function () {
-      return $http.post('http://localhost:1113/users/login?username=test&pass=test')
+    PlayListObj.login = function (username,password) {
+      return $http.post('http://localhost:1113/users/login?username='+username+'&pass='+password)
         .then(function (results) {
           return results;
         });
     };
-    PlayListObj.signUp = function () {
-      return $http.post('http://localhost:1113/users/register?email=noviJuzer@njegovEmail.com&pass=njegovaSifra&username=njegovJuzernejm')
+    PlayListObj.logedUser = function (username){
+      return $http.get('http://localhost:1113/users/getUserByUsername?username='+username).
+      then(function(results){
+        return results;
+      })
+    };
+    PlayListObj.signUp = function (username, email, password) {
+      return $http.post('http://localhost:1113/users/register?email='+email+'&pass='+password+'&username='+username)
         .then(function (results) {
           return results;
         });
     };
-     PlayListObj.deleteProfile = function () {
-      return $http.post('http://localhost:1113/users/delete?id=8')
+     PlayListObj.deleteProfile = function (userId) {
+      return $http.post('http://localhost:1113/users/delete?id='+userId)
         .then(function (results) {
           return results;
         });
