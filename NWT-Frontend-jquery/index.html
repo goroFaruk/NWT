@@ -279,13 +279,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="drop-navigation drop-navigation">
 				  <ul class="nav nav-sidebar">
 					<li class="active"><a href="index.html" class="home-icon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
-					<li><a href="#" onclick="GetAllMarks()" class="user-icon"><span class="glyphicon glyphicon-home glyphicon-blackboard" aria-hidden="true"></span>TV Shows-Sve ocjene</a></li>
-					<li><a href="#" onclick="DeleteOcjenu()" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>History-Izbrisi ocjenu</a></li>
+					<li><a href="#" onclick="GetAllMarks()" class="user-icon"><span class="glyphicon glyphicon-home glyphicon-blackboard" aria-hidden="true"></span>Daj sve ocjene</a></li>
+					<li><a href="#" onclick="DeleteOcjenu()" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>Izbrisi ocjenu</a></li>
 					<li><a href="#" class="menu1"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>Music List<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
 						<ul class="cl-effect-2">
-							<li><a href="movies.html">English</a></li>                                             
-							<li><a href="movies.html">Chinese</a></li>
-							<li><a href="movies.html">Hindi</a></li> 
+							<li><a href="#" onclick="AddSongToList()" >Add Song to List</a></li>                                             
+							<li><a href="#" onclick="DeleteSong()" >Izbrisi pjesmu</a></li>
+			
 						</ul>
 						
 						<script>
@@ -316,10 +316,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								var id=$("#idListe").val();
 								$.ajax({
 									method: "GET",
-									url: "http://localhost:1114/lista/",
+									url: "http://localhost:1114/lista/?id=5",
 									data: { id: id }
 								}).success(function(response) {
-									//vratit ce json objekat tipa ListaEntity i atributima se moze pristupiti npr response.id ili response.naziv...
+									
 									alert( response );
 								}).error(function(response){
 									alert("greska" +response);
@@ -336,7 +336,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									alert("greska" +response);
 								});
 							}
-
+							
+						function AddSongToList(){
+								$.ajax({
+									method: "POST",
+									url: "http://localhost:1112/listapjesama/dodijeliPjesmuListi?idpjesma=6&lista=2",
+								}).success(function(response) {
+									alert( response );
+								}).error(function(response){
+									alert("greska" +response);
+								});
+							}
+						
+						function DeleteSong(){
+								$.ajax({
+									method: "POST",
+									url: "http://localhost:1112/listapjesama/delete?id=6",
+								}).success(function(response) {
+									alert( response );
+								}).error(function(response){
+									alert("greska" +response);
+								});
+							}
 							
 							
 						</script>
@@ -351,13 +372,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							});
 							});
 						</script>
-					<li><a href="#" class="menu"><span class="glyphicon glyphicon-film glyphicon-king" aria-hidden="true"></span>Sports List<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
+				<!--	<li><a href="#" class="menu"><span class="glyphicon glyphicon-film glyphicon-king" aria-hidden="true"></span>Sports List<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
 						<ul class="cl-effect-1">
 							<li><a href="sports.html">Football</a></li>                                             
 							<li><a href="sports.html">Cricket</a></li>
 							<li><a href="sports.html">Tennis</a></li> 
 							<li><a href="sports.html">Shattil</a></li>  
-						</ul>
+						</ul> -->
 						<!-- script-for-menu -->
 						<script>
 							$( "li a.menu" ).click(function() {
@@ -366,11 +387,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							});
 							});
 						</script>
-					<li><a href="movies.html" class="song-icon"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>Songs</a></li>
+					<li><a href="#" onclick="GetAllSongsLists()" class="song-icon"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>Songs-getAllSongs</a></li>
 
 				  </ul>
 				  <!-- script-for-menu -->
 						<script>
+							function GetAllSongsLists(){
+								$.ajax({
+									method: "GET",
+									url: "http://localhost:1114/listapjesama/getAll",
+								}).success(function(response) {
+									alert( response.naziv );
+								}).error(function(response){
+									alert("greska" +response);
+								});
+							}
+						
+						
+						
 							$( ".top-navigation" ).click(function() {
 							$( ".drop-navigation" ).slideToggle( 300, function() {
 							// Animation complete.
