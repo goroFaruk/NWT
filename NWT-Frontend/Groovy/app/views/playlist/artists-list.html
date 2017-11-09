@@ -4,7 +4,7 @@
 
     <div class="page-actions">
       <div class="buttons-left">
-        <button class="btn btn-primary"><i class="fa fa-headphones"></i>&nbsp;&nbsp;Play all</button>
+        <button class="btn btn-primary"><i class="fa fa-headphones" ></i>&nbsp;&nbsp;Play all</button>
       </div>
 
       <div class="buttons-right">
@@ -15,7 +15,14 @@
     </div>
 
     <div class="divider-md"></div>
-
+	<div ng-controller="GetAllListsCtrl">
+	<div class="buttons-left">
+        <button class="btn btn-primary" ng-click="getLists();"><i class="fa fa-headphones" ></i>Ucitaj liste</button>
+      </div>
+	<p ng-model="lists">
+		{{lists}}
+	</p>
+	</div>
     <div class="panel panel-default">
       <div class="panel-body">
 

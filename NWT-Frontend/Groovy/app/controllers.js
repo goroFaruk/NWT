@@ -2,25 +2,21 @@
  Application controllers
  Main controllers for the app
  */
-
-angular.module("app.controllers", []).controller("AdminAppCtrl", ["$scope", "$location",
+var userId;
+angular.module("app.controllers", ['ngCookies']).controller("AdminAppCtrl", ["$scope", "$location",
   function ($scope, $location) {
     $scope.checkIfOwnPage = function () {
 
-      return _.contains(["/front","/404", "/pages/500", "/pages/login", "/pages/signin", "/pages/signin1", "/pages/signin2", "/pages/signup", "/pages/signup1", "/pages/signup2", "/pages/forgot", "/pages/lock-screen"], $location.path());
+      return _.contains(["/front", "/404", "/pages/500", "/pages/login", "/pages/signin", "/pages/signin1", "/pages/signin2", "/pages/signup", "/pages/signup1", "/pages/signup2", "/pages/forgot", "/pages/lock-screen"], $location.path());
 
     };
-	console.log("u kontroleru app.ctrl");
+    console.log("u kontroleru app.ctrl");
     $scope.checkIfFixedPage = function () {
 
       return _.contains(["/dashboard"], $location.path());
 
     };
 
-    $scope.info = {
-      theme_name: "Kimono",
-      user_name: "Jane Doe"
-    };
 
   }
 ]).controller("NavCtrl", ['navigationMenuService',
@@ -39,191 +35,241 @@ angular.module("app.controllers", []).controller("AdminAppCtrl", ["$scope", "$lo
     };
 
   }
-  ]).controller("SignInCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru sign.in.ctrl", PlayListSrv); 
- $scope.login = function () {
-	 console.log("u funkciji sign.in.ctrl");
-           PlayListSrv.login().
-		then(function (response) {
-            $scope.loginService = response.data;
-	    console.log($scope.loginService);
-        });
-        };
-	
-  }
+]).controller("SignInCtrl", ['$scope', '$cookieStore', 'PlayListSrv', function ($scope, $cookieStore, PlayListSrv) {
+  $scope.$on('$routeChangeStart', function (next, current) {
+    $scope.logedUsername = $cookieStore.get('logedUser');
+    console.log(userId);
+  });
+  $scope.login = function () {
+    $cookieStore.put('logedUser', $scope.username);
+    var logedUser = $cookieStore.get('logedUser');
+    
+    PlayListSrv.logedUser(logedUser).then(function (response){
+      console.log(response.data);
+      userId = response.data.id;
+      console.log(userId);
+      if(userId!=0){$cookieStore.put('userId',userId);}
+    });
+
+    console.log(logedUser);
+    PlayListSrv.login($scope.username, $scope.password).
+      then(function (response) {
+        $scope.loginService = response.data.message;
+        if ($scope.loginService == 'Korisnicki podaci su netacni!') {
+          window.open("#/pages/signin", '_self', false);
+        } else {
+
+          window.open("#", '_self', false);
+        }
+      });
+  };
+}
+]).controller("SignOutCtrl", ['$scope', '$cookieStore', 'PlayListSrv', function ($scope, $cookieStore, PlayListSrv) {
+  delete $cookieStore['logedUser'];
+  delete $cookieStore['userId'];
+  var logedUser = $cookieStore.get('logedUser');
+  window.open("#/pages/signin", '_self', false);
+}
+]).controller("DeleteCtrl", ['$scope','$cookieStore', 'PlayListSrv', function ($scope,$cookieStore, PlayListSrv) {
+  console.log("u kontroleru delete.ctrl", PlayListSrv);
+  var userId = $cookieStore.get('userId');
+  $scope.deleteProfile = function () {
+    console.log("u funkciji deleteProfile");
+    PlayListSrv.deleteProfile(userId).
+      then(function (response) {
+        $scope.deleteProfileService = response.data;
+        console.log($scope.deleteProfileService);
+        var msg = response.data.message;
+        if(msg == "User is successfully deleted"){
+          window.open("#/pages/signin", '_self', false);
+          delete $cookieStore['userId'];
+        }        
+        
+      });
+  };
+  
+}
 ])
-.controller("DeleteCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru delete.ctrl", PlayListSrv); 
+  .controller("SignUpCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru sign.up.ctrl", PlayListSrv);
 
- $scope.deleteProfile = function () {
-	 console.log("u funkciji deleteProfile");
-           PlayListSrv.deleteProfile().
-		then(function (response) {
-            $scope.deleteProfileService = response.data;
-	    console.log($scope.deleteProfileService);
-        });
-        };
-	
-  }
-])
-.controller("SignUpCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru sign.up.ctrl", PlayListSrv); 
+    $scope.signUp = function () {
+      console.log("u funkciji sign.in.ctrl");
+      PlayListSrv.signUp($scope.newUsername, $scope.newEmail, $scope.newPassword).
+        then(function (response) {
+          $scope.signUpService = response.data;
 
- $scope.signUp = function () {
-	 console.log("u funkciji sign.in.ctrl");
-           PlayListSrv.signUp().
-		then(function (response) {
-            $scope.signUpService = response.data;
-	    console.log($scope.signUpService);
+          console.log($scope.signUpService);
         });
-        };
-	
-  }
-]).controller("insertListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru insert.List.ctrl", PlayListSrv); 
+        window.open("#/pages/signin", '_self', false);
+    };
 
- $scope.insertList = function () {
-	 console.log("u funkciji insert.List.ctrl");
-           PlayListSrv.insertList().
-		then(function (response) {
-            $scope.insertListService = response.data;
-	    console.log($scope.insertListService);
-        });
-        };
-	
   }
-]).controller("deleteListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru delete.List.ctrl", PlayListSrv); 
+  ]).controller("insertListCtrl", ['$scope','PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru insert.List.ctrl", PlayListSrv);
+	
+    $scope.insertList = function () {
+      console.log($scope.naziv);
+      PlayListSrv.insertList($scope.naziv).
+        then(function (response) {
+			window.open("#", '_self', false);
+          
+		  $scope.insertListService = response.data;
+          console.log($scope.insertListService);
+        });
+		
+    };
 
- $scope.deleteList = function () {
-	 console.log("u funkciji delete.List.ctrl");
-           PlayListSrv.deleteList().
-		then(function (response) {
-            $scope.deleteListService = response.data;
-	    console.log($scope.deleteListService);
-        });
-        };
-	
-  }
-]).controller("updateListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru delete.List.ctrl", PlayListSrv); 
 
- $scope.updateList = function () {
-	 console.log("u funkciji update.List.ctrl");
-           PlayListSrv.updateList().
-		then(function (response) {
-            $scope.updateListService = response.data;
-	    console.log($scope.updateListService);
-        });
-        };
-	
   }
-]).controller("dodijeliListCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru dodijeli.List.ctrl", PlayListSrv); 
+  ]).controller("dodijeliListCtrl", ['$scope', '$cookieStore','PlayListSrv', function ($scope, $cookieStore, PlayListSrv) {
+    console.log("u kontroleru dodijeli.List.ctrl", PlayListSrv);
+	
+	
+    $scope.dodijeliList = function () {
+      console.log(userId);
+      PlayListSrv.dodijeliList($scope.naziv,userId).
+        then(function (response) {
+          $scope.dodijeliListService = response.data;
+          console.log($scope.dodijeliListService);
+        });
+    };
 
- $scope.dodijeliList = function () {
-	 console.log("u funkciji dodijeli.List.ctrl");
-           PlayListSrv.dodijeliList().
-		then(function (response) {
-            $scope.dodijeliListService = response.data;
-	    console.log($scope.dodijeliListService);
-        });
-        };
-	
   }
-]).controller("dodijeliPjesmuListiCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru dodijeliPjesmu.List.ctrl", PlayListSrv); 
-//417
- $scope.dodijeliPjesmuListi = function () {
-	 console.log("u funkciji dodijeliPjesmu.Listi.ctrl");
-           PlayListSrv.dodijeliPjesmuListi().
-		then(function (response) {
-            $scope.dodijeliPjesmuListiService = response.data;
-	    console.log($scope.dodijeliPjesmuListiService);
+  ]).controller("insertSongCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru insert.song.ctrl", PlayListSrv);
+    
+	$scope.insertSong = function () {
+      console.log($scope.urlPjesme);
+      PlayListSrv.insertSong($scope.urlPjesme).
+        then(function (response) {
+          $scope.insertSongService = response.data;
+          console.log($scope.insertSongService);
         });
-        };
-	
+    };
+
   }
-]).controller("deleteListapjesamaCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru deleteLista.pjesama.ctrl", PlayListSrv); 
- $scope.deleteListaPjesma = function () {
-	 console.log("u funkciji deleteLista.pjesama.ctrl");
-           PlayListSrv.deleteListaPjesma().
-		then(function (response) {
-            $scope.deleteListaPjesmaService = response.data;
-	    console.log($scope.deleteListaPjesmaService);
+  ])
+  .controller("GetAllListsCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru getalllists.ctrl", PlayListSrv);
+    $scope.getLists = function () {
+      console.log("u funkciji getLists.ctrl");
+      PlayListSrv.getLists().
+        then(function (response) {
+          $scope.lists = response.data[0].naziv;
+		  console.log($scope.lists);
         });
-        };
-	
+    };
+
   }
-]).controller("dajSvePjesmeZaListuCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru dajSvePjesmeZaListu.pjesama.ctrl", PlayListSrv); 
- $scope.dajSvePjesmeZaListu = function () {
-	 console.log("u funkciji dajSvePjesmeZaListu.pjesama.ctrl");
-           PlayListSrv.dajSvePjesmeZaListu().
-		then(function (response) {
-            $scope.dajSvePjesmeZaListuService = response.data;
-	    console.log($scope.dajSvePjesmeZaListuService);
+  ]).controller("insertPregledCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru insert.pregled.ctrl", PlayListSrv);
+    $scope.insertPregled = function () {
+      console.log(scope.idPjesme);
+      PlayListSrv.insertPregled($scope.idPjesme).
+        then(function (response) {
+          $scope.insertPregledService = response.data;
+          console.log($scope.insertPregledService);
         });
-        };
-	
+    };
+
   }
-]).controller("insertPregledCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru insert.pregled.ctrl", PlayListSrv); 
- $scope.insertPregled = function () {
-	 console.log("u funkciji insert.pregled.ctrl");
-           PlayListSrv.insertPregled().
-		then(function (response) {
-            $scope.insertPregledService = response.data;
-	    console.log($scope.insertPregledService);
+  ]).controller("deleteListCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
+	
+    $scope.deleteList = function () {
+      console.log("u funkciji delete.List.ctrl");
+      PlayListSrv.deleteList($scope.id).
+        then(function (response) {
+          $scope.deleteListService = response.data;
+          console.log($scope.deleteListService);
+		 
         });
-        };
-	
+		window.open("#/dashboards/dashboard", '_self', false);
+    };
+
   }
-]).controller("deletePregledCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru delete.pregled.ctrl", PlayListSrv); 
- $scope.deletePregled = function () {
-	 console.log("u funkciji delete.pregled.ctrl");
-           PlayListSrv.deletePregled().
-		then(function (response) {
-            $scope.deletePregledService = response.data;
-	    console.log($scope.deletePregledService);
+  ]).controller("updateListCtrl", ['$scope','$cookieStore', 'PlayListSrv', function ($scope,$cookieStore, PlayListSrv) {
+    console.log("u kontroleru delete.List.ctrl", PlayListSrv);
+
+    $scope.updateList = function () {
+      console.log("u funkciji update.List.ctrl");
+      PlayListSrv.updateList(naziv, id).
+        then(function (response) {
+          $scope.updateListService = response.data;
+          console.log($scope.updateListService);
         });
-        };
-	
+    };
+
   }
-]).controller("insertSongCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru insert.song.ctrl", PlayListSrv); 
- $scope.insertSong = function () {
-	 console.log("u funkciji insert.Song.ctrl");
-           PlayListSrv.insertSong().
-		then(function (response) {
-            $scope.insertSongService = response.data;
-	    console.log($scope.insertSongService);
+  ]).controller("dodijeliPjesmuListiCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru dodijeliPjesmu.List.ctrl", PlayListSrv);
+    $scope.dodijeliPjesmuListi = function () {
+      console.log("u funkciji dodijeliPjesmu.Listi.ctrl");
+      PlayListSrv.dodijeliPjesmuListi().
+        then(function (response) {
+          $scope.dodijeliPjesmuListiService = response.data;
+          console.log($scope.dodijeliPjesmuListiService);
         });
-        };
-	
+    };
+
   }
-]).controller("deleteSongCtrl", ['$scope','PlayListSrv',function ($scope, PlayListSrv) {
-console.log("u kontroleru delete.song.ctrl", PlayListSrv); 
- $scope.deleteSong = function () {
-	 console.log("u funkciji delete.Song.ctrl");
-           PlayListSrv.deleteSong().
-		then(function (response) {
-            $scope.deleteSongService = response.data;
-	    console.log($scope.deleteSongService);
+  ]).controller("deleteListapjesamaCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru deleteLista.pjesama.ctrl", PlayListSrv);
+    $scope.deleteListaPjesma = function () {
+      console.log("u funkciji deleteLista.pjesama.ctrl");
+      PlayListSrv.deleteListaPjesma().
+        then(function (response) {
+          $scope.deleteListaPjesmaService = response.data;
+          console.log($scope.deleteListaPjesmaService);
         });
-        };
-	
+    };
+
   }
-]).controller("ActionsCtrl", ['$scope',function ($scope) {
+  ]).controller("dajSvePjesmeZaListuCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru dajSvePjesmeZaListu.pjesama.ctrl", PlayListSrv);
+    $scope.dajSvePjesmeZaListu = function () {
+      console.log("u funkciji dajSvePjesmeZaListu.pjesama.ctrl");
+      PlayListSrv.dajSvePjesmeZaListu().
+        then(function (response) {
+          $scope.dajSvePjesmeZaListuService = response.data;
+          console.log($scope.dajSvePjesmeZaListuService);
+        });
+    };
+
+  }
+  ]).controller("deletePregledCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru delete.pregled.ctrl", PlayListSrv);
+    $scope.deletePregled = function () {
+      console.log("u funkciji delete.pregled.ctrl");
+      PlayListSrv.deletePregled().
+        then(function (response) {
+          $scope.deletePregledService = response.data;
+          console.log($scope.deletePregledService);
+        });
+    };
+
+  }
+  ]).controller("deleteSongCtrl", ['$scope', 'PlayListSrv', function ($scope, PlayListSrv) {
+    console.log("u kontroleru delete.song.ctrl", PlayListSrv);
+    $scope.deleteSong = function () {
+      console.log("u funkciji delete.Song.ctrl");
+      PlayListSrv.deleteSong().
+        then(function (response) {
+          $scope.deleteSongService = response.data;
+          console.log($scope.deleteSongService);
+        });
+    };
+
+  }
+  ]).controller("ActionsCtrl", ['$scope', function ($scope) {
 
     this.toggleChat = function () {
       $('.chat-bar').toggleClass("visible");
     };
 
   }
-]);
+  ]);
 
 /*
  App Form validations
@@ -588,7 +634,7 @@ angular.module("app.ui.ctrls", []).controller("NotifyCtrl", ["$scope", "loggit",
     }];
 
     $scope.addAlert = function () {
-      $scope.alerts.push({msg: 'Another alert!'});
+      $scope.alerts.push({ msg: 'Another alert!' });
     };
 
     $scope.closeAlert = function (index) {
@@ -746,39 +792,39 @@ angular.module("app.ui.ctrls", []).controller("NotifyCtrl", ["$scope", "loggit",
     // Parameters
 
     $scope.list
-    = [{
-      "id": 1,
-      "title": "1. dragon-breath",
-      "items": []
-    }, {
-      "id": 2,
-      "title": "2. moiré-vision",
-      "items": [{
-        "id": 21,
-        "title": "2.1. tofu-animation",
+      = [{
+        "id": 1,
+        "title": "1. dragon-breath",
+        "items": []
+      }, {
+        "id": 2,
+        "title": "2. moiré-vision",
         "items": [{
-          "id": 211,
-          "title": "2.1.1. spooky-giraffe",
-          "items": []
+          "id": 21,
+          "title": "2.1. tofu-animation",
+          "items": [{
+            "id": 211,
+            "title": "2.1.1. spooky-giraffe",
+            "items": []
+          }, {
+            "id": 212,
+            "title": "2.1.2. bubble-burst",
+            "items": []
+          }]
         }, {
-          "id": 212,
-          "title": "2.1.2. bubble-burst",
+          "id": 22,
+          "title": "2.2. barehand-atomsplitting",
           "items": []
         }]
       }, {
-        "id": 22,
-        "title": "2.2. barehand-atomsplitting",
+        "id": 3,
+        "title": "3. unicorn-zapper",
         "items": []
-      }]
-    }, {
-      "id": 3,
-      "title": "3. unicorn-zapper",
-      "items": []
-    }, {
-      "id": 4,
-      "title": "4. romantic-transclusion",
-      "items": []
-    }];
+      }, {
+        "id": 4,
+        "title": "4. romantic-transclusion",
+        "items": []
+      }];
 
     $scope.callbacks = {};
 
@@ -807,9 +853,9 @@ angular.module("app.ui.ctrls", []).controller("NotifyCtrl", ["$scope", "loggit",
  Provides general controllers for the app
  */
 
-angular.module('app.music', ['mediaPlayer','ngDragDrop'])
-  .controller('PlayListCtrl', ['$scope','PlayListSrv', 'CreatePlaylistSrv',
-    function ($scope,PlayListSrv, CreatePlaylistSrv) {
+angular.module('app.music', ['mediaPlayer', 'ngDragDrop'])
+  .controller('PlayListCtrl', ['$scope', 'PlayListSrv', 'CreatePlaylistSrv',
+    function ($scope, PlayListSrv, CreatePlaylistSrv) {
       this.audioPlaylist = [];
       var CreateNewPlaylistSrv = CreatePlaylistSrv;
 
@@ -854,274 +900,274 @@ angular.module('app.music', ['mediaPlayer','ngDragDrop'])
         }
       };
 
-      this.createNewPlaylist = function(song){
+      this.createNewPlaylist = function (song) {
 
         CreateNewPlaylistSrv.openCreateModal(song);
 
       };
 
-    }]).controller('ArtistListingCtrl',['$scope','ArtistListingSrv',
-    function($scope,ArtistListingSrv){
+    }]).controller('ArtistListingCtrl', ['$scope', 'ArtistListingSrv',
+      function ($scope, ArtistListingSrv) {
 
-      $scope.ArtistsSrv = ArtistListingSrv;
+        $scope.ArtistsSrv = ArtistListingSrv;
 
-      ArtistListingSrv.getArtists(function(data){
-        // no need to read data because its binded to $scope.AlbumsSrv
-        // You can however process something only after the data comes back
-      });
+        ArtistListingSrv.getArtists(function (data) {
+          // no need to read data because its binded to $scope.AlbumsSrv
+          // You can however process something only after the data comes back
+        });
 
-    }]).controller('AlbumsCtrl',['$scope','AlbumsListingSrv',
-    function($scope,AlbumsListingSrv){
+      }]).controller('AlbumsCtrl', ['$scope', 'AlbumsListingSrv',
+        function ($scope, AlbumsListingSrv) {
 
-      $scope.AlbumsSrv = AlbumsListingSrv;
+          $scope.AlbumsSrv = AlbumsListingSrv;
 
-      AlbumsListingSrv.getAlbums(function(data){
-        // no need to read data because its binded to $scope.AlbumsSrv
-        // You can however process something only after the data comes back
-      });
-
-
-    }]).controller('GenresCtrl',['$scope','GenresListingSrv',
-    function($scope,GenresListingSrv){
-
-      $scope.GenresSrv = GenresListingSrv;
-
-      GenresListingSrv.getGenres(function(data){
-        // no need to read data because its binded to $scope.GenresSrv
-        // You can however process something only after the data comes back
-      });
-
-
-    }]).controller('ArtistCtrl', ['$scope','$routeParams', 'ArtistSrv','PlayListSrv', 'navigationMenuService','loggit',
-    function ($scope,$routeParams, ArtistSrv,PlayListSrv, navigationMenuService,loggit) {
-
-      this.ArtistSrv = ArtistSrv;
-      var artistPlaylistVar = [],
-        artistPlaylistAlbums = [];
-
-
-      this.AlbumList = true;
-      this.FullList = false;
-      this.following = "Follow artist";
-      this.following_class = "btn-default";
-
-      this.follow = function(){
-
-        this.following = "Following";
-        this.following_class = "btn-primary";
-
-        loggit.logSuccess('Yaay!! You are now following this artist');
-
-      };
-
-      ArtistSrv.getArtist($routeParams.title, function (response) {
-
-        if(typeof response.albums != "undefined"){
-
-          _.map(response.albums, function (album) {
-
-            artistPlaylistAlbums.push({
-              album_name: album.album_name,
-              album_image: album.album_image,
-              album_release: album.album_release,
-              songs:[]
-            });
-
-            _.map(album.songs, function (song) {
-
-              /*Put them all together in one single list (for adding to new playlists for example)*/
-
-              var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
-
-              artistPlaylistVar.push({
-                image: song.image,
-                src: song.url,
-                url: song.url,
-                type: song.type,
-                artist: parseTitle[1],
-                title: parseTitle[2],
-                displayName:song.displayName
-              });
-
-              /*Put songs also in this artist ordered by album*/
-
-              artistPlaylistAlbums[artistPlaylistAlbums.length - 1].songs.push({
-                image: song.image,
-                src: song.url,
-                url: song.url,
-                type: song.type,
-                artist: parseTitle[1],
-                title: parseTitle[2],
-                displayName:song.displayName
-              });
-            });
-
+          AlbumsListingSrv.getAlbums(function (data) {
+            // no need to read data because its binded to $scope.AlbumsSrv
+            // You can however process something only after the data comes back
           });
 
-          $scope.artistName = response.name;
-          $scope.artistImage = response.image;
-          $scope.artistBanner = response.banner;
-          $scope.artistGenre = response.genre;
-          $scope.artistAbout = response.about;
 
-        }
+        }]).controller('GenresCtrl', ['$scope', 'GenresListingSrv',
+          function ($scope, GenresListingSrv) {
 
-      });
+            $scope.GenresSrv = GenresListingSrv;
 
-      $scope.artistPlaylist = artistPlaylistVar;
-      $scope.artistPlaylistAlbums = artistPlaylistAlbums;
-
-
-      this.addSongs = function (playlist, callback) {
-
-        _.each(artistPlaylistVar, function (audioElement) {
-          playlist.push(angular.copy(audioElement));
-
-          if ((artistPlaylistVar.indexOf(audioElement) + 1) == artistPlaylistVar.length) {
-            // Callback goes here
-            if (callback) {
-              callback();
-            }
-          }
-
-        });
-
-        navigationMenuService.menu = false;
-        navigationMenuService.playlist = true;
-
-      };
-
-      this.addSongsAndPlay = function (playlist, mediaPlayer) {
-
-        this.addSongs(playlist, function () {
-
-          setTimeout(function () {
-            mediaPlayer.play();
-          }, 1000);
-
-        });
-
-      };
-
-      this.addSongToPlaylist = function(song,playlist){
-
-        PlayListSrv.addSongToPlaylist(song,playlist);
-      };
-
-      this.toggleAlbumsList = function(){
-        this.AlbumList = true;
-        this.FullList = false;
-      };
-
-      this.toggleFullList = function(){
-        this.AlbumList = false;
-        this.FullList = true;
-      };
-
-
-    }]).controller('UserPlayListCtrl', ['$routeParams', 'PlayListSrv', 'navigationMenuService',
-    function ($routeParams, PlayListSrv, navigationMenuService) {
-
-      this.PlayListSrv = PlayListSrv;
-      var UserPlaylistVar = [],
-        playlistTitle, playlistImage, playlistBanner, playlistGenre,playlistUrlName;
-
-      PlayListSrv.getPlaylist($routeParams.title, function (response) {
-
-        if (typeof response.songs != "undefined") {
-
-          _.map(response.songs, function (song) {
-            var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
-            UserPlaylistVar.push({
-              image: song.image,
-              src: song.url,
-              url: song.url,
-              type: song.type,
-              artist: parseTitle[1],
-              title: parseTitle[2],
-              displayName:song.displayName
+            GenresListingSrv.getGenres(function (data) {
+              // no need to read data because its binded to $scope.GenresSrv
+              // You can however process something only after the data comes back
             });
-          });
 
-          playlistTitle = response.name;
-          playlistImage = response.image;
-          playlistBanner = response.banner;
-          playlistGenre = response.genre;
-          playlistUrlName = response.url_name;
-        }
 
-      });
+          }]).controller('ArtistCtrl', ['$scope', '$routeParams', 'ArtistSrv', 'PlayListSrv', 'navigationMenuService', 'loggit',
+            function ($scope, $routeParams, ArtistSrv, PlayListSrv, navigationMenuService, loggit) {
 
-      this.userPlaylist = UserPlaylistVar;
-      this.playlistName = playlistTitle;
-      this.playlistImage = playlistImage;
-      this.playlistBanner = playlistBanner;
-      this.playlistGenre = playlistGenre;
-      this.playlistUrlName = playlistUrlName;
+              this.ArtistSrv = ArtistSrv;
+              var artistPlaylistVar = [],
+                artistPlaylistAlbums = [];
 
-      this.addSongs = function (playlist, callback) {
 
-        _.each(UserPlaylistVar, function (audioElement) {
-          playlist.push(angular.copy(audioElement));
+              this.AlbumList = true;
+              this.FullList = false;
+              this.following = "Follow artist";
+              this.following_class = "btn-default";
 
-          if ((UserPlaylistVar.indexOf(audioElement) + 1) == UserPlaylistVar.length) {
-            // Callback goes here
-            if (callback) {
-              callback();
-            }
-          }
+              this.follow = function () {
 
-        });
+                this.following = "Following";
+                this.following_class = "btn-primary";
 
-        navigationMenuService.menu = false;
-        navigationMenuService.playlist = true;
+                loggit.logSuccess('Yaay!! You are now following this artist');
 
-      };
+              };
 
-      this.addSongsAndPlay = function (playlist, mediaPlayer) {
+              ArtistSrv.getArtist($routeParams.title, function (response) {
 
-        this.addSongs(playlist, function () {
+                if (typeof response.albums != "undefined") {
 
-          setTimeout(function () {
-            mediaPlayer.play();
-          }, 1000);
+                  _.map(response.albums, function (album) {
 
-        });
+                    artistPlaylistAlbums.push({
+                      album_name: album.album_name,
+                      album_image: album.album_image,
+                      album_release: album.album_release,
+                      songs: []
+                    });
 
-      };
+                    _.map(album.songs, function (song) {
 
-      this.addSongToPlaylist = function(song,playlist){
+                      /*Put them all together in one single list (for adding to new playlists for example)*/
 
-        PlayListSrv.addSongToPlaylist(song,playlist);
-      };
+                      var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
 
-      this.removeSongFromPlaylist = function(song,playlist){
+                      artistPlaylistVar.push({
+                        image: song.image,
+                        src: song.url,
+                        url: song.url,
+                        type: song.type,
+                        artist: parseTitle[1],
+                        title: parseTitle[2],
+                        displayName: song.displayName
+                      });
 
-        PlayListSrv.removeSongFromPlaylist(song,playlist);
+                      /*Put songs also in this artist ordered by album*/
 
-        //Remove from client so he notices immediately
-        this.userPlaylist = _.without(this.userPlaylist,song);
-      };
+                      artistPlaylistAlbums[artistPlaylistAlbums.length - 1].songs.push({
+                        image: song.image,
+                        src: song.url,
+                        url: song.url,
+                        type: song.type,
+                        artist: parseTitle[1],
+                        title: parseTitle[2],
+                        displayName: song.displayName
+                      });
+                    });
 
-    }]).controller("CreatePlaylistInstanceCtrl", ["$scope", "$modalInstance",'playlistName', 'song','loggit',
-    function ($scope, $modalInstance, playlistName, song,loggit) {
+                  });
 
-      $scope.playlistName = playlistName;
-      $scope.song = song;
+                  $scope.artistName = response.name;
+                  $scope.artistImage = response.image;
+                  $scope.artistBanner = response.banner;
+                  $scope.artistGenre = response.genre;
+                  $scope.artistAbout = response.about;
 
-      $scope.ok = function () {
+                }
 
-        if($scope.playlistName !== ""){
-          $modalInstance.close($scope);
-        }
-        else {
-          $modalInstance.dismiss('cancel');
-          loggit.logError("Error! Could not create a playlist with no name..");
-        }
-      };
+              });
 
-      $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-      };
-    }
-  ]);
+              $scope.artistPlaylist = artistPlaylistVar;
+              $scope.artistPlaylistAlbums = artistPlaylistAlbums;
+
+
+              this.addSongs = function (playlist, callback) {
+
+                _.each(artistPlaylistVar, function (audioElement) {
+                  playlist.push(angular.copy(audioElement));
+
+                  if ((artistPlaylistVar.indexOf(audioElement) + 1) == artistPlaylistVar.length) {
+                    // Callback goes here
+                    if (callback) {
+                      callback();
+                    }
+                  }
+
+                });
+
+                navigationMenuService.menu = false;
+                navigationMenuService.playlist = true;
+
+              };
+
+              this.addSongsAndPlay = function (playlist, mediaPlayer) {
+
+                this.addSongs(playlist, function () {
+
+                  setTimeout(function () {
+                    mediaPlayer.play();
+                  }, 1000);
+
+                });
+
+              };
+
+              this.addSongToPlaylist = function (song, playlist) {
+
+                PlayListSrv.addSongToPlaylist(song, playlist);
+              };
+
+              this.toggleAlbumsList = function () {
+                this.AlbumList = true;
+                this.FullList = false;
+              };
+
+              this.toggleFullList = function () {
+                this.AlbumList = false;
+                this.FullList = true;
+              };
+
+
+            }]).controller('UserPlayListCtrl', ['$routeParams', 'PlayListSrv', 'navigationMenuService',
+              function ($routeParams, PlayListSrv, navigationMenuService) {
+
+                this.PlayListSrv = PlayListSrv;
+                var UserPlaylistVar = [],
+                  playlistTitle, playlistImage, playlistBanner, playlistGenre, playlistUrlName;
+
+                PlayListSrv.getPlaylist($routeParams.title, function (response) {
+
+                  if (typeof response.songs != "undefined") {
+
+                    _.map(response.songs, function (song) {
+                      var parseTitle = song.displayName.match(/(.*?)\s?-\s?(.*)?$/);
+                      UserPlaylistVar.push({
+                        image: song.image,
+                        src: song.url,
+                        url: song.url,
+                        type: song.type,
+                        artist: parseTitle[1],
+                        title: parseTitle[2],
+                        displayName: song.displayName
+                      });
+                    });
+
+                    playlistTitle = response.name;
+                    playlistImage = response.image;
+                    playlistBanner = response.banner;
+                    playlistGenre = response.genre;
+                    playlistUrlName = response.url_name;
+                  }
+
+                });
+
+                this.userPlaylist = UserPlaylistVar;
+                this.playlistName = playlistTitle;
+                this.playlistImage = playlistImage;
+                this.playlistBanner = playlistBanner;
+                this.playlistGenre = playlistGenre;
+                this.playlistUrlName = playlistUrlName;
+
+                this.addSongs = function (playlist, callback) {
+
+                  _.each(UserPlaylistVar, function (audioElement) {
+                    playlist.push(angular.copy(audioElement));
+
+                    if ((UserPlaylistVar.indexOf(audioElement) + 1) == UserPlaylistVar.length) {
+                      // Callback goes here
+                      if (callback) {
+                        callback();
+                      }
+                    }
+
+                  });
+
+                  navigationMenuService.menu = false;
+                  navigationMenuService.playlist = true;
+
+                };
+
+                this.addSongsAndPlay = function (playlist, mediaPlayer) {
+
+                  this.addSongs(playlist, function () {
+
+                    setTimeout(function () {
+                      mediaPlayer.play();
+                    }, 1000);
+
+                  });
+
+                };
+
+                this.addSongToPlaylist = function (song, playlist) {
+
+                  PlayListSrv.addSongToPlaylist(song, playlist);
+                };
+
+                this.removeSongFromPlaylist = function (song, playlist) {
+
+                  PlayListSrv.removeSongFromPlaylist(song, playlist);
+
+                  //Remove from client so he notices immediately
+                  this.userPlaylist = _.without(this.userPlaylist, song);
+                };
+
+              }]).controller("CreatePlaylistInstanceCtrl", ["$scope", "$modalInstance", 'playlistName', 'song', 'loggit',
+                function ($scope, $modalInstance, playlistName, song, loggit) {
+
+                  $scope.playlistName = playlistName;
+                  $scope.song = song;
+
+                  $scope.ok = function () {
+
+                    if ($scope.playlistName !== "") {
+                      $modalInstance.close($scope);
+                    }
+                    else {
+                      $modalInstance.dismiss('cancel');
+                      loggit.logError("Error! Could not create a playlist with no name..");
+                    }
+                  };
+
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              ]);
