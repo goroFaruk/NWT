@@ -81,5 +81,7 @@ $RECYCLE.BIN
 #Folder idea
 .idea
 
+#node-modules
+.NWT-Frontend\Groovy\node_modules
 
 # End of httpswww.gitignore.ioapiintellij,windows
